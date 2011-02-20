@@ -1,0 +1,15 @@
+<pattern>
+  <all>
+    <attr>action</attr>
+
+    <one>
+      <attr>nick</attr>
+
+      <all>
+        <attr>x</attr>
+        <attr>y</attr>
+        <attr>z</attr>
+      </all>
+    </one>
+  </all>
+</pattern>

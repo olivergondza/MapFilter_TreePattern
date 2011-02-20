@@ -1,0 +1,15 @@
+<pattern>
+  <one>
+
+    <attr>-h</attr>
+    <attr>-v</attr>
+
+    <some>
+      <attr>-c</attr>
+      <attr>-l</attr>
+    </some>
+
+    <attr>-a</attr>
+
+  </one>
+</pattern>

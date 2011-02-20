@@ -1,0 +1,13 @@
+# Ignore generated documentation
+user/doc/
+# Ignore code coverage results
+*Coverage
+*Profiled
+*.log
+*phpCompatibilityFilter/
+*.tgz
+package.xml
+Interface.php
+NullPattern.php
+InvalidStructureException.php
+PatternInterface.php

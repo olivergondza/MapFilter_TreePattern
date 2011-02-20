@@ -1,0 +1,55 @@
+/**
+@mainpage	MapFilter_TreePattern
+
+@section	description	Description
+
+TreePattern is default pattern implementation for
+@link{MapFilter,http://olivergondza.github.com/MapFilter/}.
+
+@section        documentation   Documentation
+
+- @subpage      treepattern
+- @subpage      faq
+
+@section        download        Download
+
+@subsection     current         Current version
+
+$ git clone git://github.com/olivergondza/MapFilter_TreePattern
+
+or compressed
+(@link{zip,http://github.com/olivergondza/MapFilter/zipball/master} or
+@link{tar,http://github.com/olivergondza/MapFilter/tarball/master}).
+
+@subsection     dependencies    Dependencies
+
+@link{MapFilter,http://olivergondza.github.com/MapFilter/} 0.6.0
+
+TreePattern requires MapFilter to be installed using MapFilter package or in
+the parent directory of TreePattern.
+
+- $ git clone git://github.com/olivergondza/MapFilter
+- $ cd MapFilter
+- $ git clone git://github.com/olivergondza/MapFilter_TreePattern
+
+@section	license		License
+
+LGPL
+
+%MapFilter is free software: you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at
+your option) any later version.
+
+%MapFilter is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with %MapFilter.  If not, see <http://www.gnu.org/licenses/>.
+
+@section	author		Author
+
+Oliver Gondža (324706@mail.muni.cz)
+*/
