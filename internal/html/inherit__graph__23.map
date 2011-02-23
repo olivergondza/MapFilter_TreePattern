@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$classMapFilter__TreePattern__Xml__LibXmlException.html" title="MapFilter_TreePattern_Xml_LibXmlException" alt="" coords="5,58,288,89"/>
+<area shape="rect" id="node3" href="$classMapFilter__TreePattern__Xml__LibXmlErrorException.html" title="MapFilter_TreePattern_Xml_LibXmlErrorException" alt="" coords="345,5,655,35"/>
+<area shape="rect" id="node5" href="$classMapFilter__TreePattern__Xml__LibXmlFatalException.html" title="MapFilter_TreePattern_Xml_LibXmlFatalException" alt="" coords="345,58,655,89"/>
+<area shape="rect" id="node7" href="$classMapFilter__TreePattern__Xml__LibXmlWarningException.html" title="MapFilter_TreePattern_Xml_LibXmlWarningException" alt="" coords="336,111,664,142"/>
+</map>

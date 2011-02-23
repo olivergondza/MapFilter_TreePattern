@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-    <title>MapFilter: MapFilter</title>
+    <title>MapFilter: TreePattern</title>
     <link href="tabs.css" rel="stylesheet" type="text/css"/>
     <link href="search/search.css" rel="stylesheet" type="text/css"/>
     <script type="text/javaScript" src="search/search.js"></script>
@@ -16,17 +16,17 @@
   <div id="header">
   
   <h1>
-    <a href="http://github.com/olivergondza/MapFilter">MapFilter</a>
+    <a href="http://github.com/olivergondza/MapFilter_TreePattern">TreePattern</a>
   </h1>
   
   <div class="left">
-    <pre>$ git clone git://github.com/olivergondza/MapFilter</pre>
+    <pre>$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
   </div>
   
   <div class="right">
-    <pre>Source: <a href="http://github.com/olivergondza/MapFilter/zipball/master"><strong>zip</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter/tarball/master"><strong>tar</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter"><strong>git</strong></a></pre>
+    <pre>Source: <a href="http://github.com/olivergondza/MapFilter_TreePattern/zipball/master"><strong>zip</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern/tarball/master"><strong>tar</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern"><strong>git</strong></a></pre>
   </div>
   
   </div>
@@ -47,7 +47,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -69,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div class="navpath">
     <ul>
-      <li><a class="el" href="index.html">MapFilter</a>      </li>
+      <li><a class="el" href="index.html">MapFilter_TreePattern</a>      </li>
     </ul>
   </div>
 </div>
@@ -84,16 +83,16 @@ MapFilter</h2>
 MapFilter</h3>
 <h4><a class="anchor" id="faqmapfilterpattern"></a>
 What is MapFilter Pattern?</h4>
-<p>Pattern is such class that implements <a class="el" href="interfaceMapFilter__Pattern__Interface.html" title="MapFilter_Pattern Interface.">MapFilter_Pattern_Interface</a> (and optionally same other of MapFilter_Pattern interfaces). All filtering is going to be performed against this Pattern.</p>
+<p><code>Pattern</code> is such class that implements MapFilter_PatternInterface. All filtering is going to be performed against this Pattern.</p>
 <h4><a class="anchor" id="faqmapfilterquery"></a>
 What is MapFilter Query?</h4>
-<p>Query is a user Key-Value storage intended to filter.</p>
+<p><code>Query</code> is user data structure intended to be filtered.</p>
 <h4><a class="anchor" id="faqmapfilterresult"></a>
 What is MapFilter Result?</h4>
-<p>Result is a complex outcome of the filtering procedure provided by <a class="el" href="classMapFilter_ae19bec87bc82ffa0fd42723de2f858aa.html#ae19bec87bc82ffa0fd42723de2f858aa" title="Get full filtering results.">MapFilter::fetchResult()</a>. This result is provider of the same set of interfaces as given filtering <a class="el" href="usage.html#pattern">Pattern</a>.</p>
+<p><code>Result</code> is a complex outcome of the filtering procedure provided by MapFilter::fetchResult(). This result is provider of the same set of interfaces as given filtering Pattern.</p>
 <h2><a class="anchor" id="faqtreepatternnodes"></a>
 TreePattern</h2>
-<p>TreePattern is default <a class="el" href="interfaceMapFilter__Pattern__Interface.html" title="MapFilter_Pattern Interface.">MapFilter_Pattern_Interface</a> implementation.</p>
+<p>TreePattern is default MapFilter_PatternInterface implementation.</p>
 <h3><a class="anchor" id="faqnodes"></a>
 Nodes</h3>
 <h4><a class="anchor" id="faqallnode"></a>
@@ -148,7 +147,7 @@ What is the default attribute?</h4>
 </iframe>
 </div>
 
-<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter</pre>
+<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
 </div>
 <address class="page_footer"><small>Generated for MapFilter by
 <a href="http://www.doxygen.org/index.html">doxygen</a>.</small></address>

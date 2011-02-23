@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-    <title>MapFilter: MapFilter</title>
+    <title>MapFilter: TreePattern</title>
     <link href="tabs.css" rel="stylesheet" type="text/css"/>
     <link href="search/search.css" rel="stylesheet" type="text/css"/>
     <script type="text/javaScript" src="search/search.js"></script>
@@ -16,18 +16,19 @@
   <div id="header">
   
   <h1>
-    <a href="http://github.com/olivergondza/MapFilter">MapFilter</a>
+    <a
+    href="http://github.com/olivergondza/MapFilter_TreePattern">TreePattern</a>
   </h1>
   
   <div class="left">
-    <pre>$ git clone git://github.com/olivergondza/MapFilter</pre>
+    <pre>$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
   </div>
   
   <div class="right">
     <pre>Source: <a
-    href="http://github.com/olivergondza/MapFilter/zipball/master"><strong>zip</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter/tarball/master"><strong>tar</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter"><strong>git</strong></a></pre>
+    href="http://github.com/olivergondza/MapFilter_TreePattern/zipball/master"><strong>zip</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern/tarball/master"><strong>tar</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern"><strong>git</strong></a></pre>
   </div>
 
   </div>
@@ -48,7 +49,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div class="navpath">
     <ul>
-      <li><a class="el" href="index.html">MapFilter</a>      </li>
+      <li><a class="el" href="index.html">MapFilter_TreePattern</a>      </li>
       <li><a class="el" href="treepattern.html">TreePattern</a>      </li>
     </ul>
   </div>
@@ -87,18 +87,18 @@ Exclusive Whitelist</h3>
 <p>This simple example shows how to create simple whitelist allowing occurrence of just one of defined attributes. <code>my_utility -h -v -o a.out</code></p>
  <div class="fragment"><pre class="fragment">  <span class="keyword">public</span> <span class="keyword">static</span> function testSimpleOneWhitelist ( $query, $result ) {
   
-    $pattern = <span class="stringliteral">&quot;</span>
-<span class="stringliteral">    &lt;pattern&gt;</span>
-<span class="stringliteral">      &lt;one&gt;</span>
-<span class="stringliteral">        &lt;attr&gt;-h&lt;/attr&gt;</span>
-<span class="stringliteral">        &lt;attr&gt;-v&lt;/attr&gt;</span>
-<span class="stringliteral">      &lt;/one&gt;</span>
-<span class="stringliteral">    &lt;/pattern&gt;</span>
-<span class="stringliteral">    &quot;</span>;
+    $pattern = <span class="stringliteral">&#39;</span>
+<span class="stringliteral">        &lt;pattern&gt;</span>
+<span class="stringliteral">          &lt;one&gt;</span>
+<span class="stringliteral">            &lt;attr&gt;-h&lt;/attr&gt;</span>
+<span class="stringliteral">            &lt;attr&gt;-v&lt;/attr&gt;</span>
+<span class="stringliteral">          &lt;/one&gt;</span>
+<span class="stringliteral">        &lt;/pattern&gt;</span>
+<span class="stringliteral">    &#39;</span>;
     
     <span class="comment">// Instantiate MapFilter with pattern and query</span>
-    $filter = <span class="keyword">new</span> <a class="code" href="classMapFilter.html" title="Class to filter key-value data structures.">MapFilter</a> (
-        <a class="code" href="classMapFilter__TreePattern_a27a7692e9a23fb16738da352d969aa98.html#a27a7692e9a23fb16738da352d969aa98" title="Simple Factory Method to load data from string.">MapFilter_TreePattern::load</a> ( $pattern ),
+    $filter = <span class="keyword">new</span> MapFilter (
+        <a class="code" href="classMapFilter__TreePattern_a27a7692e9a23fb16738da352d969aa98.html#a27a7692e9a23fb16738da352d969aa98" title="Simple Factory Method to load data from XML string.">MapFilter_TreePattern::load</a> ( $pattern ),
         $query
     );
     
@@ -115,17 +115,17 @@ Simple Whitelist</h3>
 <p>Let’s assume the same query with slightly modified pattern.</p>
  <div class="fragment"><pre class="fragment">  <span class="keyword">public</span> <span class="keyword">static</span> function testSimpleOptWhitelist ( $query, $result ) {
     
-    $pattern = <span class="stringliteral">&quot;</span>
-<span class="stringliteral">    &lt;pattern&gt;</span>
-<span class="stringliteral">      &lt;opt&gt;</span>
-<span class="stringliteral">        &lt;attr&gt;-h&lt;/attr&gt;</span>
-<span class="stringliteral">        &lt;attr&gt;-v&lt;/attr&gt;</span>
-<span class="stringliteral">      &lt;/opt&gt;</span>
-<span class="stringliteral">    &lt;/pattern&gt;</span>
-<span class="stringliteral">    &quot;</span>;
+    $pattern = <span class="stringliteral">&#39;</span>
+<span class="stringliteral">        &lt;pattern&gt;</span>
+<span class="stringliteral">          &lt;opt&gt;</span>
+<span class="stringliteral">            &lt;attr&gt;-h&lt;/attr&gt;</span>
+<span class="stringliteral">            &lt;attr&gt;-v&lt;/attr&gt;</span>
+<span class="stringliteral">          &lt;/opt&gt;</span>
+<span class="stringliteral">        &lt;/pattern&gt;</span>
+<span class="stringliteral">    &#39;</span>;
     
-    $filter = <span class="keyword">new</span> <a class="code" href="classMapFilter.html" title="Class to filter key-value data structures.">MapFilter</a> (
-        <a class="code" href="classMapFilter__TreePattern_a27a7692e9a23fb16738da352d969aa98.html#a27a7692e9a23fb16738da352d969aa98" title="Simple Factory Method to load data from string.">MapFilter_TreePattern::load</a> ( $pattern ),
+    $filter = <span class="keyword">new</span> MapFilter (
+        <a class="code" href="classMapFilter__TreePattern_a27a7692e9a23fb16738da352d969aa98.html#a27a7692e9a23fb16738da352d969aa98" title="Simple Factory Method to load data from XML string.">MapFilter_TreePattern::load</a> ( $pattern ),
         $query
     );
     
@@ -141,17 +141,17 @@ Full Sets</h3>
 <p>Sometimes it’s useful to specify a group of attributes that all must occur. <code>my_app -f main.c -o a.out</code></p>
  <div class="fragment"><pre class="fragment">  <span class="keyword">public</span> <span class="keyword">static</span> function testSimpleAllWhitelist ( $query, $result ) {
   
-    $pattern = <span class="stringliteral">&quot;</span>
-<span class="stringliteral">    &lt;pattern&gt;</span>
-<span class="stringliteral">      &lt;all&gt;</span>
-<span class="stringliteral">        &lt;attr&gt;-f&lt;/attr&gt;</span>
-<span class="stringliteral">        &lt;attr&gt;-o&lt;/attr&gt;</span>
-<span class="stringliteral">      &lt;/all&gt;</span>
-<span class="stringliteral">    &lt;/pattern&gt;</span>
-<span class="stringliteral">    &quot;</span>;
+    $pattern = <span class="stringliteral">&#39;</span>
+<span class="stringliteral">        &lt;pattern&gt;</span>
+<span class="stringliteral">          &lt;all&gt;</span>
+<span class="stringliteral">            &lt;attr&gt;-f&lt;/attr&gt;</span>
+<span class="stringliteral">            &lt;attr&gt;-o&lt;/attr&gt;</span>
+<span class="stringliteral">          &lt;/all&gt;</span>
+<span class="stringliteral">        &lt;/pattern&gt;</span>
+<span class="stringliteral">    &#39;</span>;
     
-    $filter = <span class="keyword">new</span> <a class="code" href="classMapFilter.html" title="Class to filter key-value data structures.">MapFilter</a> (
-        <a class="code" href="classMapFilter__TreePattern_a27a7692e9a23fb16738da352d969aa98.html#a27a7692e9a23fb16738da352d969aa98" title="Simple Factory Method to load data from string.">MapFilter_TreePattern::load</a> ( $pattern ),
+    $filter = <span class="keyword">new</span> MapFilter (
+        <a class="code" href="classMapFilter__TreePattern_a27a7692e9a23fb16738da352d969aa98.html#a27a7692e9a23fb16738da352d969aa98" title="Simple Factory Method to load data from XML string.">MapFilter_TreePattern::load</a> ( $pattern ),
         $query
     );
     
@@ -178,7 +178,7 @@ Full Sets</h3>
 </iframe>
 </div>
 
-<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter</pre>
+<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
 </div>
 <address class="page_footer"><small>Generated for MapFilter by
 <a href="http://www.doxygen.org/index.html">doxygen</a>.</small></address>

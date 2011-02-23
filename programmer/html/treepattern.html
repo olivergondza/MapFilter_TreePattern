@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-    <title>MapFilter: MapFilter</title>
+    <title>MapFilter: TreePattern</title>
     <link href="tabs.css" rel="stylesheet" type="text/css"/>
     <link href="search/search.css" rel="stylesheet" type="text/css"/>
     <script type="text/javaScript" src="search/search.js"></script>
@@ -16,17 +16,17 @@
   <div id="header">
   
   <h1>
-    <a href="http://github.com/olivergondza/MapFilter">MapFilter</a>
+    <a href="http://github.com/olivergondza/MapFilter_TreePattern">TreePattern</a>
   </h1>
   
   <div class="left">
-    <pre>$ git clone git://github.com/olivergondza/MapFilter</pre>
+    <pre>$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
   </div>
   
   <div class="right">
-    <pre>Source: <a href="http://github.com/olivergondza/MapFilter/zipball/master"><strong>zip</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter/tarball/master"><strong>tar</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter"><strong>git</strong></a></pre>
+    <pre>Source: <a href="http://github.com/olivergondza/MapFilter_TreePattern/zipball/master"><strong>zip</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern/tarball/master"><strong>tar</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern"><strong>git</strong></a></pre>
   </div>
   
   </div>
@@ -47,7 +47,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -69,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div class="navpath">
     <ul>
-      <li><a class="el" href="index.html">MapFilter</a>      </li>
+      <li><a class="el" href="index.html">MapFilter_TreePattern</a>      </li>
     </ul>
   </div>
 </div>
@@ -86,20 +85,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><a class="el" href="treepatterntreeexamples.html">TreePattern Tree examples</a></li>
 </ul>
 <hr/>
-<p>MapFilter TreePattern (<code><a class="el" href="classMapFilter__TreePattern.html" title="Class to load and hold Pattern tree.">MapFilter_TreePattern</a></code>) consists of groups of arguments (special kind of such group may be a single argument), creating tree structure of groups as nodes and arguments as it's leaves. A new <code><a class="el" href="classMapFilter__TreePattern.html">Pattern</a></code> can be created from xml file (<code><a class="el" href="classMapFilter__TreePattern_a4baaa92d8a02b1b8b45d1e4fb151b75b.html#a4baaa92d8a02b1b8b45d1e4fb151b75b" title="Simple Factory Method to instantiate with loading the data from file.">MapFilter_TreePattern::fromFile</a> ( $url );</code>) or xml in String (<code><a class="el" href="classMapFilter__TreePattern_a27a7692e9a23fb16738da352d969aa98.html#a27a7692e9a23fb16738da352d969aa98" title="Simple Factory Method to load data from string.">MapFilter_TreePattern::load</a> ( $xmlString );</code>).</p>
-<p>During the filtering process algorithm walks through the tree starting from its root and evaluating all defined argument groups. So-called 'satisfaction' of the argument group is determined by its rules and satisfaction of it's followers. Single argument is considered 'satisfied' when it's present and when it matches the <a class="el" href="treepatternelements.html#valuepatternattr">valuePattern</a> or the <a class="el" href="treepatternelements.html#defaultattr">default</a> attribute is sat. In result will be found all satisfied arguments from all satisfied groups. <a class="el" href="treepattern.html#flags">Flags</a> will contain all defined flags from satisfied groups and <a class="el" href="treepattern.html#asserts">Asserts</a> will contain all defined asserts from adjacent unsatisfied groups.</p>
+<p>A new <code><a class="el" href="classMapFilter__TreePattern.html">Pattern</a></code> can be created from xml file (<code><a class="el" href="classMapFilter__TreePattern__Xml_a7ac6baa114124b3567d4148e59fd5e6f.html#a7ac6baa114124b3567d4148e59fd5e6f" title="Simple Factory Method to instantiate with loading the data from file.">MapFilter_TreePattern_Xml::fromFile</a> ( $url );</code>) or xml in String (<code><a class="el" href="classMapFilter__TreePattern__Xml_a8c227a0303f9721f23d916405210b971.html#a8c227a0303f9721f23d916405210b971" title="Simple Factory Method to load data from string.">MapFilter_TreePattern_Xml::load</a> ( $xmlString );</code>).</p>
 <h2><a class="anchor" id="result"></a>
 TreePattern Result</h2>
-<p>TreePattern currently provides three different types of results. Result object can be obtained by fetchResult(). Individual results can be obtained by get<em>MyResultType</em>() (i.e. <code>$filter-&gt;<a class="el" href="classMapFilter_ae19bec87bc82ffa0fd42723de2f858aa.html#ae19bec87bc82ffa0fd42723de2f858aa">fetchResult ()</a>-&gt;<a class="el" href="classMapFilter_ad33d1ae8e569a564f514a3dca0b96f4b.html#ad33d1ae8e569a564f514a3dca0b96f4b">getAsserts ()</a>;</code>).</p>
+<p>TreePattern currently provides three different types of results. Result object can be obtained by fetchResult() from MapFilter instance. Individual results can be obtained by get<em>MyResultType</em>().</p>
+<p><code>$filter-&gt;fetchResult()-&gt;getAsserts();</code></p>
 <h3><a class="anchor" id="results"></a>
 Results</h3>
-<p>Results array can be obtained by <code><a class="el" href="interfaceMapFilter__Pattern__ResultInterface_aeb15e7e100650fd51d193dd4eff70ede.html#aeb15e7e100650fd51d193dd4eff70ede">getResults ()</a></code>. Results array contains filtering result.</p>
+<p>Results can be obtained by <code><a class="el" href="classMapFilter__TreePattern_a5f769a64825d80e09e8175b65a76369d.html#a5f769a64825d80e09e8175b65a76369d">getResults()</a></code>. Results data structure contains a derivation of user query created according to given pattern.</p>
 <h3><a class="anchor" id="flags"></a>
 Flags</h3>
-<p>Flags array can be obtained by <code><a class="el" href="interfaceMapFilter__Pattern__FlagInterface_a756c07039ef3121425cffea92197d1d5.html#a756c07039ef3121425cffea92197d1d5">getFlags ()</a></code>. Flags array contains filtering flags.</p>
-<h3><a class="anchor" id="asserts"></a>
-Asserts</h3>
-<p>Asserts array can be obtained by <code><a class="el" href="interfaceMapFilter__Pattern__AssertInterface_a7f8d187b06aada3e6ff83100a938eea8.html#a7f8d187b06aada3e6ff83100a938eea8">getAsserts ()</a></code>. Asserts array contains filtering assertions. </p>
+<p>Flags can be obtained by <code><a class="el" href="classMapFilter__TreePattern_abbf0c416194f89bd5d9772315a059a83.html#abbf0c416194f89bd5d9772315a059a83">getFlags()</a></code>. Flags represents predefined aspects where user data <b>match</b> expected data pattern.</p>
+<h3><a class="anchor" id="assertions"></a>
+Assertions</h3>
+<p>Assertions can be obtained by <code><a class="el" href="classMapFilter__TreePattern_a4f0b1677bd8fbc1c9100454c6aa64cd9.html#a4f0b1677bd8fbc1c9100454c6aa64cd9">getAsserts()</a></code>. Assertions represents predefined aspects where user data <b>differs</b> from expected data patern and related information describing the failures. </p>
 </div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -115,7 +114,7 @@ Asserts</h3>
 </iframe>
 </div>
 
-<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter</pre>
+<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
 </div>
 <address class="page_footer"><small>Generated for MapFilter by
 <a href="http://www.doxygen.org/index.html">doxygen</a>.</small></address>

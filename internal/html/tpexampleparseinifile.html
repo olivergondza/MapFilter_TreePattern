@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-    <title>MapFilter: MapFilter</title>
+    <title>MapFilter: TreePattern</title>
     <link href="tabs.css" rel="stylesheet" type="text/css"/>
     <link href="search/search.css" rel="stylesheet" type="text/css"/>
     <script type="text/javaScript" src="search/search.js"></script>
@@ -16,18 +16,19 @@
   <div id="header">
   
   <h1>
-    <a href="http://github.com/olivergondza/MapFilter">MapFilter</a>
+    <a
+    href="http://github.com/olivergondza/MapFilter_TreePattern">TreePattern</a>
   </h1>
   
   <div class="left">
-    <pre>$ git clone git://github.com/olivergondza/MapFilter</pre>
+    <pre>$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
   </div>
   
   <div class="right">
     <pre>Source: <a
-    href="http://github.com/olivergondza/MapFilter/zipball/master"><strong>zip</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter/tarball/master"><strong>tar</strong></a
-    > | <a href="http://github.com/olivergondza/MapFilter"><strong>git</strong></a></pre>
+    href="http://github.com/olivergondza/MapFilter_TreePattern/zipball/master"><strong>zip</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern/tarball/master"><strong>tar</strong></a
+    > | <a href="http://github.com/olivergondza/MapFilter_TreePattern"><strong>git</strong></a></pre>
   </div>
 
   </div>
@@ -48,7 +49,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div class="navpath">
     <ul>
-      <li><a class="el" href="index.html">MapFilter</a>      </li>
+      <li><a class="el" href="index.html">MapFilter_TreePattern</a>      </li>
       <li><a class="el" href="treepattern.html">TreePattern</a>      </li>
       <li><a class="el" href="treepatterntreeexamples.html">TreePattern Tree examples</a>      </li>
     </ul>
@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <p>This example is coppied from the PHP manual (<a href="http://cz.php.net/manual/en/function.parse-ini-file.php">http://cz.php.net/manual/en/function.parse-ini-file.php</a>).</p>
-<p>There is an .ini file that is deserialized by standard function and then parsed by <a class="el" href="classMapFilter.html" title="Class to filter key-value data structures.">MapFilter</a>.</p>
+<p>There is an .ini file that is deserialized by standard function and then parsed by MapFilter.</p>
 <div class="fragment"><pre class="fragment">&lt;pattern&gt;
   &lt;all&gt;
     &lt;node_attr attr=<span class="stringliteral">&quot;first_section&quot;</span>&gt;
@@ -130,15 +130,15 @@ phpversion[] = <span class="stringliteral">&quot;5.3&quot;</span>
 </pre></div><p>Simple test that compares parsed and raw output. Since ini file is valid regards to our pattern the values will be equal.  <div class="fragment"><pre class="fragment">  <span class="keyword">public</span> <span class="keyword">static</span> function testParse () {
   
     $content = parse_ini_file (
-        PHP_MAPFILTER_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_INI,
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_INI,
         self::EXPAND_SECTIONS
     );
 
-    $pattern = <a class="code" href="classMapFilter__TreePattern_a4baaa92d8a02b1b8b45d1e4fb151b75b.html#a4baaa92d8a02b1b8b45d1e4fb151b75b" title="Simple Factory Method to instantiate with loading the data from file.">MapFilter_TreePattern::fromFile</a> (
-        PHP_MAPFILTER_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML
+    $pattern = <a class="code" href="classMapFilter__TreePattern_a4baaa92d8a02b1b8b45d1e4fb151b75b.html#a4baaa92d8a02b1b8b45d1e4fb151b75b" title="Simple Factory Method to loading data from XML file.">MapFilter_TreePattern::fromFile</a> (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML
     );
     
-    $filter = <span class="keyword">new</span> <a class="code" href="classMapFilter.html" title="Class to filter key-value data structures.">MapFilter</a> (
+    $filter = <span class="keyword">new</span> MapFilter (
         $pattern,
         $content
     );
@@ -166,7 +166,7 @@ phpversion[] = <span class="stringliteral">&quot;5.3&quot;</span>
 </iframe>
 </div>
 
-<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter</pre>
+<pre class="footer">$ git clone git://github.com/olivergondza/MapFilter_TreePattern</pre>
 </div>
 <address class="page_footer"><small>Generated for MapFilter by
 <a href="http://www.doxygen.org/index.html">doxygen</a>.</small></address>
