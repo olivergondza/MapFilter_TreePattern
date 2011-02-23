@@ -106,7 +106,7 @@ class MapFilter_TreePattern_Tree_Replacer {
     }
     
     $this->_pattern = $matches[ 'search' ] . $matches[ 'modifiers' ];
-    $this->_replacement = $matches[ 'replace' ];
+    $this->_replacement = str_replace ( '\/', '/', $matches[ 'replace' ] );
   }
   
   /**

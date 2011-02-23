@@ -55,4 +55,19 @@ class MapFilter_Test_Unit_TreePattern_Replacer extends
   
     new MapFilter_TreePattern_Tree_Replacer ( $replacement );
   }
+  
+  /**
+   *
+   */
+  public static function testSlashReplacement () {
+  
+    $rep = new MapFilter_TreePattern_Tree_Replacer (
+        '/\/{2,}/\//'
+    );
+    
+    self::assertEquals (
+        '/proc/self',
+        $rep->replace ( '/proc//self' )
+    );
+  }
 }
