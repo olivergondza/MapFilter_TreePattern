@@ -29,7 +29,7 @@
 
 /** @cond       PROGRAMMER */
 
-require_once dirname ( __FILE__ ) . '/InvalidStructureException.php';
+require_once 'PHP/MapFilter/InvalidStructureException.php';
 
 require_once dirname ( __FILE__ ) . '/TreePattern/Asserts.php';
 require_once dirname ( __FILE__ ) . '/TreePattern/Flags.php';
