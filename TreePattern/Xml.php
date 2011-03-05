@@ -174,6 +174,8 @@ class MapFilter_TreePattern_Xml {
       $error = libxml_get_last_error ();
       libxml_clear_errors ();
 
+      if ( $error === FALSE ) throw $exception;
+      
       throw MapFilter_TreePattern_Xml_LibXmlException::wrap ( $error );
     }
 
