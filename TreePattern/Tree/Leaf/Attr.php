@@ -27,7 +27,7 @@
  * @since    0.4
  */
 
-require_once dirname ( __FILE__ ) . '/../Leaf.php';
+require_once 'PHP/TreePattern/Tree/Leaf.php';
 
 /**
  * MapFilter pattern tree attribute leaf.

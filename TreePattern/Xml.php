@@ -29,22 +29,22 @@
 
 /** @cond       PROGRAMMER */
 
-require_once dirname ( __FILE__ ) . '/Tree/Node/All.php';
-require_once dirname ( __FILE__ ) . '/Tree/Node/Opt.php';
-require_once dirname ( __FILE__ ) . '/Tree/Node/One.php';
-require_once dirname ( __FILE__ ) . '/Tree/Node/Some.php';
-require_once dirname ( __FILE__ ) . '/Tree/Node/NodeAttr.php';
-require_once dirname ( __FILE__ ) . '/Tree/Leaf/KeyAttr.php';
-require_once dirname ( __FILE__ ) . '/Tree/Leaf/AliasAttr.php';
-require_once dirname ( __FILE__ ) . '/Tree/Leaf/Attr.php';
+require_once 'PHP/TreePattern/Tree/Node/All.php';
+require_once 'PHP/TreePattern/Tree/Node/Opt.php';
+require_once 'PHP/TreePattern/Tree/Node/One.php';
+require_once 'PHP/TreePattern/Tree/Node/Some.php';
+require_once 'PHP/TreePattern/Tree/Node/NodeAttr.php';
+require_once 'PHP/TreePattern/Tree/Leaf/KeyAttr.php';
+require_once 'PHP/TreePattern/Tree/Leaf/AliasAttr.php';
+require_once 'PHP/TreePattern/Tree/Leaf/Attr.php';
 
-require_once dirname ( __FILE__ ) . '/InvalidPatternElementException.php';
-require_once dirname ( __FILE__ ) . '/NotExactlyOneFollowerException.php';
-require_once dirname ( __FILE__ ) . '/InvalidPatternAttributeException.php';
-require_once dirname ( __FILE__ ) . '/MissingAttributeValueException.php';
+require_once 'PHP/TreePattern/InvalidPatternElementException.php';
+require_once 'PHP/TreePattern/NotExactlyOneFollowerException.php';
+require_once 'PHP/TreePattern/InvalidPatternAttributeException.php';
+require_once 'PHP/TreePattern/MissingAttributeValueException.php';
 
-require_once dirname ( __FILE__ ) . '/Xml/LibXmlException.php';
-require_once dirname ( __FILE__ ) . '/Xml/InvalidXmlContentException.php';
+require_once 'PHP/TreePattern/Xml/LibXmlException.php';
+require_once 'PHP/TreePattern/Xml/InvalidXmlContentException.php';
 
 
 /** @endcond */

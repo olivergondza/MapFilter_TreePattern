@@ -27,7 +27,7 @@
  * @since    0.3
  */
 
-require_once dirname ( __FILE__ ) . '/../Tree.php';
+require_once 'PHP/TreePattern/Tree.php';
 
 /**
  * Abstract class for pattern tree node.

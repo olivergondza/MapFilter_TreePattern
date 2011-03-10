@@ -27,8 +27,8 @@
  * @since    $NEXT$
  */
 
-require_once dirname ( __FILE__ ) . '/Asserts/InvalidInitializationException.php';
-require_once dirname ( __FILE__ ) . '/Asserts/MissingPropertyException.php';
+require_once 'PHP/TreePattern/Asserts/InvalidInitializationException.php';
+require_once 'PHP/TreePattern/Asserts/MissingPropertyException.php';
 
 /**
  * Class to load and hold Pattern tree.

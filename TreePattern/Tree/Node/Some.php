@@ -27,7 +27,7 @@
  * @since    0.3
  */
 
-require_once dirname ( __FILE__ ) . '/../Node.php';
+require_once 'PHP/TreePattern/Tree/Node.php';
 
 /**
  * MapFilter pattern tree some node.

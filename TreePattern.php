@@ -31,16 +31,16 @@
 
 require_once 'PHP/MapFilter/InvalidStructureException.php';
 
-require_once dirname ( __FILE__ ) . '/TreePattern/Asserts.php';
-require_once dirname ( __FILE__ ) . '/TreePattern/Flags.php';
+require_once 'PHP/TreePattern/Asserts.php';
+require_once 'PHP/TreePattern/Flags.php';
 
-require_once dirname ( __FILE__ ) . '/TreePattern/AssertInterface.php';
-require_once dirname ( __FILE__ ) . '/TreePattern/FlagInterface.php';
-require_once dirname ( __FILE__ ) . '/TreePattern/ResultInterface.php';
+require_once 'PHP/TreePattern/AssertInterface.php';
+require_once 'PHP/TreePattern/FlagInterface.php';
+require_once 'PHP/TreePattern/ResultInterface.php';
 
-require_once dirname ( __FILE__ ) . '/TreePattern/InvalidPatternNameException.php';
+require_once 'PHP/TreePattern/InvalidPatternNameException.php';
 
-require_once dirname ( __FILE__ ) . '/TreePattern/Xml.php';
+require_once 'PHP/TreePattern/Xml.php';
 
 /** @endcond */
 

@@ -27,9 +27,9 @@
  * @since    0.4
  */
 
-require_once dirname ( __FILE__ ) . '/Attr.php';
+require_once 'PHP/TreePattern/Tree/Leaf/Attr.php';
 
-require_once dirname ( __FILE__ ) . '/../Attribute.php';
+require_once 'PHP/TreePattern/Tree/Attribute.php';
 
 /**
  * MapFilter pattern tree KeyAttribute node.

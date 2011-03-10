@@ -27,7 +27,7 @@
  * @since    $NEXT$
  */
 
-require_once dirname ( __FILE__ ) . '/Replacer/InvalidStructureException.php';
+require_once 'PHP/TreePattern/Tree/Replacer/InvalidStructureException.php';
 
 /**
  * Pattern Replacer.

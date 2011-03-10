@@ -2,28 +2,17 @@
 
 error_reporting ( ( E_ALL | E_STRICT ) );
 
-if ( !is_readable ( dirname ( __FILE__ ) . '/../TreePattern.php' ) ) {
+set_include_path (
+    dirname ( dirname ( dirname ( __FILE__ ) ) )
+    . PATH_SEPARATOR . get_include_path ()
+);
 
-  define ( 'PHP_TREEPATTERN_DIR', 'PHP/MapFilter/TreePattern' );
-  define ( 'PHP_TREEPATTERN_CLASS', 'PHP/MapFilter/TreePattern.php' );
-} else {
-
-  define ( 'PHP_TREEPATTERN_DIR', dirname ( __FILE__ ) . '/../TreePattern/' );
-  define ( 'PHP_TREEPATTERN_CLASS', dirname ( __FILE__ ) . '/../TreePattern.php' );
-}
+define ( 'PHP_TREEPATTERN_DIR', 'PHP/TreePattern' );
+define ( 'PHP_TREEPATTERN_CLASS', 'PHP/TreePattern.php' );
 
 define ( 'PHP_TREEPATTERN_TEST_DIR', dirname ( __FILE__ ) );
 
-if ( !class_exists ( 'MapFilter' ) ) {
-
-  if ( is_readable ( dirname ( __FILE__ ) . '/../../MapFilter.php' ) ) {
-
-    require_once dirname ( __FILE__ ) . '/../../MapFilter.php';
-  } else {
-
-    require_once 'PHP/MapFilter.php';
-  }
-}
+require_once 'PHP/MapFilter.php';
 
 class MapFilter_Test_Sources {
   const LOCATION = '/sources/location.xml';

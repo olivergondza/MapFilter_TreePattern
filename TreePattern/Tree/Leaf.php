@@ -29,11 +29,11 @@
  * @since    0.4
  */
 
-require_once dirname ( __FILE__ ) . '/../Tree.php';
+require_once 'PHP/TreePattern/Tree.php';
 
-require_once dirname ( __FILE__ ) . '/Leaf/Interface.php';
+require_once 'PHP/TreePattern/Tree/Leaf/Interface.php';
 
-require_once dirname ( __FILE__ ) . '/Leaf/InvalidDepthIndicatorException.php';
+require_once 'PHP/TreePattern/Tree/Leaf/InvalidDepthIndicatorException.php';
 
 /**
  * Abstract class for pattern tree leaf.

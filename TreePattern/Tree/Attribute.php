@@ -27,8 +27,8 @@
  * @since    $NEXT$
  */
 
-require_once dirname ( __FILE__ ) . '/Replacer.php';
-require_once dirname ( __FILE__ ) . '/Matcher.php';
+require_once 'PHP/TreePattern/Tree/Replacer.php';
+require_once 'PHP/TreePattern/Tree/Matcher.php';
 
 /**
  * Pattern attribute.
