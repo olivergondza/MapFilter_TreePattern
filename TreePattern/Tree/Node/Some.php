@@ -44,39 +44,40 @@ final class MapFilter_TreePattern_Tree_Node_Some extends
     MapFilter_TreePattern_Tree_Node
 {
 
-  /**
-   * Satisfy certain node type and let its followers to get satisfied.
-   *
-   * @since     0.4
-   *
-   * @param     Array|ArrayAccess               &$query         A query to filter.
-   * @param     MapFilter_TreePattern_Asserts   $asserts        Asserts.
-   *
-   * @return    Bool                    Satisfied or not.
-   *
-   * Satisfy the node when there is at least one satisfied follower.  Thus
-   * satisfy MUST be mapped on ALL followers.
-   */
-  public function satisfy ( &$query, MapFilter_TreePattern_Asserts $asserts ) {
+    /**
+     * Satisfy certain node type and let its followers to get satisfied.
+     *
+     * @param Array|ArrayAccess             &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     *
+     * @return Bool Satisfied or not.
+     *
+     * Satisfy the node when there is at least one satisfied follower.  Thus
+     * satisfy MUST be mapped on ALL followers.
+     *
+     * @since 0.4
+     */
+    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    {
 
-    assert ( MapFilter_TreePattern::isMap ( $query ) );
+        assert(MapFilter_TreePattern::isMap($query));
 
-    $satisfiedFollowers = Array ();
-    foreach ( $this->getContent () as $follower ) {
+        $satisfiedFollowers = Array();
+        foreach ($this->getContent() as $follower) {
 
-      $satisfiedFollowers[] = $follower->satisfy ( $query, $asserts );
+            $satisfiedFollowers[] = $follower->satisfy($query, $asserts);
+        }
+        
+        $this->satisfied = in_array(
+            true,
+            $satisfiedFollowers
+        );
+        
+        if ($this->satisfied) {
+          
+            $this->setAssertValue($asserts);
+        }
+        
+        return $this->satisfied;
     }
-    
-    $this->satisfied = in_array (
-        TRUE,
-        $satisfiedFollowers
-    );
-    
-    if ( $this->satisfied ) {
-      
-      $this->setAssertValue ( $asserts );
-    }
-    
-    return $this->satisfied;
-  }
 }

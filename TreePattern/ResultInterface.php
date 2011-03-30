@@ -44,14 +44,14 @@ interface MapFilter_TreePattern_ResultInterface extends
     MapFilter_PatternInterface
 {
 
-  /**
-   * Get results.
-   *
-   * Get parsed query from latest parsing process.
-   *
-   * @since     0.5
-   *
-   * @return    Array|ArrayAccess       Parsing results.
-   */
-  public function getResults ();
+    /**
+     * Get results.
+     *
+     * Get parsed query from latest parsing process.
+     *
+     * @return Array|ArrayAccess Parsing results.
+     *
+     * @since 0.5
+     */
+    public function getResults();
 }

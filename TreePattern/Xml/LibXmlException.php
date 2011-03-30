@@ -1,5 +1,7 @@
 <?php
 /**
+ * libxml exception
+ *
  * PHP Version 5.1.0
  *
  * This file is part of MapFilter package.
@@ -26,6 +28,8 @@
  */
 
 /**
+ * libxml exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_Xml_LibXmlException
@@ -40,55 +44,56 @@ extends
     UnexpectedValueException
 {
 
-  /**
-   * LibXml error to Exception mapping.
-   *
-   * @since     0.1
-   *
-   * @var       Array           $_errorToException
-   */
-  private static $_errorToException = Array (
-      LIBXML_ERR_WARNING => 'MapFilter_TreePattern_Xml_LibXmlWarningException',
-      LIBXML_ERR_ERROR   => 'MapFilter_TreePattern_Xml_LibXmlErrorException',
-      LIBXML_ERR_FATAL   => 'MapFilter_TreePattern_Xml_libXmlFatalException',
-  );
-  
-  /**
-   * LibXml error to Message.
-   *
-   * @since     $NEXT$
-   *
-   * @var       Array           $_errorToMessage
-   */
-  private static $_errorToMessage = Array (
-      LIBXML_ERR_WARNING => 'LibXML warning: %s on line %s (in file %s).',
-      LIBXML_ERR_ERROR   => 'LibXML error: %s on line %s (in file %s).',
-      LIBXML_ERR_FATAL   => 'LibXML fatal: %s on line %s (in file %s).',
-  );
-
-  /**
-   * Wrap error into exception.
-   *
-   * @param     libXMLError     $error          An error to wrap.
-   *
-   * @param     MapFilter_TreePattern_Xml_LibXmlException       $error
-   *
-   * @return    MapFilter_TreePattern_Xml_LibXmlException
-   */
-  public static function wrap ( libXMLError $error ) {
-  
-    $class = self::$_errorToException[ $error->level ];
-
-    $message = sprintf (
-        self::$_errorToMessage[ $error->level ],
-        $error->message, $error->line, $error->file
+    /**
+     * LibXml error to Exception mapping.
+     *
+     * @since     0.1
+     *
+     * @var       Array           $_errorToException
+     */
+    private static $_errorToException = Array (
+        LIBXML_ERR_WARNING => 'MapFilter_TreePattern_Xml_LibXmlWarningException',
+        LIBXML_ERR_ERROR   => 'MapFilter_TreePattern_Xml_LibXmlErrorException',
+        LIBXML_ERR_FATAL   => 'MapFilter_TreePattern_Xml_libXmlFatalException',
     );
     
-    return new $class ( $message );
-  }
+    /**
+     * LibXml error to Message.
+     *
+     * @since     $NEXT$
+     *
+     * @var       Array           $_errorToMessage
+     */
+    private static $_errorToMessage = Array (
+        LIBXML_ERR_WARNING => 'LibXML warning: %s on line %s (in file %s).',
+        LIBXML_ERR_ERROR   => 'LibXML error: %s on line %s (in file %s).',
+        LIBXML_ERR_FATAL   => 'LibXML fatal: %s on line %s (in file %s).',
+    );
+
+    /**
+     * Wrap error into exception.
+     *
+     * @param libXMLError $error An error to wrap.
+     *
+     * @return MapFilter_TreePattern_Xml_LibXmlException
+     */
+    public static function wrap(libXMLError $error)
+    {
+    
+        $class = self::$_errorToException[ $error->level ];
+
+        $message = sprintf(
+            self::$_errorToMessage[ $error->level ],
+            $error->message, $error->line, $error->file
+        );
+      
+        return new $class($message);
+    }
 }
 
 /**
+  * libxml warning exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_Xml_LibXmlWarningException
@@ -97,9 +102,16 @@ extends
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Xml_LibXmlWarningException extends MapFilter_TreePattern_Xml_LibXmlException {}
+class
+    MapFilter_TreePattern_Xml_LibXmlWarningException
+extends
+    MapFilter_TreePattern_Xml_LibXmlException
+{
+}
 
 /**
+ * libxml error exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_Xml_LibXmlErrorException
@@ -108,9 +120,16 @@ class MapFilter_TreePattern_Xml_LibXmlWarningException extends MapFilter_TreePat
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Xml_LibXmlErrorException extends MapFilter_TreePattern_Xml_LibXmlException {}
+class
+    MapFilter_TreePattern_Xml_LibXmlErrorException
+extends
+    MapFilter_TreePattern_Xml_LibXmlException
+{
+}
 
 /**
+ * libxml fatal error exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_Xml_LibXmlFatalException
@@ -119,4 +138,9 @@ class MapFilter_TreePattern_Xml_LibXmlErrorException extends MapFilter_TreePatte
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Xml_LibXmlFatalException extends MapFilter_TreePattern_Xml_LibXmlException {}
+class
+    MapFilter_TreePattern_Xml_LibXmlFatalException
+extends
+    MapFilter_TreePattern_Xml_LibXmlException
+{
+}

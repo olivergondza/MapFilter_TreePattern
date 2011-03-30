@@ -44,21 +44,36 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = 'Only allowed follower for AliasAttribute is Attr. %s given.',
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
-  
-  public function setFollower ( $follower ) {
-  
-    assert ( is_string ( $follower ) );
+    /**
+     * Instantiate using default values.
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous Exception
+     */
+    public function __construct (
+        $message = 'Only allowed follower for AliasAttribute is Attr. %s given.',
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    $this->message = sprintf ( $this->message, $follower );
+        parent::__construct($message, $code, $previous);
+    }
     
-    return $this;
-  }
+    /**
+     * Set follower name
+     *
+     * @param String $follower Follower name.
+     *
+     * @return MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
+     */
+    public function setFollower($follower)
+    {
+    
+        assert(is_string($follower));
+      
+        $this->message = sprintf($this->message, $follower);
+      
+        return $this;
+    }
 }

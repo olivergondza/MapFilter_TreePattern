@@ -44,12 +44,12 @@ interface MapFilter_TreePattern_FlagInterface extends
     MapFilter_PatternInterface
 {
 
-  /**
-   * Return flags that was sat during latest filtering process.
-   *
-   * @since     0.5
-   *
-   * @return    MapFilter_TreePattern_Flags             Filtering flags.
-   */
-  public function getFlags ();
+    /**
+     * Return flags that was sat during latest filtering process.
+     *
+     * @since     0.5
+     *
+     * @return    MapFilter_TreePattern_Flags             Filtering flags.
+     */
+    public function getFlags();
 }

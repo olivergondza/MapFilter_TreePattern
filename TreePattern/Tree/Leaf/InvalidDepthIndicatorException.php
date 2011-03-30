@@ -44,21 +44,36 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "Unsupported value '%s' for iterator attribute.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
-  
-  public function setValue ( $value ) {
-  
-    assert ( is_string ( $value ) );
+    /**
+     * Instantiate using default values
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct (
+        $message = "Unsupported value '%s' for iterator attribute.",
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    $this->message = sprintf ( $this->message, $value );
+        parent::__construct($message, $code, $previous);
+    }
     
-    return $this;
-  }
+    /**
+     * Set original value
+     *
+     * @param String $value Original value
+     *
+     * @return MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException
+     */
+    public function setValue($value)
+    {
+    
+        assert(is_string($value));
+      
+        $this->message = sprintf($this->message, $value);
+      
+        return $this;
+    }
 }

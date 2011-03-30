@@ -44,21 +44,36 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "Invalid pattern element '%s'.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
-  
-  public function setName ( $name ) {
-  
-    assert ( is_string ( $name ) );
+    /**
+     * Instantiate using default values
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct(
+        $message = "Invalid pattern element '%s'.",
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    $this->message = sprintf ( $this->message, $name );
+        parent::__construct($message, $code, $previous);
+    }
     
-    return $this;
-  }
+    /**
+     * Set element name
+     *
+     * @param String $name Element name
+     *
+     * @return MapFilter_TreePattern_InvalidPatternElementException
+     */
+    public function setName($name)
+    {
+    
+        assert(is_string($name));
+      
+        $this->message = sprintf($this->message, $name);
+      
+        return $this;
+    }
 }

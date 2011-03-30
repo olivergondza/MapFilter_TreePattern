@@ -1,5 +1,7 @@
 <?php
 /**
+ * Invalid initialization exception
+ *
  * PHP Version 5.1.0
  *
  * This file is part of MapFilter package.
@@ -26,6 +28,8 @@
  */
 
 /**
+ * Invalid initialization exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_Asserts_InvalidInitializationException
@@ -40,12 +44,19 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "Invalid format for assertion initialization.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
+    /**
+     * Instantiate using default values
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct (
+        $message = "Invalid format for assertion initialization.",
+        $code = 0,
+        Exception $previous = null
+    ) {
   
-    parent::__construct ( $message, $code, $previous );
-  }
+        parent::__construct($message, $code, $previous);
+    }
 }

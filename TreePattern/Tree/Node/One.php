@@ -44,33 +44,34 @@ final class MapFilter_TreePattern_Tree_Node_One extends
     MapFilter_TreePattern_Tree_Node
 {
 
-  /**
-   * Satisfy certain node type and let its followers to get satisfied.
-   *
-   * @since     0.4
-   *
-   * @param     Array|ArrayAccess               &$query         A query to filter.
-   * @param     MapFilter_TreePattern_Asserts   $asserts       Asserts.
-   *
-   * @return    Bool                    Satisfied or not.
-   *
-   * Satisfy the node if there is one satisfied follower (any further
-   * followers mustn't be satisfied in order to pick up just first one of
-   * those).  Mapping CAN'T continue after finding satisfied follower.
-   */
-  public function satisfy ( &$query, MapFilter_TreePattern_Asserts $asserts ) {
+    /**
+     * Satisfy certain node type and let its followers to get satisfied.
+     *
+     * @param Array|ArrayAccess             &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     *
+     * @return Bool Satisfied or not.
+     *
+     * Satisfy the node if there is one satisfied follower (any further
+     * followers mustn't be satisfied in order to pick up just first one of
+     * those).  Mapping CAN'T continue after finding satisfied follower.
+     *
+     * @since 0.4
+     */
+    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    {
 
-    assert ( MapFilter_TreePattern::isMap ( $query ) );
+        assert(MapFilter_TreePattern::isMap($query));
 
-    foreach ( $this->getContent () as $follower ) {
-      
-      if ( $follower->satisfy ( $query, $asserts ) ) {
+        foreach ($this->getContent() as $follower) {
+          
+            if ($follower->satisfy($query, $asserts)) {
 
-        return $this->satisfied = TRUE;
-      }
+                return $this->satisfied = true;
+            }
+        }
+        
+        $this->setAssertValue($asserts);
+        return $this->satisfied = false;
     }
-    
-    $this->setAssertValue ( $asserts );
-    return $this->satisfied = FALSE;
-  }
 }

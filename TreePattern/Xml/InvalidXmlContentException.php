@@ -1,5 +1,7 @@
 <?php
 /**
+ * Invalid Xml content exception
+ *
  * PHP Version 5.1.0
  *
  * This file is part of MapFilter package.
@@ -26,6 +28,8 @@
  */
 
 /**
+ * Invalid Xml content exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_Xml_InvalidXmlContentException
@@ -40,21 +44,36 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "Node '%s' has no content.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
-  
-  public function setNodeName ( $name ) {
-  
-    assert ( is_string ( $name ) );
+    /**
+     * Instantiate using default values
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct (
+        $message = "Node '%s' has no content.",
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    $this->message = sprintf ( $this->message, $name );
+        parent::__construct($message, $code, $previous);
+    }
     
-    return $this;
-  }
+    /**
+     * Set pattern name
+     *
+     * @param String $name Name
+     *
+     * @return MapFilter_TreePattern_Xml_InvalidXmlContentException
+     */
+    public function setNodeName($name)
+    {
+    
+        assert(is_string($name));
+      
+        $this->message = sprintf($this->message, $name);
+      
+        return $this;
+    }
 }

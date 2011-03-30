@@ -40,88 +40,92 @@ require_once 'PHP/TreePattern/Tree/Replacer/InvalidStructureException.php';
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Tree_Replacer {
+class MapFilter_TreePattern_Tree_Replacer
+{
 
-  /**
-   * Replacement RegExp
-   *
-   * @since     $NEXT$
-   */
-  const REPLACEMENT_REGEXP =
-      '/^s?
-        (?P<search>
-          ([^\\\\\s\da-zA-Z<>\{\}\(\)]) # Possible delimiters
-          (?:(?!(?<!\\\\)\2).)*         # Delimiter has to be escaped
+    /**
+     * Replacement RegExp
+     *
+     * @since     $NEXT$
+     */
+    const REPLACEMENT_REGEXP =
+        '/^s?
+          (?P<search>
+            ([^\\\\\s\da-zA-Z<>\{\}\(\)]) # Possible delimiters
+            (?:(?!(?<!\\\\)\2).)*         # Delimiter has to be escaped
+            (\2)
+          )
+          (?P<replace>
+            (?:(?!(?<!\\\\)\2).)*         # Delimiter has to be escaped
+          )
           (\2)
-        )
-        (?P<replace>
-          (?:(?!(?<!\\\\)\2).)*         # Delimiter has to be escaped
-        )
-        (\2)
-        (?P<modifiers>[imsxeADSUXu]*)
-      $/x'
-  ;
+          (?P<modifiers>[imsxeADSUXu]*)
+        $/x'
+    ;
 
-  /**
-   * Search RegExp.
-   *
-   * @since     $NEXT$
-   *
-   * @var       String          $_pattern
-   */
-  private $_pattern = NULL;
-  
-  /**
-   * Replacement.
-   *
-   * @since     $NEXT$
-   *
-   * @var       String          $_replacement
-   */
-  private $_replacement = NULL;
-  
-  /**
-   * Create replacer
-   *
-   * @since     $NEXT$
-   *
-   * @param     String          $searchAndReplace
-   * @throws    MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
-   */
-  public function __construct ( $searchAndReplace = NULL ) {
-  
-    assert ( is_string ( $searchAndReplace ) || is_null ( $searchAndReplace ) );
+    /**
+     * Search RegExp.
+     *
+     * @since     $NEXT$
+     *
+     * @var       String          $_pattern
+     */
+    private $_pattern = null;
     
-    if ( $searchAndReplace === NULL ) return;
+    /**
+     * Replacement.
+     *
+     * @since     $NEXT$
+     *
+     * @var       String          $_replacement
+     */
+    private $_replacement = null;
     
-    $matches = Array ();
-    $valid = preg_match (
-        self::REPLACEMENT_REGEXP, $searchAndReplace, $matches
-    );
+    /**
+     * Create replacer
+     *
+     * @param String $searchAndReplace Initializer string.
+     *
+     * @throws MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
+     *
+     * @since     $NEXT$
+     */
+    public function __construct($searchAndReplace = null)
+    {
+    
+        assert(is_string($searchAndReplace) || is_null($searchAndReplace));
+        
+        if ($searchAndReplace === null) return;
+        
+        $matches = Array();
+        $valid = preg_match(
+            self::REPLACEMENT_REGEXP, $searchAndReplace, $matches
+        );
 
-    if ( !$valid ) {
-    
-      $ex = new MapFilter_TreePattern_Tree_Replacer_InvalidStructureException ();
-      throw $ex->setInput ( $searchAndReplace );
+        if (!$valid) {
+        
+            $ex = new MapFilter_TreePattern_Tree_Replacer_InvalidStructureException;
+            throw $ex->setInput($searchAndReplace);
+        }
+        
+        $this->_pattern = $matches[ 'search' ] . $matches[ 'modifiers' ];
+        $this->_replacement = str_replace('\/', '/', $matches[ 'replace' ]);
     }
     
-    $this->_pattern = $matches[ 'search' ] . $matches[ 'modifiers' ];
-    $this->_replacement = str_replace ( '\/', '/', $matches[ 'replace' ] );
-  }
-  
-  /**
-   * Replace if there is any pattern.
-   *
-   * @param     String          $subject
-   *
-   * @return    String
-   */
-  public function replace ( $subject ) {
-  
-    if ( $this->_pattern === NULL ) return $subject;
+    /**
+     * Replace if there is any pattern.
+     *
+     * @param String $subject A subject of replacement.
+     *
+     * @return    String
+     */
+    public function replace($subject)
+    {
     
-    assert ( is_string ( $subject ) );
-    
-    return preg_replace ( $this->_pattern, $this->_replacement, $subject );
-  }
+        if ($this->_pattern === null) return $subject;
+        
+        assert(is_string($subject));
+        
+        return preg_replace($this->_pattern, $this->_replacement, $subject);
+    }
 }

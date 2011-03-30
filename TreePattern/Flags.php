@@ -38,77 +38,82 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Flags {
+class MapFilter_TreePattern_Flags
+{
 
-  /**
-   * Set flags.
-   *
-   * @since     $NEXT$
-   *
-   * @var       Array           $_flags
-   */
-  private $_flags = Array ();
+    /**
+     * Set flags.
+     *
+     * @since     $NEXT$
+     *
+     * @var       Array           $_flags
+     */
+    private $_flags = Array();
 
-  /**
-   * Create flags object
-   *
-   * @since     $NEXT$
-   *
-   * @param     Array           $flags
-   */
-  public function __construct ( Array $flags = Array () ) {
-  
-    $this->_flags = array_unique ( array_values ( $flags ) );
-    sort ( $this->_flags );
-  }
-
-  /**
-   * Set new flags.
-   *
-   * @since     $NEXT$
-   *
-   * @param     String          $flagName
-   *
-   * @return    MapFilter_TreePattern_Flags
-   */
-  public function set ( $flagName ) {
-  
-    assert ( is_string ( $flagName ) );
-
-    $this->_flags[] = $flagName;
+    /**
+     * Create flags object
+     *
+     * @param Array $flags Predefined flags
+     *
+     * @since     $NEXT$
+     */
+    public function __construct(Array $flags = Array())
+    {
     
-    $this->_flags = array_unique ( $this->_flags );
-  
-    sort ( $this->_flags );
-  
-    return $this;
-  }
+        $this->_flags = array_unique(array_values($flags));
+        sort($this->_flags);
+    }
 
-  /**
-   * Get all flags.
-   *
-   * @since     $NEXT$
-   *
-   * @return    Array
-   */
-  public function getAll () {
+    /**
+     * Set new flags.
+     *
+     * @param String $flagName Flag identifier
+     *
+     * @return    MapFilter_TreePattern_Flags
+     *
+     * @since     $NEXT$
+     */
+    public function set($flagName)
+    {
+    
+        assert(is_string($flagName));
+        
+        $this->_flags[] = $flagName;
+      
+        $this->_flags = array_unique($this->_flags);
+    
+        sort($this->_flags);
+    
+        return $this;
+    }
 
-    return $this->_flags;
-  }
-  
-  /**
-   * Determine whether the flag is set.
-   *
-   * @since     $NEXT$
-   *
-   * @param     String          $flagName
-   *
-   * @return    Bool
-   */
-  public function exists ( $flagName ) {
-  
-    assert ( is_string ( $flagName ) );
-  
-    return in_array ( $flagName, $this->_flags );
-  }
+    /**
+     * Get all flags.
+     *
+     * @return    Array
+     *
+     * @since     $NEXT$
+     */
+    public function getAll()
+    {
+
+        return $this->_flags;
+    }
+    
+    /**
+     * Determine whether the flag is set.
+     *
+     * @param String $flagName Flag identifier
+     *
+     * @return    Bool
+     *
+     * @since     $NEXT$
+     */
+    public function exists($flagName)
+    {
+    
+        assert(is_string($flagName));
+    
+        return in_array($flagName, $this->_flags);
+    }
 }

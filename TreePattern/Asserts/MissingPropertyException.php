@@ -1,5 +1,7 @@
 <?php
 /**
+ * Missing property exception
+ *
  * PHP Version 5.1.0
  *
  * This file is part of MapFilter package.
@@ -26,6 +28,8 @@
  */
 
 /**
+ * Missing property exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_Asserts_MissingPropertyException
@@ -40,22 +44,38 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "Missing property '%s' for assertion '%s'.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
-  
-  public function setProperty ( $name, $assertion ) {
-  
-    assert ( is_string ( $name ) );
-    assert ( is_string ( $assertion ) );
+    /**
+     * Instantiate using default values
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct (
+        $message = "Missing property '%s' for assertion '%s'.",
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    $this->message = sprintf ( $this->message, $name, $assertion );
+        parent::__construct($message, $code, $previous);
+    }
     
-    return $this;
-  }
+    /**
+     * Set pattern name
+     *
+     * @param String $name      Property name
+     * @param String $assertion Assertion name
+     *
+     * @return MapFilter_TreePattern_Asserts_MissingPropertyException
+     */
+    public function setProperty($name, $assertion)
+    {
+    
+        assert(is_string($name));
+        assert(is_string($assertion));
+        
+        $this->message = sprintf($this->message, $name, $assertion);
+        
+        return $this;
+    }
 }

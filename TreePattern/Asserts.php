@@ -41,171 +41,178 @@ require_once 'PHP/TreePattern/Asserts/MissingPropertyException.php';
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Asserts {
+class MapFilter_TreePattern_Asserts
+{
 
-  /**
-   * Assertion path.
-   *
-   * @since     $NEXT$
-   */
-  const PATH = 0;
-  
-  /**
-   * Assertion value.
-   *
-   * @since     $NEXT$
-   */
-  const VALUE = 1;
-
-  /**
-   * Set asserts.
-   *
-   * @since     $NEXT$
-   *
-   * @var       Array           $_asserts
-   */
-  private $_asserts = Array ();
-  
-  /**
-   * Create asserts
-   *
-   * @since     $NEXT$
-   *
-   * @param     Array           $asserts
-   */
-  public function __construct ( Array $asserts = Array () ) {
-  
-    foreach ( $asserts as $name => $details ) {
+    /**
+     * Assertion path.
+     *
+     * @since     $NEXT$
+     */
+    const PATH = 0;
     
-      if ( is_int ( $name ) && !is_string ( $details ) ) {
+    /**
+     * Assertion value.
+     *
+     * @since     $NEXT$
+     */
+    const VALUE = 1;
+
+    /**
+     * Set asserts.
+     *
+     * @since     $NEXT$
+     *
+     * @var       Array           $_asserts
+     */
+    private $_asserts = Array();
+    
+    /**
+     * Create asserts
+     *
+     * @param Array $asserts Asserts
+     *
+     * @since     $NEXT$
+     */
+    public function __construct(Array $asserts = Array())
+    {
+    
+        foreach ($asserts as $name => $details) {
+        
+            if (is_int($name) && !is_string($details)) {
+          
+                throw new MapFilter_TreePattern_Asserts_InvalidInitializationException;
+            }
+        
+            $key =(!is_int($name))
+                ? $name
+                : $details
+            ;
+        
+            $this->_asserts[ $key ] =(is_array($details))
+                ? $details
+                : Array()
+            ;
+        }
+        
+        ksort($this->_asserts);
+    }
+
+    /**
+     * Set validationAssert including path and value
+     *
+     * @param String $assertName Assert identifier
+     * @param String $path       Path
+     * @param Mixed  &$value     Value reference
+     *
+     * @return    MapFilter_TreePattern_Flags
+     *
+     * @since     $NEXT$
+     */
+    public function set($assertName, $path = null, &$value = null)
+    {
+    
+        assert(is_string($assertName));
+        assert(is_string($path) || is_null($path));
+
+        $this->_asserts[ $assertName ] = Array();
+        
+        if ($path !== null) {
+        
+            $this->_asserts[ $assertName ][ self::PATH ] = $path;
+        }
+        
+        if ($value !== null) {
+        
+            $this->_asserts[ $assertName ][ self::VALUE ] = $value;
+        }
+        
+        ksort($this->_asserts);
+        
+        return $this;
+    }
+    
+    /**
+     * Get all asserts
+     *
+     * @return    Array
+     *
+     * @since     $NEXT$
+     */
+    public function getAll()
+    {
+
+        return array_keys($this->_asserts);
+    }
+    
+    /**
+     * Determine whether an assert is set
+     *
+     * @param String $assertName Assert identifier
+     *
+     * @return    Bool
+     *
+     * @since     $NEXT$
+     */
+    public function exists($assertName)
+    {
+    
+        assert(is_string($assertName));
+    
+        return array_key_exists($assertName, $this->_asserts);
+    }
+    
+    /**
+     * Get assert path
+     *
+     * @param String $assertName Assert identifier
+     * 
+     * @return    String
+     *
+     * @since     $NEXT$
+     */
+    public function getPath($assertName)
+    {
+    
+        assert(is_string($assertName));
       
-        throw new MapFilter_TreePattern_Asserts_InvalidInitializationException ();
-      }
-    
-      $key = ( !is_int ( $name ) )
-          ? $name
-          : $details
-      ;
-    
-      $this->_asserts[ $key ] = ( is_array ( $details ) )
-          ? $details
-          : Array ()
-      ;
+        $hasVal = $this->exists($assertName) && array_key_exists(
+            self::PATH, $this->_asserts[ $assertName ]
+        );
+        
+        if (!$hasVal) {
+        
+            $ex = new MapFilter_TreePattern_Asserts_MissingPropertyException;
+            throw $ex->setProperty('path', $assertName);
+        }
+        
+        return $this->_asserts[ $assertName ][ self::PATH ];
     }
     
-    ksort ( $this->_asserts );
-  }
-
-  /**
-   * Set validationAssert including path and value
-   *
-   * @since     $NEXT$
-   *
-   * @param     String          $assertName
-   * @param     String          $path
-   * @param     Mixed           &$value
-   *
-   * @return    MapFilter_TreePattern_Flags
-   */
-  public function set ( $assertName, $path = NULL, &$value = NULL ) {
-  
-    assert ( is_string ( $assertName ) );
-    assert ( is_string ( $path ) || is_null ( $path ) );
-
-    $this->_asserts[ $assertName ] = Array ();
+    /**
+     * Get assert value
+     *
+     * @param String $assertName Assert identifier
+     *
+     * @return    &Mixed
+     *
+     * @since     $NEXT$
+     */
+    public function &getValue($assertName)
+    {
     
-    if ( $path !== NULL ) {
-    
-      $this->_asserts[ $assertName ][ self::PATH ] = $path;
+        assert(is_string($assertName));
+        
+        $hasVal = $this->exists($assertName) && array_key_exists(
+            self::VALUE, $this->_asserts[ $assertName ]
+        );
+        
+        if (!$hasVal) {
+        
+            $ex = new MapFilter_TreePattern_Asserts_MissingPropertyException;
+            throw $ex->setProperty('value', $assertName);
+        }
+        
+        return $this->_asserts[ $assertName ][ self::VALUE ];
     }
-    
-    if ( $value !== NULL ) {
-    
-      $this->_asserts[ $assertName ][ self::VALUE ] = $value;
-    }
-    
-    ksort ( $this->_asserts );
-    
-    return $this;
-  }
-  
-  /**
-   * Get all asserts
-   *
-   * @since     $NEXT$
-   *
-   * @return    Array
-   */
-  public function getAll () {
-
-    return array_keys ( $this->_asserts );
-  }
-  
-  /**
-   * Determine whether an assert is set
-   *
-   * @since     $NEXT$
-   *
-   * @param     String          $assertName
-   *
-   * @return    Bool
-   */
-  public function exists ( $assertName ) {
-  
-    assert ( is_string ( $assertName ) );
-  
-    return array_key_exists ( $assertName, $this->_asserts );
-  }
-  
-  /**
-   * Get assert path
-   *
-   * @since     $NEXT$
-   *
-   * @param     String          $assertName
-   * 
-   * @return    String
-   */
-  public function getPath ( $assertName ) {
-  
-    assert ( is_string ( $assertName ) );
-  
-    $hasVal = $this->exists ( $assertName )
-        && array_key_exists ( self::PATH, $this->_asserts[ $assertName ] )
-    ;
-    
-    if ( !$hasVal ) {
-    
-      $ex = new MapFilter_TreePattern_Asserts_MissingPropertyException ();
-      throw $ex->setProperty ( 'path', $assertName );
-    }
-    
-    return $this->_asserts[ $assertName ][ self::PATH ];
-  }
-  
-  /**
-   * Get assert value
-   *
-   * @since     $NEXT$
-   *
-   * @param     String          $assertName
-   *
-   * @return    &Mixed
-   */
-  public function &getValue ( $assertName ) {
-  
-    assert ( is_string ( $assertName ) );
-    
-    $hasVal = $this->exists ( $assertName )
-        && array_key_exists ( self::VALUE, $this->_asserts[ $assertName ] )
-    ;
-    
-    if ( !$hasVal ) {
-    
-      $ex = new MapFilter_TreePattern_Asserts_MissingPropertyException ();
-      throw $ex->setProperty ( 'value', $assertName );
-    }
-    
-    return $this->_asserts[ $assertName ][ self::VALUE ];
-  }
 }

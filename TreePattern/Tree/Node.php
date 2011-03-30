@@ -44,50 +44,61 @@ abstract class MapFilter_TreePattern_Tree_Node extends
     MapFilter_TreePattern_Tree
 {
 
-  public function __construct () {
-  
-    $this->setSetters ( Array (
-        'content' => 'setContent'
-    ) );
-  
-    parent::__construct ();
-  }
+    /**
+     * Instantiate
+     *
+     * @since   0.3
+     */
+    public function __construct()
+    {
+    
+        $this->setSetters(
+            Array(
+                'content' => 'setContent'
+            )
+        );
+    
+        parent::__construct();
+    }
 
-  /**
-   * Fluent Method; Set content.
-   *
-   * @since     0.3
-   *
-   * @param     Array           $content                A content to set.
-   *
-   * @return    MapFilter_TreePattern_Tree_Node
-   */
-  public function setContent ( Array $content ) {
-   
-    $this->content = $content;
-    return $this;
-  }
-  
-  /**
-   * Pick-up satisfaction results.
-   *
-   * @since     0.3
-   *
-   * @param     Array           $result
-   * @return    Array
-   */
-  public function pickUp ( Array $result ) {
-
-    if ( !$this->isSatisfied () ) return Array ();
-  
-    foreach ( $this->getContent () as $follower ) {
-
-      $result = array_merge (
-          $result,
-          $follower->pickUp ( $result )
-      );
+    /**
+     * Fluent Method; Set content.
+     *
+     * @param Array $content A content to set.
+     *
+     * @return    MapFilter_TreePattern_Tree_Node
+     *
+     * @since     0.3
+     */
+    public function setContent(Array $content)
+    {
+     
+        $this->content = $content;
+        return $this;
     }
     
-    return $result;
-  }
+    /**
+     * Pick-up satisfaction results.
+     *
+     * @param Array $result Existing results.
+     *
+     * @return    Array
+     *
+     * @since     0.3
+     */
+    public function pickUp(Array $result)
+    {
+
+        if (!$this->isSatisfied()) return Array();
+      
+        foreach ($this->getContent() as $follower) {
+
+            $result = array_merge(
+                $result,
+                $follower->pickUp($result)
+            );
+        }
+        
+        return $result;
+    }
 }

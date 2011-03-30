@@ -1,5 +1,7 @@
 <?php
 /**
+ * Not exactly one follower
+ *
  * PHP Version 5.1.0
  *
  * This file is part of MapFilter package.
@@ -26,6 +28,8 @@
  */
 
 /**
+ * Not exactly one follower
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_NotExactlyOneFollowerException
@@ -40,22 +44,38 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "The '%s' node must have exactly one follower but %d given.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
-  
-  public function setNodeAndCount ( $node, $count ) {
-  
-    assert ( is_string ( $node ) );
-    assert ( is_int ( $count ) );
+    /**
+     * Instantiate using default values
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct(
+        $message = "The '%s' node must have exactly one follower but %d given.",
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    $this->message = sprintf ( $this->message, $node, $count );
+        parent::__construct($message, $code, $previous);
+    }
     
-    return $this;
-  }
+    /**
+     * Set node name and follower count
+     *
+     * @param String $node  Node name to set
+     * @param String $count Follower count
+     *
+     * @return MapFilter_TreePattern_NotExactlyOneFollowerException
+     */
+    public function setNodeAndCount($node, $count)
+    {
+    
+        assert(is_string($node));
+        assert(is_int($count));
+      
+        $this->message = sprintf($this->message, $node, $count);
+      
+        return $this;
+    }
 }

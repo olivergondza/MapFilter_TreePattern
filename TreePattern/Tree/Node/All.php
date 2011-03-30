@@ -44,33 +44,34 @@ final class MapFilter_TreePattern_Tree_Node_All extends
     MapFilter_TreePattern_Tree_Node
 {
 
-  /**
-   * Satisfy certain node type and let its followers to get satisfied.
-   *
-   * @since     0.4
-   *
-   * @param     Array|ArrayAccess               &$query         A query to filter.
-   * @param     MapFilter_TreePattern_Asserts   $asserts        Asserts.
-   *
-   * @return    Bool                    Satisfied or not.
-   *
-   * Satisfy the node just if there are no unsatisfied follower.  Finding
-   * unsatisfied follower may stop mapping since there is no way to satisfy
-   * parent by any further potentially satisfied follower.
-   */
-  public function satisfy ( &$query, MapFilter_TreePattern_Asserts $asserts ) {
-  
-    assert ( MapFilter_TreePattern::isMap ( $query ) );
-
-    foreach ( $this->getContent () as $follower ) {
-      
-      if ( !$follower->satisfy ( $query, $asserts ) ) {
-
-        $this->setAssertValue ( $asserts );
-        return $this->satisfied = FALSE;
-      }
-    }
+    /**
+     * Satisfy certain node type and let its followers to get satisfied.
+     *
+     * @param Array|ArrayAccess             &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     *
+     * @return Bool Satisfied or not.
+     *
+     * Satisfy the node just if there are no unsatisfied follower.  Finding
+     * unsatisfied follower may stop mapping since there is no way to satisfy
+     * parent by any further potentially satisfied follower.
+     *
+     * @since 0.4
+     */
+    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    {
     
-    return $this->satisfied = TRUE;
-  }
+        assert(MapFilter_TreePattern::isMap($query));
+
+        foreach ($this->getContent() as $follower) {
+        
+            if (!$follower->satisfy($query, $asserts)) {
+
+                $this->setAssertValue($asserts);
+                return $this->satisfied = false;
+            }
+        }
+      
+        return $this->satisfied = true;
+    }
 }

@@ -44,28 +44,29 @@ final class MapFilter_TreePattern_Tree_Node_Opt extends
     MapFilter_TreePattern_Tree_Node
 {
 
-  /**
-   * Satisfy certain node type and let its followers to get satisfied.
-   *
-   * @since     0.4
-   *
-   * @param     Array|ArrayAccess               &$query         A query to filter.
-   * @param     MapFilter_TreePattern_Asserts   $asserts        Asserts.
-   *
-   * @return    Bool                    Satisfied or not.
-   *
-   * That node is always satisfied.  Thus satisfy MUST be mapped on ALL
-   * followers.
-   */
-  public function satisfy ( &$query, MapFilter_TreePattern_Asserts $asserts ) {
-  
-    assert ( MapFilter_TreePattern::isMap ( $query ) );
-
-    foreach ( $this->getContent () as $follower ) {
+    /**
+     * Satisfy certain node type and let its followers to get satisfied.
+     *
+     * @param Array|ArrayAccess             &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     *
+     * @return Bool Satisfied or not.
+     *
+     * That node is always satisfied.  Thus satisfy MUST be mapped on ALL
+     * followers.
+     *
+     * @since 0.4
+     */
+    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    {
     
-      $follower->satisfy ( $query, $asserts );
-    }
+        assert(MapFilter_TreePattern::isMap($query));
 
-    return $this->satisfied = TRUE;
-  }
+        foreach ($this->getContent() as $follower) {
+      
+            $follower->satisfy($query, $asserts);
+        }
+
+        return $this->satisfied = true;
+    }
 }

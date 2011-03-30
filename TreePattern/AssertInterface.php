@@ -44,12 +44,12 @@ interface MapFilter_TreePattern_AssertInterface extends
     MapFilter_PatternInterface
 {
 
-  /**
-   * Return validation asserts that was raised during latest filtering process.
-   *
-   * @since     0.5
-   *
-   * @return    MapFilter_TreePattern_Asserts           Filtering asserts.
-   */
-  public function getAsserts ();
+    /**
+     * Return validation asserts that was raised during latest filtering process.
+     *
+     * @since     0.5
+     *
+     * @return    MapFilter_TreePattern_Asserts           Filtering asserts.
+     */
+    public function getAsserts();
 }

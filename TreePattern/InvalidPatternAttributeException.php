@@ -1,5 +1,7 @@
 <?php
 /**
+ * Missing attribute exception.
+ *
  * PHP Version 5.1.0
  *
  * This file is part of MapFilter package.
@@ -26,6 +28,8 @@
  */
 
 /**
+ * Missing attribute exception.
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_InvalidPatternAttributeException
@@ -40,22 +44,38 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "Node '%s' has no attribute like '%s'.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
-  
-  public function setNodeAndAttribute ( $node, $attribute ) {
-  
-    assert ( is_string ( $node ) );
-    assert ( is_string ( $attribute ) );
+    /**
+     * Instantiatate using default values.
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct (
+        $message = "Node '%s' has no attribute like '%s'.",
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    $this->message = sprintf ( $this->message, $node, $attribute );
+        parent::__construct($message, $code, $previous);
+    }
     
-    return $this;
-  }
+    /**
+     * Set node and attribute name.
+     *
+     * @param String $node      Node name
+     * @param String $attribute Attribute name
+     *
+     * @return MapFilter_TreePattern_InvalidPatternAttributeException
+     */
+    public function setNodeAndAttribute($node, $attribute)
+    {
+    
+        assert(is_string($node));
+        assert(is_string($attribute));
+        
+        $this->message = sprintf($this->message, $node, $attribute);
+        
+        return $this;
+    }
 }

@@ -48,128 +48,139 @@ implements
     MapFilter_TreePattern_Tree_Leaf_Interface
 {
 
-  /**
-   * Instantiate alias attribute
-   *
-   * @since     $NEXT$
-   */
-  public function __construct () {
-  
-    $this->setSetters ( Array (
-        'content' => 'setContent',
-    ) );
-
-    parent::__construct ();
-  }
-
-  /**
-   * Fluent Method; Set content.
-   *
-   * @since     $NEXT$
-   *
-   * @param     Array           $content                A content to set.
-   *
-   * @return    MapFilter_TreePattern_Tree_Node
-   */
-  public function setContent ( Array $content ) {
-   
-    foreach ( $content as $follower ) {
+    /**
+     * Instantiate alias attribute
+     *
+     * @since     $NEXT$
+     */
+    public function __construct()
+    {
     
-      $class = get_class ( $follower );
+        $this->setSetters(
+            Array(
+                'content' => 'setContent',
+            )
+        );
+
+        parent::__construct();
+    }
+
+    /**
+     * Fluent Method; Set content.
+     *
+     * @param Array $content A content to set.
+     *
+     * @return MapFilter_TreePattern_Tree_Node
+     *
+     * @since $NEXT$
+     */
+    public function setContent(Array $content)
+    {
+     
+        foreach ($content as $follower) {
+        
+            $class = get_class($follower);
+        
+            if ($class === 'MapFilter_TreePattern_Tree_Leaf_Attr') continue;
+          
+            $ex = new MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException;
+            throw $ex->setFollower($class);
+        }
+       
+        $this->content = $content;
+        return $this;
+    }
+
+    /**
+     * Satisfy certain node type and let its followers to get satisfied.
+     *
+     * @param Array|ArrayAccess             &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     *
+     * @return Bool Satisfied or not.
+     *
+     * @since $NEXT$
+     */
+    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    {
     
-      if ( $class === 'MapFilter_TreePattern_Tree_Leaf_Attr' ) continue;
+        $satisfied = parent::satisfy($query, $asserts);
+        
+        if (!$satisfied) return false;
+        
+        $value = $this->_removeAttr($query);
+        
+        $this->_satisfyFollowers($query, $asserts, $value);
+
+        return $satisfied;
+    }
+    
+    /**
+     * Satisfy aliases using original attribute value
+     *
+     * @param Array|ArrayAccess &$query   A query to filter.
+     * @param Array             &$asserts Asserts.
+     * @param Mixed             $value    A value of alias attribute.
+     *
+     * @return null
+     *
+     * @since $NEXT$
+     */
+    private function _satisfyFollowers(&$query, &$asserts, $value)
+    {
+    
+        foreach ($this->content as $follower) {
       
-      $ex = new MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException ();
-      throw $ex->setFollower ( $class );
+            $query[ $follower->getAttribute() ] = $value;
+            $follower->satisfy($query, $asserts);
+        }
     }
-   
-    $this->content = $content;
-    return $this;
-  }
+    
+    /**
+     * Remove attribute and fetch its value.
+     *
+     * @param Array|ArrayAccess &$query A query to filter.
+     *
+     * @return Mixed Attribute that was removed.
+     *
+     * @since $NEXT$
+     */
+    private function _removeAttr(&$query)
+    {
 
-  /**
-   * Satisfy certain node type and let its followers to get satisfied.
-   *
-   * @since     $NEXT$
-   *
-   * @param     Array|ArrayAccess               &$query         A query to filter.
-   * @param     MapFilter_TreePattern_Asserts      $asserts        Asserts.
-   *
-   * @return    Bool                    Satisfied or not.
-   */
-  public function satisfy ( &$query, MapFilter_TreePattern_Asserts $asserts ) {
-  
-    $satisfied = parent::satisfy ( $query, $asserts );
-    
-    if ( !$satisfied ) return FALSE;
-    
-    $value = $this->removeAttr ( $query );
-    
-    $this->satisfyFollowers ( $query, $asserts, $value );
+        $attr = $this->attribute->getAttribute();
 
-    return $satisfied;
-  }
-  
-  /**
-   * Satisfy aliases using original attribute value
-   *
-   * @since     $NEXT$
-   *
-   * @param     Array|ArrayAccess       &$query         A query to filter.
-   * @param     Array                   &$asserts       Asserts.
-   * @param     Mixed                   $value          A value of alias attribute.
-   */
-  private function satisfyFollowers ( &$query, &$asserts, $value ) {
-  
-    foreach ( $this->content as $follower ) {
-    
-      $query[ $follower->getAttribute () ] = $value;
-      $follower->satisfy ( $query, $asserts );
+        if (array_key_exists($attr, $query)) {
+
+            $value = $query[ $attr ];
+            unset ($query[ $attr ]);
+        }
+
+        return $value;
     }
-  }
-  
-  /**
-   * Remove attribute and fetch its value.
-   *
-   * @since     $NEXT$
-   *
-   * @param     Array|ArrayAccess       &$query         A query to filter.
-   *
-   * @return    Mixed                   Attribute that was removed.
-   */
-  private function removeAttr ( &$query ) {
+    
+    /**
+     * Pick-up satisfaction results.
+     *
+     * @param Array $result Existing result
+     *
+     * @return Array
+     *
+     * @since $NEXT$
+     */
+    public function pickUp(Array $result)
+    {
 
-    $attr = $this->attribute->getAttribute ();
+        if (!$this->isSatisfied()) return Array();
 
-    if ( array_key_exists ( $attr, $query ) ) {
+        foreach ($this->getContent() as $follower) {
 
-      $value = $query[ $attr ];
-      unset ( $query[ $attr ] );
+            $result = array_merge(
+                $result,
+                $follower->pickUp($result)
+            );
+        }
+
+        return $result;
     }
-
-    return $value;
-  }
-  
-  /**
-   * Pick-up satisfaction results.
-   *
-   * @since     $NEXT$
-   *
-   * @param     Array           $result
-   * @return    Array
-   */
-  public function pickUp ( Array $result ) {
-
-    if ( !$this->isSatisfied () ) return Array ();
-
-    foreach ( $this->getContent () as $follower ) {
-
-      $result = array_merge (
-          $result,
-          $follower->pickUp ( $result )
-      );
-    }
-
-    return $result;
-  }
 }

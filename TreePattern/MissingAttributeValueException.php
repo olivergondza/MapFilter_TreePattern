@@ -1,5 +1,7 @@
 <?php
 /**
+ * Missing attribute value exception
+ *
  * PHP Version 5.1.0
  *
  * This file is part of MapFilter package.
@@ -26,6 +28,8 @@
  */
 
 /**
+ * Missing attribute value exception
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @class    MapFilter_TreePattern_MissingAttributeValueException
@@ -40,12 +44,19 @@ extends
     UnexpectedValueException
 {
 
-  public function __construct (
-      $message = "There is an Attr node without attribute value specified.",
-      $code = 0,
-      Exception $previous = NULL
-  ) {
-  
-    parent::__construct ( $message, $code, $previous );
-  }
+    /**
+     * Instantiate using default values
+     *
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
+     */
+    public function __construct (
+        $message = "There is an Attr node without attribute value specified.",
+        $code = 0,
+        Exception $previous = null
+    ) {
+    
+        parent::__construct($message, $code, $previous);
+    }
 }
