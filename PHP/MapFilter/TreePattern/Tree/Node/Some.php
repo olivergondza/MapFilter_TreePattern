@@ -1,6 +1,6 @@
 <?php
 /**
- * Ancestor of pattern tree nodes.
+ * Some Pattern node.
  *
  * PHP Version 5.1.0
  *
@@ -27,78 +27,57 @@
  * @since    0.3
  */
 
-require_once 'PHP/TreePattern/Tree.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
 
 /**
- * Abstract class for pattern tree node.
+ * MapFilter pattern tree some node.
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node
+ * @class    MapFilter_TreePattern_Tree_Node_Some
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    0.3
  */
-abstract class MapFilter_TreePattern_Tree_Node extends
-    MapFilter_TreePattern_Tree
+final class MapFilter_TreePattern_Tree_Node_Some extends
+    MapFilter_TreePattern_Tree_Node
 {
 
     /**
-     * Instantiate
+     * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @since   0.3
+     * @param Array|ArrayAccess             &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     *
+     * @return Bool Satisfied or not.
+     *
+     * Satisfy the node when there is at least one satisfied follower.  Thus
+     * satisfy MUST be mapped on ALL followers.
+     *
+     * @since 0.4
      */
-    public function __construct()
-    {
-    
-        $this->setSetters(
-            Array(
-                'content' => 'setContent'
-            )
-        );
-    
-        parent::__construct();
-    }
-
-    /**
-     * Fluent Method; Set content.
-     *
-     * @param Array $content A content to set.
-     *
-     * @return    MapFilter_TreePattern_Tree_Node
-     *
-     * @since     0.3
-     */
-    public function setContent(Array $content)
-    {
-     
-        $this->content = $content;
-        return $this;
-    }
-    
-    /**
-     * Pick-up satisfaction results.
-     *
-     * @param Array $result Existing results.
-     *
-     * @return    Array
-     *
-     * @since     0.3
-     */
-    public function pickUp(Array $result)
+    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
 
-        if (!$this->isSatisfied()) return Array();
-      
+        assert(MapFilter_TreePattern::isMap($query));
+
+        $satisfiedFollowers = Array();
         foreach ($this->getContent() as $follower) {
 
-            $result = array_merge(
-                $result,
-                $follower->pickUp($result)
-            );
+            $satisfiedFollowers[] = $follower->satisfy($query, $asserts);
         }
         
-        return $result;
+        $this->satisfied = in_array(
+            true,
+            $satisfiedFollowers
+        );
+        
+        if ($this->satisfied) {
+          
+            $this->setAssertValue($asserts);
+        }
+        
+        return $this->satisfied;
     }
 }

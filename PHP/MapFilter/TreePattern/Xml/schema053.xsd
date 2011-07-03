@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="patterns">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="pattern" type="pattern" minOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="pattern" type="pattern" />
+  
+  <xs:complexType name="pattern">
+    <xs:sequence>
+      <xs:group ref="common_elements" minOccurs="1" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:group name="common_elements">
+    <xs:choice>
+      <xs:element name="all" type="common" />
+      <xs:element name="one" type="common" />
+      <xs:element name="opt" type="common" />
+      <xs:element name="some" type="common" />
+      <xs:element name="attr" type="attr" />
+      <xs:element name="key_attr" type="key_attr" />
+      <xs:element name="node_attr" type="common" />
+      <xs:element name="alias" type="alias" />
+    </xs:choice>
+  </xs:group>
+  
+  <xs:complexType name="common">
+    <xs:sequence>
+      <xs:group ref="common_elements" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attributeGroup ref="common_attrs" />
+  </xs:complexType>
+
+  <xs:complexType name="attr">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attributeGroup ref="common_attrs" />
+        <xs:attributeGroup ref="attr_attrs" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="alias">
+    <xs:sequence>
+      <xs:element name="attr" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="attr" type="xs:string" />
+    <xs:attributeGroup ref="common_attrs" />
+    <xs:attributeGroup ref="attr_attrs" />
+  </xs:complexType>
+
+  <xs:complexType name="key_attr">
+    <xs:sequence>
+      <xs:group ref="key_attr_elements" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="forValue" type="xs:string" use="required" />
+    <xs:attributeGroup ref="common_attrs" />
+    <xs:attributeGroup ref="attr_attrs" />
+  </xs:complexType>
+  
+  <xs:group name="key_attr_elements">
+    <xs:choice>
+      <xs:element name="all" type="common" />
+      <xs:element name="one" type="common" />
+      <xs:element name="opt" type="common" />
+      <xs:element name="some" type="common" />
+      <xs:element name="attr" type="attr" />
+      <xs:element name="key_attr" type="key_attr" />
+      <xs:element name="node_attr" type="common" />
+      <xs:element name="alias" type="alias" />
+    </xs:choice>
+  </xs:group>
+
+  <!-- List of attributes allowed for every node inside pattern -->
+  <xs:attributeGroup name="common_attrs">
+    <xs:attribute name="flag" type="xs:string" />
+    <xs:attribute name="assert" type="xs:string" />
+  </xs:attributeGroup>
+  
+  <!-- List of attributes allowed for attr like element -->
+  <xs:attributeGroup name="attr_attrs">
+    <xs:attribute name="valuePattern" type="xs:string" />
+    <xs:attribute name="valueReplacement" type="xs:string" />
+    <xs:attribute name="validationAssert" type="xs:string" />
+    <xs:attribute name="existenceAssert" type="xs:string" />
+    <xs:attribute name="validationDefault" type="xs:string" />
+    <xs:attribute name="existenceDefault" type="xs:string" />
+  </xs:attributeGroup>
+
+</xs:schema>

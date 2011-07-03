@@ -27,9 +27,9 @@
  * @since    0.4
  */
 
-require_once 'PHP/TreePattern/Tree/Leaf/Attr.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr.php';
 
-require_once 'PHP/TreePattern/Tree/Attribute.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Attribute.php';
 
 /**
  * MapFilter pattern tree KeyAttribute node.

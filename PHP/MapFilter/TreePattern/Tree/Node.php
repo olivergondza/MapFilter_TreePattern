@@ -1,6 +1,6 @@
 <?php
 /**
- * Opt Pattern node.
+ * Ancestor of pattern tree nodes.
  *
  * PHP Version 5.1.0
  *
@@ -27,46 +27,78 @@
  * @since    0.3
  */
 
-require_once 'PHP/TreePattern/Tree/Node.php';
+require_once 'PHP/MapFilter/TreePattern/Tree.php';
 
 /**
- * MapFilter pattern tree opt node.
+ * Abstract class for pattern tree node.
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node_Opt
+ * @class    MapFilter_TreePattern_Tree_Node
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    0.3
  */
-final class MapFilter_TreePattern_Tree_Node_Opt extends
-    MapFilter_TreePattern_Tree_Node
+abstract class MapFilter_TreePattern_Tree_Node extends
+    MapFilter_TreePattern_Tree
 {
 
     /**
-     * Satisfy certain node type and let its followers to get satisfied.
+     * Instantiate
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
-     *
-     * @return Bool Satisfied or not.
-     *
-     * That node is always satisfied.  Thus satisfy MUST be mapped on ALL
-     * followers.
-     *
-     * @since 0.4
+     * @since   0.3
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function __construct()
     {
     
-        assert(MapFilter_TreePattern::isMap($query));
+        $this->setSetters(
+            Array(
+                'content' => 'setContent'
+            )
+        );
+    
+        parent::__construct();
+    }
 
-        foreach ($this->getContent() as $follower) {
+    /**
+     * Fluent Method; Set content.
+     *
+     * @param Array $content A content to set.
+     *
+     * @return    MapFilter_TreePattern_Tree_Node
+     *
+     * @since     0.3
+     */
+    public function setContent(Array $content)
+    {
+     
+        $this->content = $content;
+        return $this;
+    }
+    
+    /**
+     * Pick-up satisfaction results.
+     *
+     * @param Array $result Existing results.
+     *
+     * @return    Array
+     *
+     * @since     0.3
+     */
+    public function pickUp(Array $result)
+    {
+
+        if (!$this->isSatisfied()) return Array();
       
-            $follower->satisfy($query, $asserts);
-        }
+        foreach ($this->getContent() as $follower) {
 
-        return $this->satisfied = true;
+            $result = array_merge(
+                $result,
+                $follower->pickUp($result)
+            );
+        }
+        
+        return $result;
     }
 }

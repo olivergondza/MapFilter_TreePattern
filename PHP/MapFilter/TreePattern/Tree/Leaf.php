@@ -29,11 +29,11 @@
  * @since    0.4
  */
 
-require_once 'PHP/TreePattern/Tree.php';
+require_once 'PHP/MapFilter/TreePattern/Tree.php';
 
-require_once 'PHP/TreePattern/Tree/Leaf/Interface.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Interface.php';
 
-require_once 'PHP/TreePattern/Tree/Leaf/InvalidDepthIndicatorException.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/InvalidDepthIndicatorException.php';
 
 /**
  * Abstract class for pattern tree leaf.

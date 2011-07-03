@@ -27,7 +27,7 @@
  * @since    0.5.3
  */
 
-require_once 'PHP/TreePattern/Tree/Node.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
 
 /**
  * MapFilter pattern tree NodeAttr node.

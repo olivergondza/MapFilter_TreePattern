@@ -263,7 +263,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    * @expectedExceptionMessage  String could not be parsed as XML
    */
   public static function testEmpty () {
-  
-    MapFilter_TreePattern_Xml::load ( '' );
+
+    MapFilter_TreePattern::load ( '' );
   }
 }

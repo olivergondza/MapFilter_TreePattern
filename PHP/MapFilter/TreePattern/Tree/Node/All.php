@@ -1,6 +1,6 @@
 <?php
 /**
- * Some Pattern node.
+ * All Pattern node.
  *
  * PHP Version 5.1.0
  *
@@ -24,23 +24,23 @@
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    0.4
  */
 
-require_once 'PHP/TreePattern/Tree/Node.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
 
 /**
- * MapFilter pattern tree some node.
+ * MapFilter pattern tree all node.
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node_Some
+ * @class    MapFilter_TreePattern_Tree_Node_All
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    0.4
  */
-final class MapFilter_TreePattern_Tree_Node_Some extends
+final class MapFilter_TreePattern_Tree_Node_All extends
     MapFilter_TreePattern_Tree_Node
 {
 
@@ -52,32 +52,26 @@ final class MapFilter_TreePattern_Tree_Node_Some extends
      *
      * @return Bool Satisfied or not.
      *
-     * Satisfy the node when there is at least one satisfied follower.  Thus
-     * satisfy MUST be mapped on ALL followers.
+     * Satisfy the node just if there are no unsatisfied follower.  Finding
+     * unsatisfied follower may stop mapping since there is no way to satisfy
+     * parent by any further potentially satisfied follower.
      *
      * @since 0.4
      */
     public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
-
+    
         assert(MapFilter_TreePattern::isMap($query));
 
-        $satisfiedFollowers = Array();
         foreach ($this->getContent() as $follower) {
+        
+            if (!$follower->satisfy($query, $asserts)) {
 
-            $satisfiedFollowers[] = $follower->satisfy($query, $asserts);
+                $this->setAssertValue($asserts);
+                return $this->satisfied = false;
+            }
         }
-        
-        $this->satisfied = in_array(
-            true,
-            $satisfiedFollowers
-        );
-        
-        if ($this->satisfied) {
-          
-            $this->setAssertValue($asserts);
-        }
-        
-        return $this->satisfied;
+      
+        return $this->satisfied = true;
     }
 }

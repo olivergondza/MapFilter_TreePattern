@@ -29,22 +29,22 @@
 
 /** @cond       PROGRAMMER */
 
-require_once 'PHP/TreePattern/Tree/Node/All.php';
-require_once 'PHP/TreePattern/Tree/Node/Opt.php';
-require_once 'PHP/TreePattern/Tree/Node/One.php';
-require_once 'PHP/TreePattern/Tree/Node/Some.php';
-require_once 'PHP/TreePattern/Tree/Node/NodeAttr.php';
-require_once 'PHP/TreePattern/Tree/Leaf/KeyAttr.php';
-require_once 'PHP/TreePattern/Tree/Leaf/AliasAttr.php';
-require_once 'PHP/TreePattern/Tree/Leaf/Attr.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/All.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/Opt.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/One.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/Some.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/NodeAttr.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/KeyAttr.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/AliasAttr.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr.php';
 
-require_once 'PHP/TreePattern/InvalidPatternElementException.php';
-require_once 'PHP/TreePattern/NotExactlyOneFollowerException.php';
-require_once 'PHP/TreePattern/InvalidPatternAttributeException.php';
-require_once 'PHP/TreePattern/MissingAttributeValueException.php';
+require_once 'PHP/MapFilter/TreePattern/InvalidPatternElementException.php';
+require_once 'PHP/MapFilter/TreePattern/NotExactlyOneFollowerException.php';
+require_once 'PHP/MapFilter/TreePattern/InvalidPatternAttributeException.php';
+require_once 'PHP/MapFilter/TreePattern/MissingAttributeValueException.php';
 
-require_once 'PHP/TreePattern/Xml/LibXmlException.php';
-require_once 'PHP/TreePattern/Xml/InvalidXmlContentException.php';
+require_once 'PHP/MapFilter/TreePattern/Xml/LibXmlException.php';
+require_once 'PHP/MapFilter/TreePattern/Xml/InvalidXmlContentException.php';
 
 
 /** @endcond */
@@ -168,7 +168,7 @@ class MapFilter_TreePattern_Xml
          * Use compact data allocation | remove blank nodes | translate HTML entities
          */
         $options = LIBXML_COMPACT & LIBXML_NOBLANKS & LIBXML_NOENT;
-        
+
         /** Try to load and raise proper exception accordingly */
         try {
         

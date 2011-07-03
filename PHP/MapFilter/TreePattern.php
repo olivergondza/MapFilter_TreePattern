@@ -29,16 +29,16 @@
 
 require_once 'PHP/MapFilter/InvalidStructureException.php';
 
-require_once 'PHP/TreePattern/Asserts.php';
-require_once 'PHP/TreePattern/Flags.php';
+require_once 'PHP/MapFilter/TreePattern/Asserts.php';
+require_once 'PHP/MapFilter/TreePattern/Flags.php';
 
-require_once 'PHP/TreePattern/AssertInterface.php';
-require_once 'PHP/TreePattern/FlagInterface.php';
-require_once 'PHP/TreePattern/ResultInterface.php';
+require_once 'PHP/MapFilter/TreePattern/AssertInterface.php';
+require_once 'PHP/MapFilter/TreePattern/FlagInterface.php';
+require_once 'PHP/MapFilter/TreePattern/ResultInterface.php';
 
-require_once 'PHP/TreePattern/InvalidPatternNameException.php';
+require_once 'PHP/MapFilter/TreePattern/InvalidPatternNameException.php';
 
-require_once 'PHP/TreePattern/Xml.php';
+require_once 'PHP/MapFilter/TreePattern/Xml.php';
 
 /**
  * Class to load and hold Pattern tree.
@@ -271,7 +271,7 @@ class MapFilter_TreePattern implements
     
         if ($this->_flags === null) {
       
-            $this->_flags = new MapFilter_TreePattern_Flags();
+            $this->_flags = new MapFilter_TreePattern_Flags;
             $this->_tempTree->pickUpFlags($this->_flags);
         }
         

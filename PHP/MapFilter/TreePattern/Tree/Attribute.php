@@ -27,8 +27,8 @@
  * @since    $NEXT$
  */
 
-require_once 'PHP/TreePattern/Tree/Replacer.php';
-require_once 'PHP/TreePattern/Tree/Matcher.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Replacer.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Matcher.php';
 
 /**
  * Pattern attribute.

@@ -27,9 +27,9 @@
  * @since    0.3
  */
 
-require_once 'PHP/TreePattern/Tree/Interface.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Interface.php';
 
-require_once 'PHP/TreePattern/Tree/Matcher.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Matcher.php';
 
 /**
  * Internal pattern tree.

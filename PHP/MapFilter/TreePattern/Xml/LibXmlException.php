@@ -47,7 +47,7 @@ extends
     /**
      * LibXml error to Exception mapping.
      *
-     * @since     0.1
+     * @since     $NEXT$
      *
      * @var       Array           $_errorToException
      */

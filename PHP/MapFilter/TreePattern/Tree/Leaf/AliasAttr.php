@@ -27,9 +27,9 @@
  * @since    $NEXT$
  */
 
-require_once 'PHP/TreePattern/Tree/Leaf/Attr.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr.php';
 
-require_once 'PHP/TreePattern/Tree/Leaf/AliasAttr/DisallowedFollowerException.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/AliasAttr/DisallowedFollowerException.php';
 
 /**
  * MapFilter pattern tree attribute leaf.

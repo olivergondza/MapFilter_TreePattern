@@ -3,12 +3,12 @@
 error_reporting ( ( E_ALL | E_STRICT ) );
 
 set_include_path (
-    dirname ( dirname ( dirname ( __FILE__ ) ) )
+    dirname ( dirname ( __FILE__ ) )
     . PATH_SEPARATOR . get_include_path ()
 );
 
-define ( 'PHP_TREEPATTERN_DIR', 'PHP/TreePattern' );
-define ( 'PHP_TREEPATTERN_CLASS', 'PHP/TreePattern.php' );
+define ( 'PHP_TREEPATTERN_DIR', 'PHP/MapFilter/TreePattern' );
+define ( 'PHP_TREEPATTERN_CLASS', 'PHP/MapFilter/TreePattern.php' );
 
 define ( 'PHP_TREEPATTERN_TEST_DIR', dirname ( __FILE__ ) );
 

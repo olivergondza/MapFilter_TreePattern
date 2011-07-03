@@ -4,10 +4,5 @@ user/doc/
 *Coverage
 *Profiled
 *.log
-*phpCompatibilityFilter/
+*phpCompatibilityFilter*
 *.tgz
-package.xml
-Interface.php
-NullPattern.php
-InvalidStructureException.php
-PatternInterface.php

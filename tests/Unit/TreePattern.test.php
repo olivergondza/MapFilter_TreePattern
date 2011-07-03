@@ -266,7 +266,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     );
   }
   
-  public static function provideCompareStringAngFileLoad () {
+  public static function provideCompareStringAndFileLoad () {
   
     return Array (
         Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION ),
@@ -284,9 +284,9 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @dataProvider      provideCompareStringAngFileLoad
+   * @dataProvider      provideCompareStringAndFileLoad
    */
-  public static function testCompareStringAngFileLoad ( $url ) {
+  public static function testCompareStringAndFileLoad ( $url ) {
 
     $fromFile = MapFilter_TreePattern::fromFile ( $url );
     $fromString = MapFilter_TreePattern::load (

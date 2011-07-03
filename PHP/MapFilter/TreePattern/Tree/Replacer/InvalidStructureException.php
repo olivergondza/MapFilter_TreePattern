@@ -1,6 +1,6 @@
 <?php
 /**
- * All Pattern node.
+ * Class to handle invalid structure exception.
  *
  * PHP Version 5.1.0
  *
@@ -18,60 +18,62 @@
  *                              
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- *
+ *                              
  * @category Pear
  * @package  MapFilter_TreePattern
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.4
+ * @since    $NEXT$
  */
-
-require_once 'PHP/TreePattern/Tree/Node.php';
 
 /**
- * MapFilter pattern tree all node.
+ * Class to handle invalid structure exception.
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node_All
+ * @class    MapFilter_InvalidStructureException
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.4
+ * @since    $NEXT$
  */
-final class MapFilter_TreePattern_Tree_Node_All extends
-    MapFilter_TreePattern_Tree_Node
+class
+    MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
+extends
+    UnexpectedValueException
 {
 
     /**
-     * Satisfy certain node type and let its followers to get satisfied.
+     * Instantiate using default values
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
-     *
-     * @return Bool Satisfied or not.
-     *
-     * Satisfy the node just if there are no unsatisfied follower.  Finding
-     * unsatisfied follower may stop mapping since there is no way to satisfy
-     * parent by any further potentially satisfied follower.
-     *
-     * @since 0.4
+     * @param String    $message  Exception message
+     * @param String    $code     Exception code
+     * @param Exception $previous Previous exception
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function __construct(
+        $message = "Invalid structure of replacement. '%s' given. /<regex>/<replacement>/<modifiers> expected",
+        $code = 0,
+        Exception $previous = null
+    ) {
+    
+        parent::__construct($message, $code, $previous);
+    }
+    
+    /**
+     * Set original input.
+     *
+     * @param String $input Original input
+     * 
+     * @return MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
+     */
+    public function setInput($input)
     {
     
-        assert(MapFilter_TreePattern::isMap($query));
-
-        foreach ($this->getContent() as $follower) {
-        
-            if (!$follower->satisfy($query, $asserts)) {
-
-                $this->setAssertValue($asserts);
-                return $this->satisfied = false;
-            }
-        }
+        assert(is_string($input));
       
-        return $this->satisfied = true;
+        $this->message = sprintf($this->message, $input);
+      
+        return $this;
     }
 }
