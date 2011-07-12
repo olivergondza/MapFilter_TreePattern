@@ -51,58 +51,6 @@ interface MapFilter_TreePattern_Tree_Interface
     public function &getContent();
     
     /**
-     * Set valueFilter.
-     *
-     * A Fluent Method.
-     *
-     * @param String $valueFilter A valueFilter to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with valueFilter.
-     *
-     * @since     0.4
-     */
-    public function setValueFilter($valueFilter);
-    
-    /**
-     * Set Flag.
-     *
-     * A Fluent Method.
-     *
-     * @param String $flag A flag to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with flag.
-     *
-     * @since     0.4
-     */
-    public function setFlag($flag);
-    
-    /**
-     * Set Assert.
-     *
-     * A Fluent Method.
-     *
-     * @param String $assert An assert to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with flag.
-     *
-     * @since     0.4
-     */
-    public function setAssert($assert);
-    
-    /**
-     * Set attachPattern.
-     *
-     * A Fluent Method.
-     *
-     * @param String $attachPattern A pattern name to attach.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with attachPattern.
-     *
-     * @since     0.5.3
-     */
-    public function setAttachPattern($attachPattern);
-    
-    /**
      * Set TreePattern.
      *
      * @param MapFilter_TreePattern $pattern A pattern to set.
@@ -116,7 +64,7 @@ interface MapFilter_TreePattern_Tree_Interface
     /**
      * Create new tree instance.
      *
-     * Setting is done by Fluent Methods.
+     * @param MapFilter_TreePattern_Tree_Builder $builder A builder to use.
      *
      * @return    MapFilter_TreePattern_Tree_Interface
      *
@@ -125,7 +73,7 @@ interface MapFilter_TreePattern_Tree_Interface
      *
      * @since     0.4
      */
-    public function __construct();
+    public function __construct(MapFilter_TreePattern_Tree_Builder $builder);
     
     /**
      * Make copy of the node.

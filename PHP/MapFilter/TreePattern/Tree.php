@@ -130,129 +130,24 @@ abstract class MapFilter_TreePattern_Tree implements
     /**
      * Create new tree instance.
      *
-     * @since     0.3
-     *
-     * Setting is done by Fluent Methods.
+     * @param MapFilter_TreePattern_Tree_Builder $builder A bulder to use.
      *
      * @return    MapFilter_TreePattern_Tree_Interface
+     *
+     * @since     0.3
      */
-    public function __construct()
+    public function __construct(MapFilter_TreePattern_Tree_Builder $builder)
     {
     
-        $this->setSetters(
-            Array(
-                'flag' => 'setFlag',
-                'assert' => 'setAssert',
-                'attachPattern' => 'setAttachPattern',
-                'forValue' => 'setValueFilter',
-            )
-        );
-      
-        $this->_valueFilter = new MapFilter_TreePattern_Tree_Matcher;
-    }
+        $this->flag = $builder->flag;
+        $this->existenceAssert = $builder->existenceAssert;
+        $this->validationAssert = $builder->validationAssert;
+        $this->attachPattern = $builder->attachPattern;
+        $this->content = $builder->content;
     
-    /**
-     * Set setter methods alloved for node.
-     *
-     * @param Array $setters Array of attrs and its setters.
-     *
-     * @return  MapFilter_TreePattern_Tree_Interface
-     *
-     * @since     $NEXT$
-     */
-    protected function setSetters(Array $setters)
-    {
-    
-        $this->setters += $setters;
-        return $this;
-    }
-    
-    /**
-     * Get alloved setters.
-     *
-     * @since     $NEXT$
-     *
-     * @return    Array
-     */
-    public function getSetters()
-    {
-    
-        return $this->setters;
-    }
-    
-    /**
-     * Set Flag.
-     *
-     * @param String $flag A flag to set.
-     *
-     * @return    MapFilter_TreePattern_Tree_Interface    New pattern with flag.
-     *
-     * @since     0.4
-     */
-    public function setFlag($flag)
-    {
-    
-        assert(is_string($flag));
-    
-        $this->flag = $flag;
-        return $this;
-    }
-    
-    /**
-     * Set Assert.
-     *
-     * @param String $assert An assert to set.
-     *
-     * @return    MapFilter_TreePattern_Tree_Interface    New pattern with flag.
-     *
-     * @since     0.4
-     */
-    public function setAssert($assert)
-    {
-    
-        assert(is_string($assert));
-    
-        $this->existenceAssert = $this->validationAssert = $assert;
-        return $this;
-    }
-    
-    /**
-     * Set attachPattern.
-     *
-     * @param String $attachPattern A pattern name to attach.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with attachPattern.
-     *
-     * @since     0.5.3
-     */
-    public function setAttachPattern($attachPattern)
-    {
-    
-        assert(is_string($attachPattern));
-      
-        $this->attachPattern = $attachPattern;
-        return $this;
-    }
-
-    /**
-     * Set valueFilter.
-     *
-     * @param String $valueFilter A valueFilter to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with valueFilter.
-     *
-     * @since     0.4
-     */
-    public function setValueFilter($valueFilter)
-    {
-
-        assert(is_string($valueFilter));
-
         $this->_valueFilter = new MapFilter_TreePattern_Tree_Matcher(
-            $valueFilter
+            $builder->valueFilter
         );
-
-        return $this;
     }
     
     /**
@@ -279,7 +174,6 @@ abstract class MapFilter_TreePattern_Tree implements
     {
     
         $this->attachPattern();
-    
         return $this->content;
     }
     

@@ -1,6 +1,6 @@
 <?php
 /**
- * Ancestor of pattern tree nodes.
+ * Class to load Pattern tree from xml.
  *
  * PHP Version 5.1.0
  *
@@ -18,54 +18,77 @@
  *                              
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * 
  * @category Pear
  * @package  MapFilter_TreePattern
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/All.php';
+
+require_once 'PHP/MapFilter/TreePattern/Xml/InvalidXmlContentException.php';
 
 /**
- * Abstract class for pattern tree node.
+ * Tree All element builder class
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node
+ * @class    MapFilter_TreePattern_Tree_Leaf_Attr_Builder
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    $NEXT$
  */
-abstract class MapFilter_TreePattern_Tree_Node extends
-    MapFilter_TreePattern_Tree
+class MapFilter_TreePattern_Tree_Leaf_Attr_Builder extends
+    MapFilter_TreePattern_Tree_Leaf_Builder
 {
 
     /**
-     * Pick-up satisfaction results.
+     * Set text content for the element
      *
-     * @param Array $result Existing results.
+     * @param String $name Attribute name.
      *
-     * @return    Array
+     * @return null
      *
-     * @since     0.3
+     * @since   $NEXT$
      */
-    public function pickUp(Array $result)
+    public function setTextContent($name)
     {
+    
+        $this->setAttr($name);
+    }
 
-        if (!$this->isSatisfied()) return Array();
-      
-        foreach ($this->getContent() as $follower) {
+    /**
+     * Set element content
+     *
+     * @param Array $content Content to set.
+     *
+     * @return null
+     *
+     * @since   $NEXT$
+     */
+    public function setContent(Array $content)
+    {
+    
+        throw new MapFilter_TreePattern_Xml_InvalidXmlContentException;
+    }
 
-            $result = array_merge(
-                $result,
-                $follower->pickUp($result)
-            );
-        }
-        
-        return $result;
+    /**
+     * Build tree element
+     *
+     * @return MapFilter_TreePattern_Tree_Leaf_Attr Tree Element
+     *
+     * @return null
+     *
+     * @ince    $NEXT$
+     */
+    public function build()
+    {
+    
+        return new MapFilter_TreePattern_Tree_Leaf_Attr($this);
     }
 }

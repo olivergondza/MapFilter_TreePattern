@@ -58,8 +58,8 @@ class MapFilter_TreePattern_Tree_Matcher
      *
      * Determine whether a string is sanitized regexp
      */
-    const SANITIZED_REGEXP =
-        '/^
+    const SANITIZED_REGEXP
+        = '/^
           ([^\\\\\s\da-zA-Z<>\{\}\(\)])   # Posible delimiters
           (?:(?!(?<!\\\\)\1).)*           # Delimiter has to be escaped
           (\1)

@@ -254,15 +254,15 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     ' );
 
     $assembled = new MapFilter ( $assembled, $query );
-
-    self::assertEquals (
-        $result,
-        $simple->fetchResult ()->getResults ()
-    );
     
     self::assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
+    );
+    
+    self::assertEquals (
+        $result,
+        $simple->fetchResult ()->getResults ()
     );
   }
   

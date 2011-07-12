@@ -159,6 +159,11 @@ class MapFilter_TreePattern_Tree_Attribute
     public function setAttribute($attribute)
     {
 
+        if (!$attribute) {
+        
+            throw new MapFilter_TreePattern_MissingAttributeValueException;
+        }
+
         $this->_attribute = $attribute;
         return $this;
     }
@@ -175,25 +180,6 @@ class MapFilter_TreePattern_Tree_Attribute
     {
     
         return $this->_attribute;
-    }
-    
-    /**
-     * Set default value.
-     *
-     * @param String $default A default value to set.
-     *
-     * @return    MapFilter_TreePattern_Tree_Attribute
-     * @see       setValidationDefault, setExistenceDefault
-     *
-     * @since     $NEXT$
-     */
-    public function setDefault($default)
-    {
-
-        return $this
-            ->setExistenceDefault($default)
-            ->setValidationDefault($default)
-        ;
     }
     
     /**

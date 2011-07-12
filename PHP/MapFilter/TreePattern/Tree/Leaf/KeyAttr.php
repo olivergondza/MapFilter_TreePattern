@@ -51,39 +51,6 @@ implements
 {
 
     /**
-     * Instantiate attribute
-     *
-     * @since $NEXT$
-     */
-    public function __construct()
-    {
-    
-        $this->setSetters(
-            Array(
-                'content' => 'setContent'
-            )
-        );
-    
-        parent::__construct();
-    }
-
-    /**
-     * Fluent Method; Set content.
-     *
-     * @param Array $content A content to set.
-     *
-     * @return self
-     *
-     * @since 0.5.2
-     */
-    public function setContent(Array $content)
-    {
-     
-        $this->content = $content;
-        return $this;
-    }
-
-    /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
      * @param Array|ArrayAccess             &$query  A query to filter.

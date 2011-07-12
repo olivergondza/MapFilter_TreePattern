@@ -49,49 +49,6 @@ implements
 {
 
     /**
-     * Instantiate alias attribute
-     *
-     * @since     $NEXT$
-     */
-    public function __construct()
-    {
-    
-        $this->setSetters(
-            Array(
-                'content' => 'setContent',
-            )
-        );
-
-        parent::__construct();
-    }
-
-    /**
-     * Fluent Method; Set content.
-     *
-     * @param Array $content A content to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Node
-     *
-     * @since $NEXT$
-     */
-    public function setContent(Array $content)
-    {
-     
-        foreach ($content as $follower) {
-        
-            $class = get_class($follower);
-        
-            if ($class === 'MapFilter_TreePattern_Tree_Leaf_Attr') continue;
-          
-            $ex = new MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException;
-            throw $ex->setFollower($class);
-        }
-       
-        $this->content = $content;
-        return $this;
-    }
-
-    /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
      * @param Array|ArrayAccess             &$query  A query to filter.

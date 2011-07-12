@@ -1,6 +1,6 @@
 <?php
 /**
- * Ancestor of pattern tree nodes.
+ * Class to load Pattern tree from xml.
  *
  * PHP Version 5.1.0
  *
@@ -18,54 +18,56 @@
  *                              
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * 
  * @category Pear
  * @package  MapFilter_TreePattern
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/KeyAttr.php';
 
 /**
- * Abstract class for pattern tree node.
+ * Tree All element builder class
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node
+ * @class    MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    $NEXT$
  */
-abstract class MapFilter_TreePattern_Tree_Node extends
-    MapFilter_TreePattern_Tree
+class MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder extends
+    MapFilter_TreePattern_Tree_Leaf_Attr_Builder
 {
 
     /**
-     * Pick-up satisfaction results.
+     * Fluent Method; Set content.
      *
-     * @param Array $result Existing results.
+     * @param Array $content A content to set.
      *
-     * @return    Array
+     * @return self
      *
-     * @since     0.3
+     * @since 0.5.2
      */
-    public function pickUp(Array $result)
+    public function setContent(Array $content)
     {
+    
+        $this->content = $content;
+    }
 
-        if (!$this->isSatisfied()) return Array();
-      
-        foreach ($this->getContent() as $follower) {
-
-            $result = array_merge(
-                $result,
-                $follower->pickUp($result)
-            );
-        }
-        
-        return $result;
+    /**
+     * Build tree element
+     *
+     * @return MapFilter_TreePattern_Tree_Leaf_KeyAttr Tree Element
+     */
+    public function build()
+    {
+    
+        return new MapFilter_TreePattern_Tree_Leaf_KeyAttr($this);
     }
 }

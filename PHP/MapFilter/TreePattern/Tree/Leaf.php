@@ -66,170 +66,24 @@ implements
     /**
      * Instantiate attribute
      *
+     * @param MapFilter_TreePattern_Tree_Builder $builder A builder to use.
+     *
      * @since     $NEXT$
      */
-    public function __construct()
+    public function __construct(MapFilter_TreePattern_Tree_Builder $builder)
     {
     
         $this->attribute = new MapFilter_TreePattern_Tree_Attribute;
-
-        $this->setSetters(
-            Array(
-                'attr' => 'setAttribute',
-                'default' => 'setDefault',
-                'existenceDefault' => 'setExistenceDefault',
-                'validationDefault' => 'setValidationDefault',
-                'valuePattern' => 'setValuePattern',
-                'valueReplacement' => 'setValueReplacement',
-                'existenceAssert' => 'setExistenceAssert',
-                'validationAssert' => 'setValidationAssert',
-                'iterator' => 'setIterator',
-            )
-        );
-
-        parent::__construct();
-    }
-    
-    /**
-     * Set attribute.
-     *
-     * A Fluent Method.
-     *
-     * @param String $attribute An attribute to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface A pattern with new attribute.
-     *
-     * @since     0.4
-     */
-    public function setAttribute($attribute)
-    {
-
-        $this->attribute->setAttribute($attribute);
-        return $this;
-    }
-    
-    /**
-     * Set default value.
-     *
-     * A Fluent Method.
-     *
-     * @param String $default A default value to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface A pattern with new default value.
-     *
-     * @since     0.4
-     */
-    public function setDefault($default)
-    {
-
-        $this->attribute->setDefault($default);
-        return $this;
-    }
-    
-    /**
-     * Set existence default value.
-     *
-     * A Fluent Method.
-     *
-     * @param String $existenceDefault A default value to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface A pattern with new default value.
-     *
-     * @since     $NEXT$
-     */
-    public function setExistenceDefault($existenceDefault)
-    {
-
-        $this->attribute->setExistenceDefault($existenceDefault);
-        return $this;
-    }
-    
-    /**
-     * Set validation default value.
-     *
-     * A Fluent Method.
-     *
-     * @param String $validationDefault A default value to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface A pattern with new default value.
-     *
-     * @since     $NEXT$
-     */
-    public function setValidationDefault($validationDefault)
-    {
-
-        $this->attribute->setValidationDefault($validationDefault);
-        return $this;
-    }
-    
-    /**
-     * Set valuePattern.
-     *
-     * A Fluent Method.
-     *
-     * @param String $valuePattern A valueFilter to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface A pattern with new valueFilter.
-     *
-     * @since     0.4
-     */
-    public function setValuePattern($valuePattern)
-    {
-
-        $this->attribute->setValuePattern($valuePattern);
-        return $this;
-    }
-    
-    /**
-     * Set valueReplacement.
-     *
-     * A Fluent Method.
-     *
-     * @param String $valueReplacement A valueReplacement to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface
-     *          A pattern with new valueReplacement.
-     *
-     * @since     $NEXT$
-     */
-    public function setValueReplacement($valueReplacement)
-    {
-
-        $this->attribute->setValueReplacement($valueReplacement);
-        return $this;
-    }
-    
-    /**
-     * Set existenceAssert.
-     *
-     * @param String $existenceAssert An existenceAssert to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with existenceAssert.
-     *
-     * @since     $NEXT$
-     */
-    public function setExistenceAssert($existenceAssert)
-    {
-    
-        $this->existenceAssert = $existenceAssert;
-        return $this;
-    }
-    
-    /**
-     * Set validationAssert.
-     *
-     * @param String $validationAssert A validationAssert to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface
-     *          New pattern with validationAssert.
-     *
-     * @since     $NEXT$
-     */
-    public function setValidationAssert($validationAssert)
-    {
-    
-        $this->validationAssert = $validationAssert;
-        return $this;
+        $this->attribute->setAttribute($builder->name);
+        $this->attribute->setExistenceDefault($builder->existenceDefault);
+        $this->attribute->setValidationDefault($builder->validationDefault);
+        $this->attribute->setValuePattern($builder->valuePattern);
+        $this->attribute->setValueReplacement($builder->valueReplacement);
+        $this->attribute->setIterator($builder->iterator);
+        $this->existenceAssert = $builder->existenceAssert;
+        $this->validationAssert = $builder->validationAssert;
+        
+        parent::__construct($builder);
     }
     
     /**
@@ -247,44 +101,6 @@ implements
     }
 
     /**
-     * Set iterator.
-     *
-     * A Fluent Method.
-     *
-     * @param String $iterator An iterator value to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with iterator.
-     * @throws MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException
-     *
-     * @since     0.5.2
-     */
-    public function setIterator($iterator)
-    {
-
-        assert(is_string($iterator) || is_int($iterator));
-
-        $wordToLevel = Array (
-            self::ITERATOR_VALUE_YES => 1,
-            self::ITERATOR_VALUE_NO => 0,
-        );
-        
-        if (array_key_exists($iterator, $wordToLevel)) {
-        
-            $iterator = $wordToLevel[ $iterator ];
-        }
-
-        if (!is_numeric($iterator)) {
-        
-            $ex = new MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException;
-            throw $ex->setValue($iterator);
-        }
-
-        $this->attribute->setIterator((Int) $iterator);
-
-        return $this;
-    }
-
-    /**
      * Pick-up satisfaction results.
      *
      * @param Array $result Existing results
@@ -296,11 +112,10 @@ implements
     public function pickUp(Array $result)
     {
 
-        if (!$this->isSatisfied()) return Array ();
+        if (!$this->isSatisfied()) return Array();
 
-        $result[ $this->attribute->getAttribute() ]
-            = $this->attribute->getValue()
-        ;
+        $attrName = $this->attribute->getAttribute();
+        $result[ $attrName ] = $this->attribute->getValue();
 
         foreach ($this->getContent() as $follower) {
 

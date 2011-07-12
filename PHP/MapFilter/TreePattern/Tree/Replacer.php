@@ -48,8 +48,8 @@ class MapFilter_TreePattern_Tree_Replacer
      *
      * @since     $NEXT$
      */
-    const REPLACEMENT_REGEXP =
-        '/^s?
+    const REPLACEMENT_REGEXP
+        = '/^s?
           (?P<search>
             ([^\\\\\s\da-zA-Z<>\{\}\(\)]) # Possible delimiters
             (?:(?!(?<!\\\\)\2).)*         # Delimiter has to be escaped

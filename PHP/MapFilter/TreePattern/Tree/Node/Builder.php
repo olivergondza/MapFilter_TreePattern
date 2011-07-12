@@ -1,6 +1,6 @@
 <?php
 /**
- * Ancestor of pattern tree nodes.
+ * Class to load Pattern tree from xml.
  *
  * PHP Version 5.1.0
  *
@@ -18,54 +18,30 @@
  *                              
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- *
+ * 
  * @category Pear
  * @package  MapFilter_TreePattern
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
 
 /**
- * Abstract class for pattern tree node.
+ * Tree All element builder class
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node
+ * @class    MapFilter_TreePattern_Tree_Node_Builder
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    0.3
+ * @since    $NEXT$
  */
-abstract class MapFilter_TreePattern_Tree_Node extends
-    MapFilter_TreePattern_Tree
+abstract class MapFilter_TreePattern_Tree_Node_Builder extends
+    MapFilter_TreePattern_Tree_Builder
 {
-
-    /**
-     * Pick-up satisfaction results.
-     *
-     * @param Array $result Existing results.
-     *
-     * @return    Array
-     *
-     * @since     0.3
-     */
-    public function pickUp(Array $result)
-    {
-
-        if (!$this->isSatisfied()) return Array();
-      
-        foreach ($this->getContent() as $follower) {
-
-            $result = array_merge(
-                $result,
-                $follower->pickUp($result)
-            );
-        }
-        
-        return $result;
-    }
 }

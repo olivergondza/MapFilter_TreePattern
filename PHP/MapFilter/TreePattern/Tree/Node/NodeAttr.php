@@ -75,63 +75,19 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
 
     /**
      * Instantiate
+     *
+     * @param MapFilter_TreePattern_Tree_Builder $builder A builder to use.
      * 
      * @since 0.5.3
      */
-    public function __construct()
+    public function __construct(MapFilter_TreePattern_Tree_Builder $builder)
     {
     
-        $this->setSetters(
-            Array(
-                'attr' => 'setAttribute',
-                'iterator' => 'setIterator',
-                'content' => 'setContent',
-            )
-        );
-        
-        parent::__construct();
-    }
-
-    /**
-     * Set attribute.
-     *
-     * A Fluent Method.
-     *
-     * @param String $attribute An attribute to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface A pattern with new attribute.
-     *
-     * @since 0.4
-     */
-    public function setAttribute($attribute)
-    {
+        parent::__construct($builder);
     
-        assert(is_string($attribute));
-      
-        $this->_attribute = $attribute;
-      
-        return $this;
-    }
-
-    /**
-     * Set iterator.
-     *
-     * A Fluent Method.
-     *
-     * @param String $iterator An iterator value to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Interface New pattern with iterator.
-     *
-     * @since 0.5.2
-     */
-    public function setIterator($iterator)
-    {
-    
-        assert(is_string($iterator));
-      
-        $this->_iterator = $iterator;
-      
-        return $this;
+        $this->_attribute = $builder->name;
+        $this->_iterator = $builder->iterator;
+        $this->setContent($builder->content);
     }
 
     /**
@@ -146,7 +102,11 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
     public function setContent(Array $content)
     {
 
-        self::_assertNonSingleFollower($content);
+        if (!$this->attachPattern) {
+
+            self::_assertNonSingleFollower($content);
+        }
+        
         $this->content = $content;
         $this->_follower = array_shift($content);
 
@@ -175,9 +135,7 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
         }
 
         $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-        throw $ex->setNodeAndCount(
-            'node_attr', $contentCount
-        );
+        throw $ex->setNodeAndCount('node_attr', $contentCount);
     }
 
     /**

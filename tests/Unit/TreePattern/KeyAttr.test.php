@@ -13,14 +13,15 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
     PHPUnit_Framework_TestCase
 {
   
-  /** Obtain an attribute from KeyAttr node*/
+  /** Obtain an attribute from KeyAttr node */
   public static function testKeyAttrAttribute () {
   
     $attr = 'An attribute';
     
-    $node = new MapFilter_TreePattern_Tree_Leaf_KeyAttr ();
+    $builder = new MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder;
+    $builder->setAttr ( $attr );
     
-    $node->setAttribute ( $attr );
+    $node = new MapFilter_TreePattern_Tree_Leaf_KeyAttr ($builder);
     
     self::assertEquals (
         $attr,

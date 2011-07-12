@@ -307,9 +307,8 @@ class MapFilter_TreePattern implements
     ) {
     
         $pattern->setTreePattern($this);
-        $this->_sidePatterns[ self::MAIN_PATTERN ]
-            = $this->_patternTree = clone $pattern
-        ;
+        $this->_patternTree = clone $pattern;
+        $this->_sidePatterns[ self::MAIN_PATTERN ] = $this->_patternTree;
       
         return $this;
     }
@@ -378,9 +377,9 @@ class MapFilter_TreePattern implements
     private function _cleanup()
     {
     
-        $this->_results = null;
         $this->_asserts = new MapFilter_TreePattern_Asserts;
         $this->_flags = null;
+        $this->_results = null;
         $this->_tempTree = null;
     }
     
@@ -397,19 +396,18 @@ class MapFilter_TreePattern implements
      */
     public function parse($query)
     {
-    
+
         if (!self::isMap($query)) {
-      
+
             throw new MapFilter_InvalidStructureException;
         }
-    
+
         $this->_cleanup();
-    
+
         $this->_tempTree = clone $this->_patternTree;
-    
         $this->_tempTree->satisfy($query, $this->_asserts);   
     }
-    
+
     /**
      * Determine whether the parameter is a Map.
      *

@@ -27,16 +27,14 @@
  * @since    0.5.3
  */
 
-/** @cond       PROGRAMMER */
-
-require_once 'PHP/MapFilter/TreePattern/Tree/Node/All.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Node/Opt.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Node/One.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Node/Some.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Node/NodeAttr.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/KeyAttr.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/AliasAttr.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/All/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/Opt/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/One/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/Some/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Node/NodeAttr/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/KeyAttr/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/AliasAttr/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr/Builder.php';
 
 require_once 'PHP/MapFilter/TreePattern/InvalidPatternElementException.php';
 require_once 'PHP/MapFilter/TreePattern/NotExactlyOneFollowerException.php';
@@ -45,9 +43,6 @@ require_once 'PHP/MapFilter/TreePattern/MissingAttributeValueException.php';
 
 require_once 'PHP/MapFilter/TreePattern/Xml/LibXmlException.php';
 require_once 'PHP/MapFilter/TreePattern/Xml/InvalidXmlContentException.php';
-
-
-/** @endcond */
 
 /**
  * Class to load  Pattern tree.
@@ -81,6 +76,61 @@ class MapFilter_TreePattern_Xml
      */
     const DATA_IS_STRING = false;
     
+    /** @cond     INTERNAL */
+
+    /**
+     * Valid XML structure tag.
+     * @{
+     */
+    const PATTERN = 'pattern';
+    const PATTERNS = 'patterns';
+    
+    const NODE_ALL = 'all';
+    const NODE_ONE = 'one';
+    const NODE_OPT = 'opt';
+    const NODE_KEYATTR = 'key_attr';
+    const NODE_ATTR = 'attr';
+    const NODE_SOME = 'some';
+    const NODE_NODEATTR = 'node_attr';
+    const NODE_ALIAS = 'alias';
+    /**@}*/
+    
+    /**
+     * Node name Object type mapping.
+     *
+     * @since     0.4
+     *
+     * @var       Array           $_tagToNode
+     */
+    private static $_tagToNode = Array(
+        self::NODE_ALL => 'MapFilter_TreePattern_Tree_Node_All_Builder',
+        self::NODE_ONE => 'MapFilter_TreePattern_Tree_Node_One_Builder',
+        self::NODE_OPT => 'MapFilter_TreePattern_Tree_Node_Opt_Builder',
+        self::NODE_SOME => 'MapFilter_TreePattern_Tree_Node_Some_Builder',
+        self::NODE_NODEATTR => 'MapFilter_TreePattern_Tree_Node_NodeAttr_Builder',
+        self::NODE_KEYATTR => 'MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder',
+        self::NODE_ATTR => 'MapFilter_TreePattern_Tree_Leaf_Attr_Builder',
+        self::NODE_ALIAS => 'MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder',
+    );
+    
+    /**
+     * Valid XML attribute.
+     */
+    const ATTR_NAME = 'name';
+    
+    /**
+     * Array key for attributes
+     *
+     * @since     0.5.3
+     */
+    const ATTR_ARRAY_KEY = '@attributes';
+    
+    /** @endcond */
+    
+    private $_xmlElement = null;
+    private $_mainTreeElement = null;
+    private $_sideTreeElements = Array ();
+    
     /**
      * Simple Factory Method to load data from string.
      *
@@ -97,19 +147,9 @@ class MapFilter_TreePattern_Xml
       
         assert(is_string($xmlSource));
         
-        $xmlElement = self::loadXml(
-            $xmlSource,
-            self::DATA_IS_STRING
+        return self::_build(
+            self::_loadXml($xmlSource, self::DATA_IS_STRING)
         );
-
-        $sideTrees = self::unwrap($xmlElement);
-        $sideTrees = array_map(
-            'MapFilter_TreePattern_Xml::parseTree',
-            $sideTrees
-        );
-
-        $xmlElement = self::parseTree($xmlElement);
-        return new MapFilter_TreePattern($xmlElement, $sideTrees);
     }
 
     /**
@@ -128,19 +168,9 @@ class MapFilter_TreePattern_Xml
     
         assert(is_string($url));
       
-        $xmlElement = self::loadXml(
-            $url,
-            self::DATA_IS_URL
+        return self::_build(
+            self::_loadXml($url, self::DATA_IS_URL)
         );
-        
-        $sideTrees = self::unwrap($xmlElement);
-        $sideTrees = array_map(
-            'MapFilter_TreePattern_Xml::parseTree',
-            $sideTrees
-        );
-
-        $xmlElement = self::parseTree($xmlElement);
-        return new MapFilter_TreePattern($xmlElement, $sideTrees);
     }
     
     /**
@@ -154,7 +184,7 @@ class MapFilter_TreePattern_Xml
      *
      * @since     0.1
      */
-    public static function loadXml($xml, $isUrl)
+    private static function _loadXml($xml, $isUrl)
     {
     
         assert(is_string($xml));
@@ -185,118 +215,223 @@ class MapFilter_TreePattern_Xml
 
         return $xmlElement;
     }
-
-    /** @cond     INTERNAL */
-
-    /**
-     * Valid XML structure tag.
-     * @{
-     */
-    const PATTERN = 'pattern';
-    const PATTERNS = 'patterns';
-    
-    const NODE_ALL = 'all';
-    const NODE_ONE = 'one';
-    const NODE_OPT = 'opt';
-    const NODE_KEYATTR = 'key_attr';
-    const NODE_ATTR = 'attr';
-    const NODE_SOME = 'some';
-    const NODE_NODEATTR = 'node_attr';
-    const NODE_ALIAS = 'alias';
-    /**@}*/
     
     /**
-     * Node name Object type mapping.
+     * Build pattern from xmlElement
      *
-     * @since     0.4
+     * @param SimpleXmlElement $xmlElement An input element
      *
-     * @var       Array           $_tagToNode
+     * @return MapFilter_TreePattern
+     *
+     * @since $NEXT$
      */
-    private static $_tagToNode = Array(
-        self::NODE_ALL => 'MapFilter_TreePattern_Tree_Node_All',
-        self::NODE_ONE => 'MapFilter_TreePattern_Tree_Node_One',
-        self::NODE_OPT => 'MapFilter_TreePattern_Tree_Node_Opt',
-        self::NODE_SOME => 'MapFilter_TreePattern_Tree_Node_Some',
-        self::NODE_NODEATTR => 'MapFilter_TreePattern_Tree_Node_NodeAttr',
-        self::NODE_KEYATTR => 'MapFilter_TreePattern_Tree_Leaf_KeyAttr',
-        self::NODE_ATTR => 'MapFilter_TreePattern_Tree_Leaf_Attr',
-        self::NODE_ALIAS => 'MapFilter_TreePattern_Tree_Leaf_AliasAttr',
-    );
-    
-    /**
-     * Valid XML attribute.
-     */
-    const ATTR_NAME = 'name';
-    
-    /** @endcond */
-    
-    /**
-     * Determines whether a tag is valid.
-     *
-     * @param String $tag A tag name to test.
-     *
-     * @return    Bool            Valid or not
-     *
-     * @since     0.4
-     */
-    private static function _isValidTag($tag)
+    private static function _build(SimpleXmlElement $xmlElement)
     {
     
-        assert(is_string($tag));
-    
-        return array_key_exists($tag, self::$_tagToNode);
+        $parser = new self($xmlElement);
+        return $parser->_parse();
     }
     
     /**
-     * Throw when there are some leftover attributes.
+     * Instantiate Xml deserializer
      *
-     * @param String $tagName    A tag with attributes.
-     * @param Array  $attributes Leftover attributes.
+     * @param SimpleXmlElement $xmlElement An input element
      *
-     * @return  null
+     * @return MapFilter_TreePattern_Xml
      *
-     * @throws    MapFilter_TreePattern_InvalidPatternAttributeException
+     * @since $NEXT$
+     */
+    private function __construct(SimpleXmlElement $xmlElement)
+    {
+    
+        $this->_xmlElement = $xmlElement;
+    }
+    
+    /**
+     * Create Pattern instance out of xmlEleemnt
+     *
+     * @return MapFilter_TreePattern
+     *
+     * @since $NEXT$
+     */
+    private function _parse ()
+    {
+
+        $this->_unwrap();
+
+        $sideTrees = array_map(
+            Array($this, '_parseTree'),
+            $this->_sideTreeElements
+        );
+
+        $mainTree = $this->_parseTree($this->_mainTreeElement);
+        
+        return new MapFilter_TreePattern($mainTree, $sideTrees);
+    }
+    
+    /**
+     * Identify main and side patterns in the input
+     *
+     * @return    SimpleXmlElement   Unwrapped element.
+     * @throws    MapFilter_TreePattern_NotExactlyOneFollowerException
+     *            MapFilter_TreePattern_InvalidPatternElementException
      *
      * @since     0.4
      */
-    private static function _assertLeftoverAttrs($tagName, Array $attributes)
+    private function _unwrap()
+    {
+     
+        $tagName = $this->_xmlElement->getName();
+       
+        /** Tree is not wrapped */
+        if ($this->_isValidTag($tagName)) {
+        
+            $this->_mainTreeElement = $this->_xmlElement;
+        } elseif ($tagName === self::PATTERN) {
+        
+            $this->_unwrapPattern();
+        } elseif ($tagName === self::PATTERNS) {
+        
+            $this->_unwrapMultiplePatterns();
+        } else {
+
+            $ex = new MapFilter_TreePattern_InvalidPatternElementException;
+            throw $ex->setName($tagName);
+        }
+        
+        $this->_xmlElement = null;
+    }
+    
+    /**
+     * Unwrap single pattern
+     *
+     * @since   $NEXT$
+     *
+     * @return  null
+     */
+    private function _unwrapPattern()
     {
     
-        assert(is_string($tagName));
-    
-        if ($attributes != Array()) {
+        $count = (Int) $this->_xmlElement->count();
+        if ( $count !== 1) {
         
-            $attrs = array_keys($attributes);
+            $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
+            throw $ex->setNodeAndCount(self::PATTERN, $count);
+        }
+        
+        $this->_mainTreeElement = $this->_xmlElement->children();
+    }
+    
+    /**
+     * Unwrap multiple patterns
+     *
+     * @single  $NEXT$
+     *
+     * @return  null
+     */
+    private function _unwrapMultiplePatterns()
+    {
+    
+        if ($this->_xmlElement->count() < 1) {
+        
+            $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
+            throw $ex->setNodeAndCount(self::PATTERN, 0);
+        }
+      
+        $this->_sideTreeElements = Array();
+        foreach (iterator_to_array($this->_xmlElement, false) as $child) {
+          
+            $count = (Int) $child->count();
+            if ( $count !== 1) {
 
-            $ex = new MapFilter_TreePattern_InvalidPatternAttributeException;
-            throw $ex->setNodeAndAttribute($tagName, $attrs[ 0 ]);
+                $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
+                throw $ex->setNodeAndCount(self::PATTERN, $count);
+            }
+
+            $this->_store($child);
         }
     }
     
     /**
-     * Obtain and remove attribute from an array of attributes.
+     * Get value of element name attribute
      *
-     * @param Array  &$attributes Array of all provided attributes.
-     * @param String $attribute   Attribute to obtain.
+     * @param SimpleXmlElement $child A child to examine.
      *
-     * @return    String|false            Attribute name or false.
+     * @return String|Null Element name
+     *
+     * @since   $NEXT$
+     */
+    private function _getElementName (SimpleXmlElement $child)
+    {
+    
+        $attrs = (Array) $child->attributes();
+    
+        $attributes = $this->_getAttributes($child);
+    
+        return (array_key_exists(self::ATTR_NAME, $attributes))
+            ? $attributes[ self::ATTR_NAME ]
+            : MapFilter_TreePattern::MAIN_PATTERN
+        ;
+    }
+    
+    /**
+     * Store pattern
+     *
+     * @param SimpleXmlElement $child A pattern to store.
+     *
+     * @return null
+     *
+     * @since   $NEXT$
+     */
+    private function _store (SimpleXmlElement $child)
+    {
+    
+        $name = $this->_getElementName($child);
+    
+        $isMain = $name === MapFilter_TreePattern::MAIN_PATTERN;
+        if ( $isMain ) {
+        
+            $this->_mainTreeElement = $child->children();
+        } else {
+        
+            $this->_sideTreeElements[ $name ] = $child->children();
+        }
+    }
+    
+    /**
+     * Parse serialized pattern tree to its object implementation.
+     *
+     * @param SimpleXmlElement $xml An element to parse.
+     *
+     * @return    MapFilter_TreePattern_Tree      Parsed pattern.
+     * @throws    MapFilter_TreePattern_MissingAttributeValueException
      *
      * @since     0.4
      */
-    private static function _getAttribute(Array &$attributes, $attribute)
+    private function _parseTree(SimpleXmlElement $xml)
     {
-    
-        assert(is_string($attribute));
-    
-        if (!array_key_exists($attribute, $attributes)) return false;
 
-        /** Fetch and delete */
-        $value = (String) $attributes[ $attribute ];
-        unset ($attributes[ $attribute]);
-    
-        return $value;
+        $tagName = $this->_validateTagName($xml);
+
+        /** Parse followers recursively */
+        $followers = array_map(
+            Array($this, '_parseTree'),
+            iterator_to_array($xml->children(), false)
+        );
+
+        $node = $this->_createNodeBuilder($tagName, $followers);
+
+        $node = $this->_parseTagAttributes($xml, $node, $tagName);
+        
+        $textContent =trim((String) $xml[ 0 ]);
+        if ((Bool) strlen($textContent)) {
+
+            $node->setTextContent($textContent);
+        }
+
+        return $node->build();
     }
-    
+
     /**
      * Get tag name.
      *
@@ -308,64 +443,32 @@ class MapFilter_TreePattern_Xml
      *
      * @since     0.4
      */
-    private static function _validateTagName(SimpleXmlElement $xml)
+    private function _validateTagName(SimpleXmlElement $xml)
     {
     
         $tagName = $xml->getName();
 
-        if (self::_isValidTag($tagName)) return $tagName;
+        if ($this->_isValidTag($tagName)) return $tagName;
 
         $ex = new MapFilter_TreePattern_InvalidPatternElementException;
         throw $ex->setName($tagName);
     }
-
-    /**
-     * Array key for attributes
-     *
-     * @since     0.5.3
-     */
-    const ATTR_ARRAY_KEY = '@attributes';
     
     /**
-     * Parse attributes of existing tag.
+     * Determines whether a tag is valid.
      *
-     * @param SimpleXmlEmement           $xml     A node to parse.
-     * @param MapFilter_TreePattern_Tree $node    A pattern node to fill.
-     * @param String                     $tagName A name of tag.
+     * @param String $tag A tag name to test.
      *
-     * @return    MapFilter_TreePattern_Tree      A pattern node with attributes.
+     * @return    Bool            Valid or not
      *
      * @since     0.4
      */
-    private static function _parseTagAttributes(
-        SimpleXmlElement $xml,
-        MapFilter_TreePattern_Tree $node,
-        $tagName
-    ) {
+    private function _isValidTag($tag)
+    {
     
-        assert(is_string($tagName));
-      
-        /** Obtain all attributes and set them using a bunch of soft setters */
-        $attrs = (Array) $xml->attributes();
-        $attributes = array_key_exists(self::ATTR_ARRAY_KEY, $attrs)
-            ? $attrs[self::ATTR_ARRAY_KEY]
-            : Array()
-        ;
-        
-        foreach ($node->getSetters() as $attr => $setter) {
-
-            /** Reset loop if attribute does not exist */
-            $attrValue = self::_getAttribute($attributes, $attr);
-
-            if ($attrValue === false) continue;
-
-            $node = call_user_func(Array($node, $setter), $attrValue);
-        }
-
-        /** Unset attributes and make sure that none of them left over */
-        self::_assertLeftoverAttrs($tagName, $attributes);
-
-        return $node;
+        assert(is_string($tag));
+    
+        return array_key_exists($tag, self::$_tagToNode);
     }
     
     /**
@@ -379,159 +482,77 @@ class MapFilter_TreePattern_Xml
      *
      * @since     0.4
      */
-    private static function _createTreeNode($tagName, Array $followers)
+    private function _createNodeBuilder($tagName, Array $followers)
     {
     
         assert(is_string($tagName));
       
         /** Instantiate pattern node */
         $class = self::$_tagToNode[ $tagName ];
-        $node = new $class();
+        $node = new $class;
 
         if ($followers === Array()) return $node;
 
-        if (!array_key_exists('content', $node->getSetters())) {
-
-            $ex = new MapFilter_TreePattern_Xml_InvalidXmlContentException;
+        try {
+        
+            $node->setContent($followers);
+        } catch (MapFilter_TreePattern_Xml_InvalidXmlContentException $ex) {
+        
             throw $ex->setNodeName($tagName);
         }
-        
-        $node->setContent($followers);
 
         return $node;
     }
     
     /**
-     * Parse serialized pattern tree to its object implementation.
+     * Parse attributes of existing tag.
      *
-     * @param SimpleXmlElement $xml An element to parse.
+     * @param SimpleXmlEmement           $xml         A node to parse.
+     * @param MapFilter_TreePattern_Tree $nodeBuilder A pattern node to fill.
+     * @param String                     $tagName     A name of tag.
      *
-     * @return    MapFilter_TreePattern_Tree      Parsed pattern.
-     * @throws    MapFilter_TreePattern_MissingAttributeValueException
+     * @return    MapFilter_TreePattern_Tree      A pattern node with attributes.
      *
      * @since     0.4
      */
-    public static function parseTree(SimpleXmlElement $xml)
-    {
-
-        $tagName = self::_validateTagName($xml);
-
-        /** Parse followers recursively */
-        $followers = array_map(
-            'self::parseTree',
-            iterator_to_array($xml->children(), false)
-        );
-
-        $node = self::_createTreeNode($tagName, $followers);
-
-        $node = self::_parseTagAttributes($xml, $node, $tagName);
-
-        /** Attr node can have attribute in tag body so special check is needed. */
-        if (get_class($node) === 'MapFilter_TreePattern_Tree_Leaf_Attr') {
-
-            $alreadySet =(Bool)($node->getAttribute());
-
-            $available =(Bool) strlen((String) $xml[ 0 ]);
-
-            if (!$alreadySet && !$available) {
-
-                throw new MapFilter_TreePattern_MissingAttributeValueException;
-            }
-
-            if ($available) {
-
-                $node->setAttribute(trim((String) $xml[ 0 ]));
-            }
-        }
-
-        return $node;
-    }
+    private function _parseTagAttributes(
+        SimpleXmlElement $xml,
+        MapFilter_TreePattern_Tree_Builder $nodeBuilder,
+        $tagName
+    ) {
     
-    /**
-     * Unwrap not necessary \<pattern\> tags from very beginning and end of tree.
-     *
-     * @param SimpleXmlElement &$xmlElement An element to unwrap.
-     *
-     * @return    SimpleXmlElement   Unwrapped element.
-     * @throws    MapFilter_TreePattern_NotExactlyOneFollowerException
-     *            MapFilter_TreePattern_InvalidPatternElementException
-     *
-     * @since     0.4
-     */
-    public static function unwrap(SimpleXmlElement &$xmlElement)
-    {
-     
-        $tagName = $xmlElement->getName();
-       
-        /** Tree is not wrapped */
-        if (self::_isValidTag($tagName)) return Array();
-
-        /** Unwrap pattern tag */
-        if ($tagName === self::PATTERN) {
+        assert(is_string($tagName));
+      
+        $attributes = $this->_getAttributes($xml);
+        foreach ($attributes as $attrName => $attrVal) {
         
-            if ($xmlElement->count() !== 1) {
-            
-                $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-                throw $ex->setNodeAndCount(
-                    self::PATTERN, (Int) $xmlElement->count()
-                );
-            }
-
-            $xmlElement = $xmlElement->children();
-
-            return Array();
-        }
-
-        /** Unwrap patterns tag */
-        if ($tagName === self::PATTERNS) {
-        
-            if ($xmlElement->count() < 1) {
-            
-                $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-                throw $ex->setNodeAndCount(self::PATTERN, 0);
-            }
+            try {
+  
+                $method = 'set' . ucfirst($attrName);
+                $nodeBuilder->$method ( $attrVal );
+            } catch (MapFilter_TreePattern_InvalidPatternAttributeException $ex) {
           
-            $sidePatterns = Array();
-            foreach (iterator_to_array($xmlElement, false) as $child) {
-              
-                if ($child->count() !== 1) {
-
-                    $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-                    throw $ex->setNodeAndCount(
-                        self::PATTERN, (Int) $child->count()
-                    );
-                }
-
-                $attrs =(Array) $child->attributes();
-
-                $name = (
-                    array_key_exists(self::ATTR_ARRAY_KEY, $attrs)
-                    && array_key_exists(
-                        self::ATTR_NAME, $attrs[ self::ATTR_ARRAY_KEY ]
-                    )
-                 )
-                    ? $attrs[self::ATTR_ARRAY_KEY][ self::ATTR_NAME ]
-                    : false
-                ;
-
-                $isMain = $name === false
-                    || $name === MapFilter_TreePattern::MAIN_PATTERN
-                ;
-
-                if ( $isMain ) {
-                
-                    $xmlElement = $child->children();
-                } else {
-                
-                    $sidePatterns[ $name ] = $child->children();
-                }
+                throw $ex->setNodeAndAttribute($tagName, $attrName);
             }
-            
-            return $sidePatterns;
         }
 
-        /** Unknown tag */
-        $ex = new MapFilter_TreePattern_InvalidPatternElementException;
-        throw $ex->setName($tagName);
+        return $nodeBuilder;
+    }
+    
+    /**
+     * Get Element attributes
+     *
+     * @param SimpleXmlElement $element An element to examine
+     *
+     * @return Array
+     */
+    private function _getAttributes(SimpleXmlElement $element)
+    {
+    
+        $attrs = (Array) $element->attributes();
+        return array_key_exists(self::ATTR_ARRAY_KEY, $attrs)
+            ? $attrs[ self::ATTR_ARRAY_KEY ]
+            : Array()
+        ;
     }
 }
