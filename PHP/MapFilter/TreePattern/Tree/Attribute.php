@@ -413,12 +413,7 @@ class MapFilter_TreePattern_Tree_Attribute
             return $valid;
         }
         
-        if ( !is_array($valueCandidate)
-            && !($valueCandidate instanceof Traversable)
-        ) {
-
-            return false;
-        }
+        if (!MapFilter_TreePattern::isIterator($valueCandidate)) return false;
 
         $values = Array();
         foreach ($valueCandidate as $singleValueCandidate) {
@@ -445,14 +440,9 @@ class MapFilter_TreePattern_Tree_Attribute
      */
     private function _validateScalarValue(&$valueCandidate)
     {
-    
-        if ( is_array($valueCandidate)
-            || $valueCandidate instanceof Traversable
-        ) {
-        
-            return false;
-        }
-      
+
+        if (MapFilter_TreePattern::isIterator($valueCandidate)) return false;
+
         $fits = $this->_valuePattern->match((String)$valueCandidate);
         
         if (!$fits) return false;
@@ -464,7 +454,7 @@ class MapFilter_TreePattern_Tree_Attribute
             );
         }
         
-        return $fits;
+        return true;
     }
 
     /**
