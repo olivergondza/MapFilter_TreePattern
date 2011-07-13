@@ -19,7 +19,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    * @expectedException MapFilter_TreePattern_InvalidPatternNameException
    * @expectedExceptionMessage  Pattern 'NoSuchPattern' can not be attached.
    */
-  public static function testWrongPatternAttachment () {
+  public function testWrongPatternAttachment () {
   
     $pattern = '
         <pattern>
@@ -40,7 +40,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    * @expectedException MapFilter_TreePattern_NotExactlyOneFollowerException
    * @expectedExceptionMessage  The 'node_attr' node must have exactly one follower but 2 given.
    */
-  public static function testMultipleFollower () {
+  public function testMultipleFollower () {
   
     $pattern = '
       <pattern>
@@ -59,7 +59,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    * @expectedException MapFilter_TreePattern_NotExactlyOneFollowerException
    * @expectedExceptionMessage  The 'node_attr' node must have exactly one follower but 0 given.
    */
-  public static function testNoFollower () {
+  public function testNoFollower () {
   
     $pattern = '
     <pattern>
@@ -78,7 +78,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     $filter->fetchResult ();
   }
   
-  public static function provideAssertAndFlags () {
+  public function provideAssertAndFlags () {
   
     return Array (
         Array (
@@ -117,7 +117,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
   /**
    * @dataProvider      provideAssertAndFlags
    */
-  public static function testAssertAndFlags (
+  public function testAssertAndFlags (
       $query, $result, $flags, $asserts
   ) {
   
@@ -131,23 +131,23 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
 
     $assembled = new MapFilter ( $assembled, $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $assembled->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $assembled->fetchResult ()->getAsserts ()
     );
   }
   
-  public static function provideMultipleCompare () {
+  public function provideMultipleCompare () {
   
     return Array (
         Array (
@@ -201,7 +201,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
   /**
    * @dataProvider      provideMultipleCompare
    */
-  public static function testMultipleCompare ( $query, $result ) {
+  public function testMultipleCompare ( $query, $result ) {
   
     $simple = MapFilter_TreePattern::load ( '
         <pattern>
@@ -258,12 +258,12 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
 
     $assembled = new MapFilter ( $assembled, $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $simple->fetchResult ()->getResults ()
     );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
@@ -272,18 +272,18 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     $simple->setQuery ( $query );
     $assembled->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $simple->fetchResult ()->getResults ()
     );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
   }
   
-  public static function provideCyclicParse () {
+  public function provideCyclicParse () {
   
     return Array (
         Array (
@@ -347,7 +347,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    * @dataProvider      provideCyclicParse
    * @group	        Unit::TreePattern::NodeAttr::testCyclicParse
    */
-  public static function testCyclicParse ( $query, $result ) {
+  public function testCyclicParse ( $query, $result ) {
   
     $assembled = MapFilter_TreePattern::load ( '
         <patterns>
@@ -365,7 +365,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
 
     $assembled = new MapFilter ( $assembled, $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
@@ -373,13 +373,13 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     /** Try pattern resuse */
     $assembled->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
   }
   
-  public static function provideIteratorParse () {
+  public function provideIteratorParse () {
   
     return Array (
         Array (
@@ -524,7 +524,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
   /**
    * @dataProvider      provideIteratorParse
    */
-  public static function testIteratorParse (
+  public function testIteratorParse (
       $query, $result, $flags, $asserts
   ) {
   
@@ -541,17 +541,17 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
 
     $assembled = new MapFilter ( $assembled, $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $assembled->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $assembled->fetchResult ()->getAsserts ()
     );
@@ -559,17 +559,17 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     /** Try pattern reuse */
     $assembled->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $assembled->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $assembled->fetchResult ()->getAsserts ()
     );

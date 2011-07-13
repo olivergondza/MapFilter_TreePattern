@@ -11,7 +11,7 @@ require_once PHP_TREEPATTERN_CLASS;
  */
 class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {  
   
-  public static function provideSimpleAllNode () {
+  public function provideSimpleAllNode () {
   
     return Array (
         Array (
@@ -35,7 +35,7 @@ class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {
    *
    * @dataProvider      provideSimpleAllNode
    */
-  public static function testSimpleAllNode ( $query, $result ) {
+  public function testSimpleAllNode ( $query, $result ) {
 
     $pattern = MapFilter_TreePattern::load ( '
         <pattern>
@@ -51,7 +51,7 @@ class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {
     
     $filter->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
       $result,
       $filter->fetchResult ()->getResults ()
     );

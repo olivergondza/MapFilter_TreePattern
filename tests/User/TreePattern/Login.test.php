@@ -14,7 +14,7 @@ class MapFilter_Test_User_TreePattern_Login extends
     PHPUnit_Framework_TestCase
 {
 
-  public static function provideParseLogin () {
+  public function provideParseLogin () {
   
     return Array (
         // Valid set; 'login' flag will be set
@@ -80,7 +80,7 @@ class MapFilter_Test_User_TreePattern_Login extends
    * Test parse external source and validate
    * @dataProvider      provideParseLogin
    */
-  public static function testParseLogin ( $query, $result, $flags, $asserts ) {
+  public function testParseLogin ( $query, $result, $flags, $asserts ) {
   
     sort ( $flags );
   
@@ -91,17 +91,17 @@ class MapFilter_Test_User_TreePattern_Login extends
         $query
     );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
 
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
 
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );

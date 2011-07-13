@@ -17,13 +17,13 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    * @expectedException MapFilter_TreePattern_InvalidPatternElementException
    * @expectedExceptionMessage  Invalid pattern element 'lantern'.
    */
-  public static function testWrongPattern () {
+  public function testWrongPattern () {
 
     $pattern = MapFilter_TreePattern::load ( '<lantern></lantern>' );
-    self::fail ( 'No exception risen' );
+    $this->fail ( 'No exception risen' );
   }
   
-  public static function provideWrongCount () {
+  public function provideWrongCount () {
   
     return Array (
         Array (
@@ -68,14 +68,14 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideWrongCount
    */
-  public static function testWrongCount ( $patternStr, $count, $node ) {
+  public function testWrongCount ( $patternStr, $count, $node ) {
 
     try {
 
       $pattern = MapFilter_TreePattern::load ( $patternStr );
     } catch ( MapFilter_TreePattern_NotExactlyOneFollowerException $ex ) {
 
-      self::assertEquals (
+      $this->assertEquals (
           "The '$node' node must have exactly one follower but $count given.",
           $ex->getMessage ()
       );
@@ -88,7 +88,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    * @expectedException MapFilter_TreePattern_InvalidPatternElementException
    * @expectedExceptionMessage  Invalid pattern element 'wrongnode'.
    */
-  public static function testWrongTag () {
+  public function testWrongTag () {
   
     $pattern = MapFilter_TreePattern::load (
         '<pattern><wrongnode></wrongnode></pattern>'
@@ -100,7 +100,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    * @expectedException MapFilter_TreePattern_NotExactlyOneFollowerException
    * @expectedExceptionMessage  The 'pattern' node must have exactly one follower but 2 given.
    */
-  public static function testMultipleTree () {
+  public function testMultipleTree () {
   
     $pattern = MapFilter_TreePattern::load (
         '<pattern><opt></opt><all></all></pattern>'
@@ -112,7 +112,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    * @expectedException MapFilter_TreePattern_InvalidPatternAttributeException
    * @expectedExceptionMessage Node 'key_attr' has no attribute like 'wrongattr'.
    */
-  public static function testWrongAttr () {
+  public function testWrongAttr () {
   
     $pattern = '
         <pattern>
@@ -125,7 +125,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     MapFilter_TreePattern::load ( $pattern );
   }
   
-  public static function provideSimpleOneWhitelist () {
+  public function provideSimpleOneWhitelist () {
   
     return Array (
         Array (
@@ -143,7 +143,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideSimpleOneWhitelist
    */
-  public static function testSimpleOneWhitelist ( $query, $result ) {
+  public function testSimpleOneWhitelist ( $query, $result ) {
   
     $pattern = '
         <pattern>
@@ -161,14 +161,14 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     );
     
     // Get desired result
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
   }
   /**@}*/
 
-  public static function provideSimpleAllWhitelist () {
+  public function provideSimpleAllWhitelist () {
   
     return Array (
         Array (
@@ -182,7 +182,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideSimpleAllWhitelist
    */
-  public static function testSimpleAllWhitelist ( $query, $result ) {
+  public function testSimpleAllWhitelist ( $query, $result ) {
   
     $pattern = '
         <pattern>
@@ -198,14 +198,14 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
   }
   /*@}*/
   
-  public static function provideSimpleOptWhitelist () {
+  public function provideSimpleOptWhitelist () {
   
     return Array (
         Array (
@@ -235,7 +235,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideSimpleOptWhitelist
    */
-  public static function testSimpleOptWhitelist ( $query, $result ) {
+  public function testSimpleOptWhitelist ( $query, $result ) {
     
     $pattern = '
         <pattern>
@@ -251,7 +251,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
@@ -262,7 +262,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    * @expectedException Exception
    * @expectedExceptionMessage  String could not be parsed as XML
    */
-  public static function testEmpty () {
+  public function testEmpty () {
 
     MapFilter_TreePattern::load ( '' );
   }

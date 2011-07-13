@@ -14,7 +14,7 @@ class MapFilter_Test_User_TreePattern_Generator extends
     PHPUnit_Framework_TestCase
 {
 
-  public static function provideGenerator () {
+  public function provideGenerator () {
   
     return Array (
         // No source specified
@@ -137,7 +137,7 @@ class MapFilter_Test_User_TreePattern_Generator extends
   /**
    * @dataProvider      provideGenerator
    */
-  public static function testGenerator (
+  public function testGenerator (
       $query, $result, $flags, $asserts
   ) {
   
@@ -148,17 +148,17 @@ class MapFilter_Test_User_TreePattern_Generator extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ($asserts ),
         $filter->fetchResult ()->getAsserts ()
     );

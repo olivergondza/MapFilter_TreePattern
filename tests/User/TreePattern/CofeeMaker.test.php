@@ -13,7 +13,7 @@ require_once PHP_TREEPATTERN_CLASS;
 class MapFilter_Test_User_TreePattern_CoffeeMaker extends PHPUnit_Framework_TestCase {
 
   /*@}*/
-  public static function provideParseCoffeeMaker () {
+  public function provideParseCoffeeMaker () {
   
     return Array (
         Array (
@@ -56,7 +56,7 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends PHPUnit_Framework_Test
   /**
    * @dataProvider      provideParseCoffeeMaker
    */
-  public static function testParseCoffeeMaker ( $query, $result ) {
+  public function testParseCoffeeMaker ( $query, $result ) {
   
     $filter = new MapFilter (
         MapFilter_TreePattern::fromFile (
@@ -65,7 +65,7 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends PHPUnit_Framework_Test
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );

@@ -15,7 +15,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
 {
 
     /**@{*/
-    public static function provideDuration () {
+    public function provideDuration () {
   
     return Array (
         // An absence of query set related assertions
@@ -80,7 +80,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
   /**
    * @dataProvider      provideDuration
    */
-  public static function testDuration ( $query, $result, $flags, $asserts ) {
+  public function testDuration ( $query, $result, $flags, $asserts ) {
   
     $filter = new MapFilter (
         MapFilter_TreePattern::fromFile (
@@ -89,17 +89,17 @@ class MapFilter_Test_User_TreePattern_Duration extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );
@@ -110,7 +110,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
   /**
     * @dataProvider     provideDuration
     */
-  public static function testDurationArrayAccess (
+  public function testDurationArrayAccess (
       $query, $result, $flags, $asserts
   ) {
   
@@ -128,17 +128,17 @@ class MapFilter_Test_User_TreePattern_Duration extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $filterObject->fetchResult ()->getResults (),
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $filterObject->fetchResult ()->getFlags (),
         $filter->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $filterObject->fetchResult ()->getAsserts (),
         $filter->fetchResult ()->getAsserts ()
     );

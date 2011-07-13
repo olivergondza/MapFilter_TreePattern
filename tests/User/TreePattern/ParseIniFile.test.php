@@ -17,7 +17,7 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
   const EXPAND_SECTIONS = TRUE;
  
   /**@{*/
-  public static function testParse () {
+  public function testParse () {
   
     $content = parse_ini_file (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_INI,
@@ -28,14 +28,11 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML
     );
     
-    $filter = new MapFilter (
-        $pattern,
-        $content
-    );
+    $filter = new MapFilter ( $pattern, $content );
     
     $result = $filter->fetchResult ();
 
-    self::assertEquals (
+    $this->assertEquals (
         $content,
         $result->getResults ()
     );

@@ -14,9 +14,9 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    * Test whether MapFilter_TreePattern implements
    * MapFilter_Pattern_Interface
    */
-  public static function testInterface () {
+  public function testInterface () {
   
-    self::assertTrue (
+    $this->assertTrue (
         is_a (
             MapFilter_TreePattern::load ( '<attr>attr</attr>' ),
             'MapFilter_PatternInterface'
@@ -25,18 +25,18 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
   }
   
   /** Parse a tag that hes not been wrapped in <pattern> tags */
-  public static function testUnwrapped () {
+  public function testUnwrapped () {
 
     $lazyPattern = '<attr>anAttribute</attr>';
     $pattern = '<pattern><attr>anAttribute</attr></pattern>';
     $deepPattern = '<patterns><pattern><attr>anAttribute</attr></pattern></patterns>';
   
-    self::assertEquals (
+    $this->assertEquals (
         MapFilter_TreePattern::load ( $pattern ),
         MapFilter_TreePattern::load ( $lazyPattern )
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         MapFilter_TreePattern::load ( $pattern ),
         MapFilter_TreePattern::load ( $deepPattern )
     );
@@ -46,12 +46,12 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    * Invalid file
    * @expectedException MapFilter_TreePattern_Xml_LibXmlException
    */
-  public static function testWrongFile () {
+  public function testWrongFile () {
   
     $filter = MapFilter_TreePattern::fromFile ( 'no_such_file.xml' );
   }
   
-  public static function provideWrongAttribute () {
+  public function provideWrongAttribute () {
   
     return Array (
         /** An attr attribute */
@@ -193,19 +193,19 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    *
    * @dataProvider provideWrongAttribute
    */
-  public static function testWrongAttribute ( $pattern, $exception ) {
+  public function testWrongAttribute ( $pattern, $exception ) {
 
     try {
 
       MapFilter_TreePattern::load ( $pattern );
-      self::fail ( 'No exception risen.' );
+      $this->fail ( 'No exception risen.' );
     } catch ( MapFilter_TreePattern_InvalidPatternAttributeException $ex ) {
 
-      self::assertEquals ( $exception, $ex->getMessage () );
+      $this->assertEquals ( $exception, $ex->getMessage () );
     }
   }
   
-  public static function provideCompareAttached () {
+  public function provideCompareAttached () {
   
     return Array (
         Array (
@@ -230,7 +230,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideCompareAttached
    */
-  public static function testSimpleCompareAttached ( $query, $result ) {
+  public function testSimpleCompareAttached ( $query, $result ) {
 
     $simple = MapFilter_TreePattern::load ( '
         <pattern>
@@ -255,18 +255,18 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
 
     $assembled = new MapFilter ( $assembled, $query );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $assembled->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $simple->fetchResult ()->getResults ()
     );
   }
   
-  public static function provideCompareStringAndFileLoad () {
+  public function provideCompareStringAndFileLoad () {
   
     return Array (
         Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION ),
@@ -286,17 +286,17 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideCompareStringAndFileLoad
    */
-  public static function testCompareStringAndFileLoad ( $url ) {
+  public function testCompareStringAndFileLoad ( $url ) {
 
     $fromFile = MapFilter_TreePattern::fromFile ( $url );
     $fromString = MapFilter_TreePattern::load (
         file_get_contents ( $url )
     );
     
-    self::assertEquals ( $fromFile, $fromString );
+    $this->assertEquals ( $fromFile, $fromString );
   }
   
-  public static function provideInvalidQueryStructure () {
+  public function provideInvalidQueryStructure () {
   
     return Array (
         Array ( TRUE ),
@@ -314,7 +314,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    * @expectedException MapFilter_InvalidStructureException
    * @expectedExceptionMessage Data structure passed as a query can not be parsed using given pattern.
    */
-  public static function testInvalidQueryStructure ( $structure ) {
+  public function testInvalidQueryStructure ( $structure ) {
   
     $filter = new MapFilter (
         MapFilter_TreePattern::load ( '<attr>attr</attr>' ),

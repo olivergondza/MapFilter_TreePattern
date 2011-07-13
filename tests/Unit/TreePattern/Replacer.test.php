@@ -13,7 +13,7 @@ class MapFilter_Test_Unit_TreePattern_Replacer extends
     PHPUnit_Framework_TestCase
 {
   
-  public static function provideInvalidReplacement () {
+  public function provideInvalidReplacement () {
   
     return Array (
         Array ( '' ),
@@ -34,12 +34,12 @@ class MapFilter_Test_Unit_TreePattern_Replacer extends
    * @dataProvider      provideInvalidReplacement
    * @expectedException MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
    */
-  public static function testInvalidReplacement ( $replacement ) {
+  public function testInvalidReplacement ( $replacement ) {
   
     new MapFilter_TreePattern_Tree_Replacer ( $replacement );
   }
   
-  public static function provideReplacement () {
+  public function provideReplacement () {
   
     return Array (
         Array ( '/^a$/b/' ),
@@ -51,7 +51,7 @@ class MapFilter_Test_Unit_TreePattern_Replacer extends
   /**
    * @dataProvider      provideReplacement
    */
-  public static function testReplacement ( $replacement ) {
+  public function testReplacement ( $replacement ) {
   
     new MapFilter_TreePattern_Tree_Replacer ( $replacement );
   }
@@ -59,13 +59,13 @@ class MapFilter_Test_Unit_TreePattern_Replacer extends
   /**
    *
    */
-  public static function testSlashReplacement () {
+  public function testSlashReplacement () {
   
     $rep = new MapFilter_TreePattern_Tree_Replacer (
         '/\/{2,}/\//'
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         '/proc/self',
         $rep->replace ( '/proc//self' )
     );

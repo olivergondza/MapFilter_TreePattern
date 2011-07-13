@@ -13,7 +13,7 @@ require_once PHP_TREEPATTERN_CLASS;
 class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
 
   /*@}*/
-  public static function provideParseCat () {
+  public function provideParseCat () {
   
     return Array (
         Array (
@@ -122,7 +122,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideParseCat
    */
-  public static function testParseCat (
+  public function testParseCat (
       $query, $result, $flags, $asserts = Array ()
   ) {
   
@@ -133,17 +133,17 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );

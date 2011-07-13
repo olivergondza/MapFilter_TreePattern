@@ -13,7 +13,7 @@ class MapFilter_Test_Unit_TreePattern_Matcher extends
     PHPUnit_Framework_TestCase
 {
   
-  public static function provideUnsanitizedEquality () {
+  public function provideUnsanitizedEquality () {
   
     return Array (
         Array ( 'hello', '/^hello$/' ),
@@ -44,14 +44,14 @@ class MapFilter_Test_Unit_TreePattern_Matcher extends
   /**
    * @dataProvider      provideUnsanitizedEquality
    */
-  public static function testUnsanitizedEquality ( $sanitized, $unsanitized ) {
+  public function testUnsanitizedEquality ( $sanitized, $unsanitized ) {
   
     $sanitized = new MapFilter_TreePattern_Tree_Matcher ( $sanitized );
     $unsanitized = new MapFilter_TreePattern_Tree_Matcher ( $unsanitized );
 
-    self::assertEquals ( $sanitized, $unsanitized );
+    $this->assertEquals ( $sanitized, $unsanitized );
     
-    self::assertEquals (
+    $this->assertEquals (
         $sanitized->match ( 'hello' ),
         $unsanitized->match ( 'hello' )
     );

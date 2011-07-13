@@ -15,7 +15,7 @@ class MapFilter_Test_User_TreePattern_Action extends
 {
 
   /*@{*/
-  public static function provideParseAction () {
+  public function provideParseAction () {
   
     return Array (
         Array (
@@ -98,7 +98,7 @@ class MapFilter_Test_User_TreePattern_Action extends
    * Test parse external source and validate
    * @dataProvider      provideParseAction
    */
-  public static function testParseAction ( $query, $result ) {
+  public function testParseAction ( $query, $result ) {
   
     $filter = new MapFilter (
         MapFilter_TreePattern::fromFile (
@@ -107,7 +107,7 @@ class MapFilter_Test_User_TreePattern_Action extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults()
     );

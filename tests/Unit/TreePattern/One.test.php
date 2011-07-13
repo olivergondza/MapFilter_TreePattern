@@ -13,7 +13,7 @@ class MapFilter_Test_Unit_TreePattern_One extends
     PHPUnit_Framework_TestCase
 {
   
-  public static function provideSimpleOneNode () {
+  public function provideSimpleOneNode () {
   
     return Array (
         Array (
@@ -36,7 +36,7 @@ class MapFilter_Test_Unit_TreePattern_One extends
    *
    * @dataProvider      provideSimpleOneNode
    */
-  public static function testSimpleOneNode ( $query, $result ) {
+  public function testSimpleOneNode ( $query, $result ) {
     
     $pattern = MapFilter_TreePattern::load ( '
         <pattern>
@@ -51,9 +51,9 @@ class MapFilter_Test_Unit_TreePattern_One extends
 
     $filter->setQuery ( $query );
 
-    self::assertEquals (
-      $result,
-      $filter->fetchResult ()->getResults ()
+    $this->assertEquals (
+        $result,
+        $filter->fetchResult ()->getResults ()
     );
   }
 }

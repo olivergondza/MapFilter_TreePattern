@@ -12,7 +12,7 @@ require_once PHP_TREEPATTERN_CLASS;
 */
 class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
 
-  public static function provideParseFilterUtility () {
+  public function provideParseFilterUtility () {
   
     return Array (
         Array (
@@ -77,7 +77,7 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
    * Test parse external source and validate
    * @dataProvider      provideParseFilterUtility
    */
-  public static function testParseFilterUtility ( $query, $result ) {
+  public function testParseFilterUtility ( $query, $result ) {
 
     $filter = new MapFilter (
         MapFilter_TreePattern::fromFile (
@@ -86,7 +86,7 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults()
     );

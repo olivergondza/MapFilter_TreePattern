@@ -15,7 +15,7 @@ class MapFilter_Test_User_TreePattern_Location extends
 {
 
   /*@{*/
-  public static function provideParseLocation () {
+  public function provideParseLocation () {
   
     return Array (
         Array (
@@ -64,7 +64,7 @@ class MapFilter_Test_User_TreePattern_Location extends
    * Test parse external source and validate
    * @dataProvider      provideParseLocation
    */
-  public static function testParseLocation ( $query, $result ) {
+  public function testParseLocation ( $query, $result ) {
   
     $filter = new MapFilter (
         MapFilter_TreePattern::fromFile (
@@ -73,7 +73,7 @@ class MapFilter_Test_User_TreePattern_Location extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults()
     );

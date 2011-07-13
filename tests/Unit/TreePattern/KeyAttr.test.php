@@ -14,7 +14,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
 {
   
   /** Obtain an attribute from KeyAttr node */
-  public static function testKeyAttrAttribute () {
+  public function testKeyAttrAttribute () {
   
     $attr = 'An attribute';
     
@@ -23,13 +23,13 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
     
     $node = new MapFilter_TreePattern_Tree_Leaf_KeyAttr ($builder);
     
-    self::assertEquals (
+    $this->assertEquals (
         $attr,
         $node->getAttribute ()
     );
   }
   
-  public static function provideKeyAttrCreate () {
+  public function provideKeyAttrCreate () {
   
     return Array (
         Array (
@@ -67,7 +67,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
   *
   * @dataProvider provideKeyAttrCreate
   */
-  public static function testKeyAttrCreate ( $result, $query ) {
+  public function testKeyAttrCreate ( $result, $query ) {
 
     $pattern = '
         <pattern>
@@ -82,13 +82,13 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
 
     $filter->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
   }
   
-  public static function provideKeyAttrArrayValue () {
+  public function provideKeyAttrArrayValue () {
   
     return Array (
         Array (
@@ -232,7 +232,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
    * @dataProvider      provideKeyAttrArrayValue
    * @group             Unit::TreePattern::KeyAttr::testKeyAttrArrayValue
    */
-  public static function testKeyAttrArrayValue (
+  public function testKeyAttrArrayValue (
       $query, $results, $asserts, $flags
   ) {
   
@@ -263,23 +263,23 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $results,
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
   }
 
-  public static function provideKeyAttrDefaultValuePattern () {
+  public function provideKeyAttrDefaultValuePattern () {
   
     return Array (
         Array (
@@ -356,7 +356,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
   /**
    * @dataProvider      provideKeyAttrDefaultValuePattern
    */
-  public static function testKeyAttrDefaultValuePattern ( $query, $result ) {
+  public function testKeyAttrDefaultValuePattern ( $query, $result ) {
   
     $pattern = '
         <pattern>
@@ -377,13 +377,13 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
   }
   
-  public static function provideValidationAndAssertationDefault () {
+  public function provideValidationAndAssertationDefault () {
   
     return Array (
         Array (
@@ -416,7 +416,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
   /**
    * @dataProvider      provideValidationAndAssertationDefault
    */
-  public static function testValidationAndAssertationDefault (
+  public function testValidationAndAssertationDefault (
       $query, $result
   ) {
   
@@ -439,7 +439,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         $query
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );

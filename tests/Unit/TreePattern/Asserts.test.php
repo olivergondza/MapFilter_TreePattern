@@ -13,7 +13,7 @@ class MapFilter_Test_Unit_TreePattern_Asserts extends
     PHPUnit_Framework_TestCase
 {
 
-  public static function testBuild () {
+  public function testBuild () {
   
     $in = Array ( 'gh', 'df', 'gh', 'as', 'as' );
   
@@ -22,20 +22,20 @@ class MapFilter_Test_Unit_TreePattern_Asserts extends
     $fluent = new MapFilter_TreePattern_Asserts ();
     $fluent->set( 'gh' )->set( 'df' )->set( 'gh' )->set( 'as' )->set( 'as' );
 
-    self::assertEquals ( $atOnce, $fluent );
+    $this->assertEquals ( $atOnce, $fluent );
     
     $sorted = array_unique ( $in );
     sort ( $sorted );
     
-    self::assertEquals ( $sorted, $atOnce->getAll () );
+    $this->assertEquals ( $sorted, $atOnce->getAll () );
     
     foreach ( $in as $flagCandidate ) {
     
-      self::assertTrue ( $atOnce->exists ( $flagCandidate ) );
+      $this->assertTrue ( $atOnce->exists ( $flagCandidate ) );
     }
   }
   
-  public static function testRich () {
+  public function testRich () {
   
     $value = 42;
   
@@ -55,15 +55,15 @@ class MapFilter_Test_Unit_TreePattern_Asserts extends
     $fluent = new MapFilter_TreePattern_Asserts ();
     $fluent->set ( 'as' )->set ( 'df', 'myPath' )->set ( 'gh', '', $value );
 
-    self::assertEquals ( $atOnce, $fluent );
+    $this->assertEquals ( $atOnce, $fluent );
     
-    self::assertEquals ( $atOnce->getPath ( 'df' ), $fluent->getPath ( 'df' ) );
-    self::assertEquals ( $atOnce->getPath ( 'gh' ), $fluent->getPath ( 'gh' ) );
+    $this->assertEquals ( $atOnce->getPath ( 'df' ), $fluent->getPath ( 'df' ) );
+    $this->assertEquals ( $atOnce->getPath ( 'gh' ), $fluent->getPath ( 'gh' ) );
     
-    self::assertSame ( $atOnce->getValue ( 'gh' ), $fluent->getValue ( 'gh' ) );
+    $this->assertSame ( $atOnce->getValue ( 'gh' ), $fluent->getValue ( 'gh' ) );
   }
   
-  public static function provideInvalidInit () {
+  public function provideInvalidInit () {
   
     return Array (
         Array (
@@ -83,12 +83,12 @@ class MapFilter_Test_Unit_TreePattern_Asserts extends
    * @expectedException         MapFilter_TreePattern_Asserts_InvalidInitializationException
    * @expectedExceptionMessage  Invalid format for assertion initialization
    */
-  public static function testInvalidInit ( $init ) {
+  public function testInvalidInit ( $init ) {
   
     new MapFilter_TreePattern_Asserts ( $init );
   }
   
-  public static function provideMissingProperty () {
+  public function provideMissingProperty () {
   
     return Array (
         Array ( 'getPath', 'plain' ),
@@ -103,7 +103,7 @@ class MapFilter_Test_Unit_TreePattern_Asserts extends
    * @dataProvider              provideMissingProperty
    * @expectedException         MapFilter_TreePattern_Asserts_MissingPropertyException
    */
-  public static function testMissingProperty ( $property, $assert ) {
+  public function testMissingProperty ( $property, $assert ) {
   
     $asserts = new MapFilter_TreePattern_Asserts ();
     $asserts->set ( 'plain' )->set ( 'path', 'key' );

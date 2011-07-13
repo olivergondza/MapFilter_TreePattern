@@ -15,7 +15,7 @@ extends
     PHPUnit_Framework_TestCase
 {  
   
-  public static function provideEmptyAliasAttr () {
+  public function provideEmptyAliasAttr () {
   
     return Array (
         Array (
@@ -52,7 +52,7 @@ extends
    *
    * @dataProvider      provideEmptyAliasAttr
    */
-  public static function testEmptyAliasAttr (
+  public function testEmptyAliasAttr (
       $query, $result, $flags, $asserts
   ) {
 
@@ -66,17 +66,17 @@ extends
     
     $filter->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );
@@ -86,7 +86,7 @@ extends
    * @expectedException MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
    * @expectedExceptionMessage  Only allowed follower for AliasAttribute is Attr.
    */
-  public static function testDisallowedFollowerException () {
+  public function testDisallowedFollowerException () {
   
     $pattern = '
         <pattern>
@@ -99,7 +99,7 @@ extends
     $pattern = MapFilter_TreePattern::load ( $pattern );
   }
   
-  public static function provideOneToOneAliasAttr () {
+  public function provideOneToOneAliasAttr () {
   
     return Array (
         Array (
@@ -137,7 +137,7 @@ extends
    *
    * @dataProvider      provideOneToOneAliasAttr
    */
-  public static function testOneToOneAliasAttr (
+  public function testOneToOneAliasAttr (
       $query, $result, $flags, $asserts
   ) {
 
@@ -154,23 +154,23 @@ extends
     
     $filter->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );
   }
   
-  public static function provideOneToManyAliasAttr () {
+  public function provideOneToManyAliasAttr () {
   
     return Array (
         Array (
@@ -208,7 +208,7 @@ extends
    *
    * @dataProvider      provideOneToManyAliasAttr
    */
-  public static function testOneToManyAliasAttr (
+  public function testOneToManyAliasAttr (
       $query, $result, $flags, $asserts
   ) {
 
@@ -226,17 +226,17 @@ extends
     
     $filter->setQuery ( $query );
 
-    self::assertEquals (
+    $this->assertEquals (
         $result,
         $filter->fetchResult ()->getResults ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
         $filter->fetchResult ()->getFlags ()
     );
     
-    self::assertEquals (
+    $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );
