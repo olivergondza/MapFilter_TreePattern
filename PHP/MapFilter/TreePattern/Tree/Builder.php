@@ -40,16 +40,65 @@
  */
 abstract class MapFilter_TreePattern_Tree_Builder
 {
-
+    
+    /**
+     * Validation assert
+     *
+     * @var String $validationAssert
+     *
+     * @since    $NEXT$
+     */
     public $validationAssert = null;
-    public $existenceAssert = null;
+        
+    /**
+     * Existence assert
+     *
+     * @var String $existenceAssert
+     *
+     * @since    $NEXT$
+     */
+    public $existenceAssert = null;    
+    
+    /**
+     * Flag
+     *
+     * @var Array $flag
+     *
+     * @since    $NEXT$
+     */
     public $flag = null;
+        
+    /**
+     * Value filter
+     *
+     * @var Array $valueFilter
+     *
+     * @since    $NEXT$
+     */
     public $valueFilter = null;
+    
+    /**
+     * Attach pattern
+     *
+     * @var Array $attachPattern
+     *
+     * @since    $NEXT$
+     */
     public $attachPattern = null;
+    
+    /**
+     * Content
+     *
+     * @var Array $content
+     *
+     * @since    $NEXT$
+     */
     public $content = Array ();
 
     /**
      * Create builder
+     *
+     * @since    $NEXT$
      */
     final public function __construct()
     {
@@ -137,7 +186,7 @@ abstract class MapFilter_TreePattern_Tree_Builder
      *
      * @return null
      *
-     * @ince    $NEXT$
+     * @since    $NEXT$
      */
     abstract public function build();
     

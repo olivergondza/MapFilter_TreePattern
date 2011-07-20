@@ -31,11 +31,6 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
             0,
             'pattern'
         ),
-        Array (
-            '<patterns></patterns>',
-            0,
-            'pattern'
-        ),
         Array ( '
             <pattern>
               <all />
@@ -258,12 +253,33 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   }
   /*@{*/
   
+  public function provideCompareStringAndFileLoad () {
+  
+    return Array (
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::COFFEE_MAKER ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::ACTION ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::GENERATOR ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DIRECTION ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML ),
+    );
+  }
+  
   /**
-   * @expectedException Exception
-   * @expectedExceptionMessage  String could not be parsed as XML
+   * @dataProvider      provideCompareStringAndFileLoad
    */
-  public function testEmpty () {
+  public function testCompareStringAndFileLoad ( $url ) {
 
-    MapFilter_TreePattern::load ( '' );
+    $fromFile = MapFilter_TreePattern::fromFile ( $url );
+    $fromString = MapFilter_TreePattern::load (
+        file_get_contents ( $url )
+    );
+    
+    $this->assertEquals ( $fromFile, $fromString );
   }
 }

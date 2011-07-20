@@ -18,7 +18,7 @@ All filtering is going to be performed against this Pattern.
 
 <tt>Result</tt> is a complex outcome of the filtering procedure provided by
 MapFilter::fetchResult().  This result is provider of the same set of
-interfaces as given filtering @ref pattern "Pattern".
+interfaces as given filtering pattern.
 
 @section 	faqtreepatternnodes	TreePattern
 

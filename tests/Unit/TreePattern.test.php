@@ -179,12 +179,6 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
             '<pattern><some iterator="yes" /></pattern>',
             "Node 'some' has no attribute like 'iterator'."
         ),
-
-/*        Array (
-            '<pattern><attr><attr>an_attr</attr></attr></pattern>',
-            "Node 'attr' has no content."
-        ),
-*/      
     );
   }
   
@@ -266,36 +260,6 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     );
   }
   
-  public function provideCompareStringAndFileLoad () {
-  
-    return Array (
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::COFFEE_MAKER ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::ACTION ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::GENERATOR ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DIRECTION ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML ),
-    );
-  }
-  
-  /**
-   * @dataProvider      provideCompareStringAndFileLoad
-   */
-  public function testCompareStringAndFileLoad ( $url ) {
-
-    $fromFile = MapFilter_TreePattern::fromFile ( $url );
-    $fromString = MapFilter_TreePattern::load (
-        file_get_contents ( $url )
-    );
-    
-    $this->assertEquals ( $fromFile, $fromString );
-  }
-  
   public function provideInvalidQueryStructure () {
   
     return Array (
@@ -310,7 +274,8 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @dataProvider      provideInvalidQueryStructure
+   * @dataProvider provideInvalidQueryStructure
+   *
    * @expectedException MapFilter_InvalidStructureException
    * @expectedExceptionMessage Data structure passed as a query can not be parsed using given pattern.
    */
@@ -322,5 +287,139 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     );
     
     $filter->fetchResult ();
+  }
+  
+  public function provideColidingPatternNames () {
+  
+    return Array (
+        Array ( '
+            <patterns>
+              <pattern name="main"><all /></pattern>
+              <pattern name="main"><opt /></pattern>
+            </patterns>'
+        ),
+        Array ( '
+            <patterns>
+              <pattern><all /></pattern>
+              <pattern><opt /></pattern>
+            </patterns>'
+        ),
+        Array ( '
+            <patterns>
+              <pattern name="main"><all /></pattern>
+              <pattern><opt /></pattern>
+            </patterns>'
+        ),
+        Array ( '
+            <patterns>
+              <pattern><all /></pattern>
+              <pattern name="main"><opt /></pattern>
+            </patterns>'
+        ),
+        Array ( '
+            <patterns>
+              <pattern name="has_one"><one /></pattern>
+              <pattern><all /></pattern>
+              <pattern name="different_name"><one /></pattern>
+              <pattern name="main"><opt /></pattern>
+              <pattern name="another_name"></pattern>
+            </patterns>'
+        ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideColidingPatternNames
+   *
+   * @expectedException MapFilter_TreePattern_ColidingPatternNamesException
+   */
+  public function testColidingPatternNames ( $pattern ) {
+
+    MapFilter_TreePattern_Xml::load ( $pattern );
+  }
+
+  public function provideNoPatternSpecified () {
+  
+    return Array (
+        Array ( '<patterns/>' ),
+        Array ( '<patterns></patterns>' ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideNoPatternSpecified
+   *
+   * @expectedException MapFilter_TreePattern_NoPatternSpecifiedException
+   * @expectedExceptionMessage No pattern specified.
+   */  
+  public function testNoPatternSpecified ( $pattern ) {
+  
+    MapFilter_TreePattern_Xml::load ( $pattern );
+  }
+  
+  public function provideNoMainPattern () {
+  
+    return Array (
+        Array ( '
+            <pattern name="no_main">
+              <all />
+            </pattern>
+        ' ),
+        Array ( '
+            <patterns>
+              <pattern name="no_main">
+                <all />
+              </pattern>
+            </patterns>
+        ' ),
+        Array ( '
+            <patterns>
+              <pattern name="no_main">
+                <all />
+              </pattern>
+              <pattern name="still_no_main">
+                <all />
+              </pattern>
+            </patterns>
+        ' ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideNoMainPattern
+   *
+   * @expectedException MapFilter_TreePattern_NoMainPatternException
+   * @expectedExceptionMessage No main pattern specified.
+   */
+  public function testNoMainPattern ( $pattern ) {
+  
+    MapFilter_TreePattern_Xml::load ( $pattern );
+  }
+  
+  public function provideInvalidXml () {
+  
+    return Array (
+        Array ( '<' ),
+        Array ( '>' ),
+        Array ( '<pattern' ),
+        Array ( 'pattern>' ),
+        Array ( '<pattern>' ),
+        Array ( '</pattern>' ),
+        Array ( 'pattern' ),
+        Array ( '<all><opt></all></opt>' ),
+        Array ( '<pattern name>' ),
+        Array ( '<pattern name=>' ),
+        Array ( '<pattern name=">' ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideInvalidXml
+   *
+   * @expectedException MapFilter_TreePattern_Xml_LibXmlFatalException
+   */
+  public function testInvalidXml ( $pattern ) {
+  
+    MapFilter_TreePattern_Xml::load ( $pattern );
   }
 }

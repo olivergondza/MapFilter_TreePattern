@@ -50,6 +50,8 @@ extends
      * @param String    $message  Exception message
      * @param String    $code     Exception code
      * @param Exception $previous Previous exception
+     *
+     * @since $NEXT$
      */
     public function __construct(
         $message = "Invalid structure of replacement. '%s' given. /<regex>/<replacement>/<modifiers> expected",
@@ -66,6 +68,8 @@ extends
      * @param String $input Original input
      * 
      * @return MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
+     *
+     * @since $NEXT$
      */
     public function setInput($input)
     {

@@ -45,14 +45,59 @@ abstract class MapFilter_TreePattern_Tree_Leaf_Builder extends
     MapFilter_TreePattern_Tree_Builder
 {
 
+    /**
+     * Element name
+     *
+     * @var String $name
+     *
+     * @since    $NEXT$
+     */
     public $name = null;
+    
+    /**
+     * Iterator
+     *
+     * @var String $iterator
+     *
+     * @since    $NEXT$
+     */
     public $iterator = 0;
+    
+    /**
+     * Existence default
+     *
+     * @var String $existenceDefault
+     *
+     * @since    $NEXT$
+     */
     public $existenceDefault = null;
+    
+    /**
+     * Validation default
+     *
+     * @var String $validationDefault
+     *
+     * @since    $NEXT$
+     */
     public $validationDefault = null;
+    
+    /**
+     * Value patern
+     *
+     * @var String $valuePattern
+     *
+     * @since    $NEXT$
+     */
     public $valuePattern = null;
+    
+    /**
+     * Value replacement
+     *
+     * @var String $valueReplacement
+     *
+     * @since    $NEXT$
+     */
     public $valueReplacement = null;
-    public $existenceAssert = null;
-    public $validationAssert = null;
 
     /**
      * Set iterator.

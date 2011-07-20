@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to load Pattern tree from xml.
+ * Invalid Xml content exception
  *
  * PHP Version 5.1.0
  *
@@ -18,7 +18,7 @@
  *                              
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *                              
  * @category Pear
  * @package  MapFilter_TreePattern
  * @author   Oliver Gondža <324706@mail.muni.cz>
@@ -27,80 +27,36 @@
  * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree/Builder.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Node/NodeAttr.php';
-
 /**
- * Tree All element builder class
+ * No pattern specified exception
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Node_NodeAttr_Builder
+ * @class    MapFilter_TreePattern_NoPatternSpecifiedException
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Tree_Node_NodeAttr_Builder extends
-    MapFilter_TreePattern_Tree_Node_Builder
+class
+    MapFilter_TreePattern_NoPatternSpecifiedException
+extends
+    UnexpectedValueException
 {
 
     /**
-     * Element name.
+     * Instantiate using default values
      *
-     * @var String $name
-     *
-     * @since $NEXT$
+     * @param String    $message  Exception message
+     * @param Int       $code     Exception code
+     * @param Exception $previous Previous exception
      */
-    public $name = null;
+    public function __construct (
+        $message = 'No pattern specified.',
+        $code = 0,
+        Exception $previous = null
+    ) {
     
-    /**
-     * Iterator bepth.
-     *
-     * @var Int $iterator
-     *
-     * @since $NEXT$
-     */
-    public $iterator = 0;
-
-    /**
-     * Set attribute.
-     *
-     * @param String $name An attribute to set.
-     *
-     * @return null
-     *
-     * @since 0.4
-     */
-    public function setAttr($name)
-    {
-    
-        $this->name = $name;
-    }
-    
-    /**
-     * Set iterator.
-     *
-     * @param String $depth An iterator value to set.
-     *
-     * @return null
-     *
-     * @since 0.5.2
-     */
-    public function setIterator($depth)
-    {
-    
-        $this->iterator = $depth;
-    }
-
-    /**
-     * Build tree element
-     *
-     * @return MapFilter_TreePattern_Tree_Node_Some Tree Element
-     */
-    public function build()
-    {
-    
-        return new MapFilter_TreePattern_Tree_Node_NodeAttr($this);
+        parent::__construct($message, $code, $previous);
     }
 }

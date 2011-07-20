@@ -202,7 +202,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    * @dataProvider      provideMultipleCompare
    */
   public function testMultipleCompare ( $query, $result ) {
-  
+
     $simple = MapFilter_TreePattern::load ( '
         <pattern>
             <all>
@@ -348,7 +348,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    * @group	        Unit::TreePattern::NodeAttr::testCyclicParse
    */
   public function testCyclicParse ( $query, $result ) {
-  
+
     $assembled = MapFilter_TreePattern::load ( '
         <patterns>
           <pattern>

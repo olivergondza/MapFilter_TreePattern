@@ -73,6 +73,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    * Rise an exception in case of no attr value
    *
    * @dataProvider	provideAssertEmptyAttr
+   *
    * @expectedException MapFilter_TreePattern_MissingAttributeValueException
    * @expectedExceptionMessage There is an Attr node without attribute value specified.
    */
@@ -109,6 +110,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   
   /**
    * Use unsupported value as an iterator depth indicator
+   *
    * @expectedException MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException
    * @expectedExceptionMessage Unsupported value 'auto' for iterator attribute.
    */

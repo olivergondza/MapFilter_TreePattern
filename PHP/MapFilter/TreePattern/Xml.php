@@ -43,6 +43,9 @@ require_once 'PHP/MapFilter/TreePattern/MissingAttributeValueException.php';
 
 require_once 'PHP/MapFilter/TreePattern/Xml/LibXmlException.php';
 require_once 'PHP/MapFilter/TreePattern/Xml/InvalidXmlContentException.php';
+require_once 'PHP/MapFilter/TreePattern/ColidingPatternNamesException.php';
+require_once 'PHP/MapFilter/TreePattern/NoPatternSpecifiedException.php';
+require_once 'PHP/MapFilter/TreePattern/NoMainPatternException.php';
 
 /**
  * Class to load  Pattern tree.
@@ -129,7 +132,7 @@ class MapFilter_TreePattern_Xml
     
     private $_xmlElement = null;
     private $_mainTreeElement = null;
-    private $_sideTreeElements = Array ();
+    private $_sideTreeElements = Array();
     
     /**
      * Simple Factory Method to load data from string.
@@ -319,13 +322,19 @@ class MapFilter_TreePattern_Xml
             throw $ex->setNodeAndCount(self::PATTERN, $count);
         }
         
+        $name = $this->_getElementName($this->_xmlElement);
+        if ($name!==MapFilter_TreePattern::MAIN_PATTERN) {
+        
+            throw new MapFilter_TreePattern_NoMainPatternException;
+        }
+        
         $this->_mainTreeElement = $this->_xmlElement->children();
     }
     
     /**
      * Unwrap multiple patterns
      *
-     * @single  $NEXT$
+     * @since  $NEXT$
      *
      * @return  null
      */
@@ -334,21 +343,25 @@ class MapFilter_TreePattern_Xml
     
         if ($this->_xmlElement->count() < 1) {
         
-            $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-            throw $ex->setNodeAndCount(self::PATTERN, 0);
+            throw new MapFilter_TreePattern_NoPatternSpecifiedException;
         }
       
         $this->_sideTreeElements = Array();
         foreach (iterator_to_array($this->_xmlElement, false) as $child) {
           
             $count = (Int) $child->count();
-            if ( $count !== 1) {
+            if ($count !== 1) {
 
                 $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
                 throw $ex->setNodeAndCount(self::PATTERN, $count);
             }
 
             $this->_store($child);
+        }
+        
+        if (is_null($this->_mainTreeElement)) {
+        
+            throw new MapFilter_TreePattern_NoMainPatternException;
         }
     }
     
@@ -363,8 +376,6 @@ class MapFilter_TreePattern_Xml
      */
     private function _getElementName (SimpleXmlElement $child)
     {
-    
-        $attrs = (Array) $child->attributes();
     
         $attributes = $this->_getAttributes($child);
     
@@ -388,14 +399,21 @@ class MapFilter_TreePattern_Xml
     
         $name = $this->_getElementName($child);
     
-        $isMain = $name === MapFilter_TreePattern::MAIN_PATTERN;
-        if ( $isMain ) {
+        if ($name === MapFilter_TreePattern::MAIN_PATTERN) {
         
-            $this->_mainTreeElement = $child->children();
-        } else {
+            if (is_null($this->_mainTreeElement)) {
+
+                $this->_mainTreeElement = $child->children();
+                return;
+            }
+        } elseif (!array_key_exists($name, $this->_sideTreeElements)) {
         
             $this->_sideTreeElements[ $name ] = $child->children();
+            return;
         }
+        
+        $ex = new MapFilter_TreePattern_ColidingPatternNamesException;
+        throw $ex->setName($name);
     }
     
     /**

@@ -84,7 +84,7 @@ class MapFilter_TreePattern_Tree_Leaf_Attr_Builder extends
      *
      * @return null
      *
-     * @ince    $NEXT$
+     * @since    $NEXT$
      */
     public function build()
     {
