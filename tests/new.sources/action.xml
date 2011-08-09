@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pattern>
+  <key_attr attr="action">
+
+    <!--// "id" or "file_name" must be used -->
+    <for value="delete">
+      <one>
+        <attr>id</attr>
+        <attr>file_name</attr>
+      </one>
+    </for>
+
+    <!--// "new_file" is mandatory and "new_name" is optional attribute -->
+    <for value="create">
+      <all>
+        <attr>new_file</attr>
+        <opt>
+          <attr>new_name</attr>
+        </opt>
+      </all>
+    </for>
+
+    <!--// "new_name" is now mandatory with one of "id" or "old_name" -->
+    <for value="rename">
+      <all>
+        <one>
+          <attr>id</attr>
+          <attr>old_name</attr>
+        </one>
+        <attr>new_name</attr>
+      </all>
+    </for>
+    
+    <!--// "id" is mandatory argument for "report" action. -->
+    <for value="report">
+      <attr>id</attr>
+    </for>
+    <!--        
+    //  Consider equivalent but slightly clumsy statement:
+    //
+    //  <for value="report">
+    //    <all>
+    //      <attr>id</attr>
+    //    </all>
+    //  </for>
+    -->
+
+  </key_attr>
+</pattern>

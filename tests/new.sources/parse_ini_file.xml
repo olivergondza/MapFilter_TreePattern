@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pattern SYSTEM "TreePattern053.dtd">
+<pattern>
+  <all>
+    <key name="first_section">
+
+      <all assert="no_any_of_that">
+        <key name="one" assert="no_one" />
+        <key name="five" assert="no_five" />
+        <key name="animal" assert="no_animal" />
+      </all>
+
+    </key>
+    <key name="second_section">
+
+      <all>
+        <key name="path" />
+        <key name="URL" />
+      </all>
+
+    </key>
+    <key name="third_section">
+
+      <key name="phpversion">
+        <iterator />
+      </key>
+
+    </key>
+  </all>
+</pattern>

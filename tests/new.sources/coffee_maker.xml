@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pattern SYSTEM "TreePattern053.dtd">
+<pattern>
+  <all>
+
+    <!-- String ( coffee|tea|cacao ) -->
+    <key name="beverage">
+      <string valuePattern="coffee|tea|cacao" />
+    </key>
+
+    <!-- Bool; default yes -->
+    <key name="cup">
+      <string default="yes" valuePattern="yes|no" />
+    </key>
+
+    <!-- Int ( -5..5 ); default 0 -->
+    <key name="sugar">
+      <string default="0" valuePattern="-?[0-5]" />
+    </key>
+
+  </all>
+</pattern>

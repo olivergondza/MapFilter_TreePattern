@@ -104,8 +104,9 @@ class MapFilter_TreePattern_Tree_Replacer
 
         if (!$valid) {
         
-            $ex = new MapFilter_TreePattern_Tree_Replacer_InvalidStructureException;
-            throw $ex->setInput($searchAndReplace);
+            throw new MapFilter_TreePattern_Tree_Replacer_InvalidStructureException(
+                $searchAndReplace
+            );
         }
         
         $this->_pattern = $matches[ 'search' ] . $matches[ 'modifiers' ];

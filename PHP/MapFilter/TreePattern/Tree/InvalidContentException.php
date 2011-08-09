@@ -32,48 +32,30 @@
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Xml_InvalidXmlContentException
+ * @class    MapFilter_TreePattern_Tree_InvalidContentException
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Xml_InvalidXmlContentException
-extends
+class MapFilter_TreePattern_Tree_InvalidContentException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
-     */
-    public function __construct (
-        $message = "Node '%s' has no content.",
-        $code = 0,
-        Exception $previous = null
-    ) {
-    
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set pattern name
+     * @param String $name    Name
+     * @param String $message Exception message
      *
-     * @param String $name Name
-     *
-     * @return MapFilter_TreePattern_Xml_InvalidXmlContentException
+     * @since $NEXT$
      */
-    public function setNodeName($name)
+    public function __construct($name, $message = "Node '%s' has no content.")
     {
     
         assert(is_string($name));
-      
-        $this->message = sprintf($this->message, $name);
-      
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $name));
     }
 }

@@ -47,16 +47,15 @@ extends
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $message Exception message
+     *
+     * @since $NEXT$
      */
-    public function __construct (
-        $message = 'No pattern specified.',
-        $code = 0,
-        Exception $previous = null
-    ) {
+    public function __construct($message = 'No pattern specified.')
+    {
     
-        parent::__construct($message, $code, $previous);
+        assert(is_string($message));
+    
+        parent::__construct($message);
     }
 }

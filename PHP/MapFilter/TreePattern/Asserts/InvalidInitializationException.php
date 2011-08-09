@@ -38,25 +38,23 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Asserts_InvalidInitializationException
-extends
+class MapFilter_TreePattern_Asserts_InvalidInitializationException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $message Exception message
+     *
+     * @since    $NEXT$
      */
     public function __construct (
-        $message = "Invalid format for assertion initialization.",
-        $code = 0,
-        Exception $previous = null
+        $message = "Invalid format for assertion initialization."
     ) {
+
+        assert(is_string($message));
   
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message);
     }
 }

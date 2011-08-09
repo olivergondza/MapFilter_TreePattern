@@ -1,0 +1,50 @@
+<!ENTITY % common.elements "all|one|opt|some|alias|attr|node_attr|key_attr">
+<!ENTITY % common.attrs
+   "assert              CDATA   #IMPLIED
+    flag                CDATA   #IMPLIED
+    forValue            CDATA   #IMPLIED
+    attachPattern       CDATA   #IMPLIED"
+>
+<!ENTITY % attr.attrs
+   "attr                CDATA #IMPLIED
+    default             CDATA #IMPLIED
+    existenceDefault    CDATA #IMPLIED
+    validationDefault   CDATA #IMPLIED
+    valuePattern        CDATA #IMPLIED
+    valueReplacement    CDATA #IMPLIED
+    existenceAssert     CDATA #IMPLIED
+    validationAssert    CDATA #IMPLIED
+    iterator            CDATA #IMPLIED"
+>
+
+<!ELEMENT patterns      (pattern)+>
+
+<!ELEMENT pattern       (%common.elements;)>
+<!ATTLIST pattern       name CDATA "main">
+  
+<!ELEMENT all           (%common.elements;)*>
+<!ATTLIST all           %common.attrs;>
+
+<!ELEMENT one           (%common.elements;)*>
+<!ATTLIST one           %common.attrs;>
+
+<!ELEMENT opt           (%common.elements;)*>
+<!ATTLIST opt           %common.attrs;>
+
+<!ELEMENT some          (%common.elements;)*>
+<!ATTLIST some          %common.attrs;>
+  
+<!ELEMENT attr          (#PCDATA)>
+<!ATTLIST attr          %common.attrs; %attr.attrs;>
+
+<!ELEMENT alias         (attr*)>
+<!ATTLIST alias         %common.attrs; %attr.attrs;>
+
+<!ELEMENT key_attr      (%common.elements;)*>
+<!ATTLIST key_attr      %common.attrs; %attr.attrs;>
+
+<!ELEMENT node_attr     (%common.elements;)*>
+<!ATTLIST node_attr     %common.attrs;
+    iterator    CDATA #IMPLIED
+    attr        CDATA #IMPLIED
+>

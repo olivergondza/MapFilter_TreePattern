@@ -269,7 +269,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML ),
     );
   }
-  
+
   /**
    * @dataProvider      provideCompareStringAndFileLoad
    */
@@ -279,7 +279,42 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     $fromString = MapFilter_TreePattern::load (
         file_get_contents ( $url )
     );
-    
+
     $this->assertEquals ( $fromFile, $fromString );
+  }
+
+  public function provideTautology () {
+
+    return Array (
+        Array ( NULL ),
+        Array ( TRUE ),
+        Array ( 0 ),
+        Array ( .1 ),
+        Array ( 'a' ),
+        Array ( Array ( 'a' ) ),
+        Array ( new MapFilter ),
+        Array ( xml_parser_create () ),
+    );
+  }
+
+  /**
+   * @dataProvider      provideTautology
+   * @group tautology
+   */
+  public function testTautology ( $data ) {
+  
+    $tautology = MapFilter_TreePattern::load ( '
+        <pattern>
+          <value flag="valueFlag" assert="valueAssert" />
+        </pattern>
+    ' );
+    
+    $filter = new MapFilter ( $tautology, $data );
+    
+    $result = $filter->fetchResult ();
+    
+    $this->assertEquals ( $data, $result->getResults () );
+    $this->assertEquals ( Array (), $result->getAsserts ()->getAll () );
+    $this->assertEquals ( Array ( 'valueFlag' ), $result->getFlags ()->getAll () );
   }
 }

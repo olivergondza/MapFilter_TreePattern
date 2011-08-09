@@ -34,7 +34,7 @@ require_once 'PHP/MapFilter/PatternInterface.php';
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_Pattern_ResultInterface
+ * @class    MapFilter_TreePattern_ResultInterface
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter

@@ -360,8 +360,9 @@ class MapFilter_TreePattern implements
             return clone $this->_sidePatterns[ $sidePatternName ];
         }
 
-        $ex = new MapFilter_TreePattern_InvalidPatternNameException;
-        throw $ex->setName($sidePatternName);
+        throw new MapFilter_TreePattern_InvalidPatternNameException(
+            $sidePatternName
+        );
     }
 
     /**
@@ -396,11 +397,6 @@ class MapFilter_TreePattern implements
      */
     public function parse($query)
     {
-
-        if (!self::isMap($query)) {
-
-            throw new MapFilter_InvalidStructureException;
-        }
 
         $this->_cleanup();
 

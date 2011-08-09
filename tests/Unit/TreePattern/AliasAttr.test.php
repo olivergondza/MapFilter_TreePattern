@@ -13,7 +13,7 @@ class
     MapFilter_Test_Unit_TreePattern_AliasAttr
 extends
     PHPUnit_Framework_TestCase
-{  
+{
   
   public function provideEmptyAliasAttr () {
   

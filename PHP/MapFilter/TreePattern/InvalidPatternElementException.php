@@ -38,42 +38,25 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_InvalidPatternElementException
-extends
+class MapFilter_TreePattern_InvalidPatternElementException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $name    Element name
+     * @param String $message Exception message
+     *
+     * @since $NEXT$
      */
     public function __construct(
-        $message = "Invalid pattern element '%s'.",
-        $code = 0,
-        Exception $previous = null
+        $name, $message = "Invalid pattern element '%s'."
     ) {
     
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set element name
-     *
-     * @param String $name Element name
-     *
-     * @return MapFilter_TreePattern_InvalidPatternElementException
-     */
-    public function setName($name)
-    {
-    
         assert(is_string($name));
-      
-        $this->message = sprintf($this->message, $name);
-      
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $name));
     }
 }

@@ -182,8 +182,9 @@ class MapFilter_TreePattern_Asserts
         
         if (!$hasVal) {
         
-            $ex = new MapFilter_TreePattern_Asserts_MissingPropertyException;
-            throw $ex->setProperty('path', $assertName);
+            throw new MapFilter_TreePattern_Asserts_MissingPropertyException(
+                'path', $assertName
+            );
         }
         
         return $this->_asserts[ $assertName ][ self::PATH ];
@@ -209,8 +210,9 @@ class MapFilter_TreePattern_Asserts
         
         if (!$hasVal) {
         
-            $ex = new MapFilter_TreePattern_Asserts_MissingPropertyException;
-            throw $ex->setProperty('value', $assertName);
+            throw new MapFilter_TreePattern_Asserts_MissingPropertyException(
+                'value', $assertName
+            );
         }
         
         return $this->_asserts[ $assertName ][ self::VALUE ];

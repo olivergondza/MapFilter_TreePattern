@@ -30,6 +30,8 @@
 require_once 'PHP/MapFilter/TreePattern/Tree/Replacer.php';
 require_once 'PHP/MapFilter/TreePattern/Tree/Matcher.php';
 
+require_once 'PHP/MapFilter/TreePattern/Tree/Attribute/MissingValueException.php';
+
 /**
  * Pattern attribute.
  *
@@ -161,7 +163,7 @@ class MapFilter_TreePattern_Tree_Attribute
 
         if (!$attribute) {
         
-            throw new MapFilter_TreePattern_MissingAttributeValueException;
+            throw new MapFilter_TreePattern_Tree_Attribute_MissingValueException;
         }
 
         $this->_attribute = $attribute;

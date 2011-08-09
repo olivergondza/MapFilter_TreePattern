@@ -27,6 +27,8 @@
  * @since    $NEXT$
  */
 
+require_once 'PHP/MapFilter/TreePattern/InvalidPatternAttributeException.php';
+
 /**
  * Tree element builder class
  *
@@ -98,10 +100,16 @@ abstract class MapFilter_TreePattern_Tree_Builder
     /**
      * Create builder
      *
+     * @param String $elementName Element name
+     *
      * @since    $NEXT$
      */
-    final public function __construct()
+    final public function __construct($elementName)
     {
+
+        assert(is_string($elementName));
+
+        $this->elementName = $elementName;
     }
     
     /**
@@ -184,8 +192,6 @@ abstract class MapFilter_TreePattern_Tree_Builder
      *
      * @return MapFilter_TreePattern_Tree Tree Element
      *
-     * @return null
-     *
      * @since    $NEXT$
      */
     abstract public function build();
@@ -199,9 +205,38 @@ abstract class MapFilter_TreePattern_Tree_Builder
      * @return null
      * @throws MapFilter_TreePattern_InvalidPatternAttributeException
      */
-    public function __call ( $name, Array $args )
+    public function __call($name, Array $args)
     {
     
-        throw new MapFilter_TreePattern_InvalidPatternAttributeException;
+        throw new MapFilter_TreePattern_InvalidPatternAttributeException(
+            $this->elementName,
+            self::getAttribute($name)
+        );
+    }
+    
+    /**
+     * Get name of setter method for given attribute name
+     *
+     * @param String $attrName Attribute name
+     *
+     * @return String Setter name
+     */
+    public static function getSetter($attrName)
+    {
+    
+        return 'set' . ucfirst($attrName);
+    }
+    
+    /**
+     * Get name of attribute for given setter method name
+     *
+     * @param String $setterName Setter method name
+     *
+     * @return String Attribute name
+     */
+    public static function getAttribute($setterName)
+    {
+    
+        return lcfirst(substr($setterName, 3));
     }
 }

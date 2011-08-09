@@ -32,52 +32,27 @@
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_InvalidStructureException
+ * @class    MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
-extends
+class MapFilter_TreePattern_Tree_Replacer_InvalidStructureException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param String    $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $message Exception message
      *
      * @since $NEXT$
      */
     public function __construct(
-        $message = "Invalid structure of replacement. '%s' given. /<regex>/<replacement>/<modifiers> expected",
-        $code = 0,
-        Exception $previous = null
+        $message = "Invalid structure of replacement. '%s' given. /<regex>/<replacement>/<modifiers> expected"
     ) {
     
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set original input.
-     *
-     * @param String $input Original input
-     * 
-     * @return MapFilter_TreePattern_Tree_Replacer_InvalidStructureException
-     *
-     * @since $NEXT$
-     */
-    public function setInput($input)
-    {
-    
-        assert(is_string($input));
-      
-        $this->message = sprintf($this->message, $input);
-      
-        return $this;
+        parent::__construct($message);
     }
 }

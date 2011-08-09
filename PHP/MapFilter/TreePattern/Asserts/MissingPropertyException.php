@@ -38,44 +38,27 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Asserts_MissingPropertyException
-extends
+class MapFilter_TreePattern_Asserts_MissingPropertyException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
-     */
-    public function __construct (
-        $message = "Missing property '%s' for assertion '%s'.",
-        $code = 0,
-        Exception $previous = null
-    ) {
-    
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set pattern name
-     *
      * @param String $name      Property name
      * @param String $assertion Assertion name
+     * @param String $message   Exception message
      *
-     * @return MapFilter_TreePattern_Asserts_MissingPropertyException
+     * @since    $NEXT$
      */
-    public function setProperty($name, $assertion)
-    {
+    public function __construct (
+        $name, $assertion, $message = "Missing property '%s' for assertion '%s'."
+    ) {
     
         assert(is_string($name));
         assert(is_string($assertion));
-        
-        $this->message = sprintf($this->message, $name, $assertion);
-        
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $name, $assertion));
     }
 }

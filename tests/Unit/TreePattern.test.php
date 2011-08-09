@@ -11,17 +11,13 @@ require_once PHP_TREEPATTERN_CLASS;
 class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {  
   
   /**
-   * Test whether MapFilter_TreePattern implements
-   * MapFilter_Pattern_Interface
+   * Test whether MapFilter_TreePattern implements MapFilter_PatternInterface
    */
   public function testInterface () {
   
-    $this->assertTrue (
-        is_a (
-            MapFilter_TreePattern::load ( '<attr>attr</attr>' ),
-            'MapFilter_PatternInterface'
-        )
-    );
+    $pattern = MapFilter_TreePattern::load ( '<attr>attr</attr>' );
+  
+    $this->assertTrue ( $pattern instanceof MapFilter_PatternInterface );
   }
   
   /** Parse a tag that hes not been wrapped in <pattern> tags */
@@ -258,35 +254,6 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
         $result,
         $simple->fetchResult ()->getResults ()
     );
-  }
-  
-  public function provideInvalidQueryStructure () {
-  
-    return Array (
-        Array ( TRUE ),
-        Array ( NULL ),
-        Array ( 0 ),
-        Array ( 3.14 ),
-        Array ( 'asdf' ),
-        Array ( new MapFilter () ),
-        Array ( xml_parser_create () ),
-    );
-  }
-  
-  /**
-   * @dataProvider provideInvalidQueryStructure
-   *
-   * @expectedException MapFilter_InvalidStructureException
-   * @expectedExceptionMessage Data structure passed as a query can not be parsed using given pattern.
-   */
-  public function testInvalidQueryStructure ( $structure ) {
-  
-    $filter = new MapFilter (
-        MapFilter_TreePattern::load ( '<attr>attr</attr>' ),
-        $structure
-    );
-    
-    $filter->fetchResult ();
   }
   
   public function provideColidingPatternNames () {

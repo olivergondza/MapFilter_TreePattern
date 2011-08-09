@@ -38,46 +38,25 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_ColidingPatternNamesException
-extends
+class MapFilter_TreePattern_ColidingPatternNamesException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $name    Pattern name
+     * @param String $message Exception message
      *
      * @since    $NEXT$
      */
     public function __construct (
-        $message = "Pattern name '%s' used several times.",
-        $code = 0,
-        Exception $previous = null
+        $name, $message = "Pattern name '%s' used several times."
     ) {
     
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set pattern name
-     *
-     * @param String $name Pattern name
-     *
-     * @return MapFilter_TreePattern_ColidingPatternNamesException
-     *
-     * @since $NEXT$
-     */
-    public function setName($name)
-    {
-    
         assert(is_string($name));
+        assert(is_string($message));
     
-        $this->message = sprintf($this->message, $name);
-      
-        return $this;
+        parent::__construct(sprintf($message, $name));
     }
 }

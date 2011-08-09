@@ -74,7 +74,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    *
    * @dataProvider	provideAssertEmptyAttr
    *
-   * @expectedException MapFilter_TreePattern_MissingAttributeValueException
+   * @expectedException MapFilter_TreePattern_Tree_Attribute_MissingValueException
    * @expectedExceptionMessage There is an Attr node without attribute value specified.
    */
   public function testAssertEmptyAttr ( $pattern ) {
@@ -549,7 +549,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   }
   
   /**
-   * @expectedException MapFilter_TreePattern_Xml_InvalidXmlContentException
+   * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
    * @expectedExceptionMessage Node 'attr' has no content
    */
   public function testContent () {

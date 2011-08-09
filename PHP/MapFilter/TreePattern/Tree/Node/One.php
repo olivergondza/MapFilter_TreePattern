@@ -27,7 +27,7 @@
  * @since    0.3
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Policy.php';
 
 /**
  * MapFilter pattern tree one node.
@@ -41,7 +41,7 @@ require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
  * @since    0.3
  */
 final class MapFilter_TreePattern_Tree_Node_One extends
-    MapFilter_TreePattern_Tree_Node
+    MapFilter_TreePattern_Tree_Policy
 {
 
     /**
@@ -60,8 +60,6 @@ final class MapFilter_TreePattern_Tree_Node_One extends
      */
     public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
-
-        assert(MapFilter_TreePattern::isMap($query));
 
         foreach ($this->getContent() as $follower) {
           

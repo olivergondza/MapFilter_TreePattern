@@ -18,7 +18,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
   
     $attr = 'An attribute';
     
-    $builder = new MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder;
+    $builder = new MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder ( 'keyattr' );
     $builder->setAttr ( $attr );
     
     $node = new MapFilter_TreePattern_Tree_Leaf_KeyAttr ($builder);

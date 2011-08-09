@@ -128,6 +128,15 @@ abstract class MapFilter_TreePattern_Tree implements
     protected $setters = Array();
     
     /**
+     * Name of the element
+     *
+     * @var     String                                    $elementName
+     *
+     * @since   $NEXT$
+     */
+    public $elementName = null;
+    
+    /**
      * Create new tree instance.
      *
      * @param MapFilter_TreePattern_Tree_Builder $builder A bulder to use.
@@ -138,7 +147,8 @@ abstract class MapFilter_TreePattern_Tree implements
      */
     public function __construct(MapFilter_TreePattern_Tree_Builder $builder)
     {
-    
+
+        $this->elementName = $builder->elementName;    
         $this->flag = $builder->flag;
         $this->existenceAssert = $builder->existenceAssert;
         $this->validationAssert = $builder->validationAssert;
@@ -237,6 +247,8 @@ abstract class MapFilter_TreePattern_Tree implements
      */
     protected function isSatisfied()
     {
+
+        assert(is_bool($this->satisfied));
     
         return $this->satisfied;
     }
@@ -273,7 +285,7 @@ abstract class MapFilter_TreePattern_Tree implements
     {
 
         return ($valueCandidate instanceof Iterator)
-            ? iterator_to_array($valueCandidate, false)
+            ? array_values(iterator_to_array($valueCandidate))
             : $valueCandidate
         ;
     }

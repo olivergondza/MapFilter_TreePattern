@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pattern SYSTEM "TreePattern053.dtd">
+<pattern>
+  <one>
+
+    <key name="-h" />
+    <key name="-v" />
+
+    <some>
+      <key name="-c" />
+      <key name="-l" />
+    </some>
+
+    <key name="-a" />
+
+  </one>
+</pattern>

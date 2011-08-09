@@ -47,35 +47,22 @@ extends
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $node    Node name to set
+     * @param String $count   Follower count
+     * @param String $message Exception message
+     *
+     * @since $NEXT$
      */
     public function __construct(
-        $message = "The '%s' node must have exactly one follower but %d given.",
-        $code = 0,
-        Exception $previous = null
+        $node,
+        $count,
+        $message = "The '%s' node must have exactly one follower but %d given."
     ) {
-    
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set node name and follower count
-     *
-     * @param String $node  Node name to set
-     * @param String $count Follower count
-     *
-     * @return MapFilter_TreePattern_NotExactlyOneFollowerException
-     */
-    public function setNodeAndCount($node, $count)
-    {
     
         assert(is_string($node));
         assert(is_int($count));
-      
-        $this->message = sprintf($this->message, $node, $count);
-      
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $node, $count));
     }
 }

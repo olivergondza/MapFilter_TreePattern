@@ -38,42 +38,25 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException
-extends
+class MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $value   Original value
+     * @param String $message Exception message
+     *
+     * @since $NEXT$
      */
     public function __construct (
-        $message = "Unsupported value '%s' for iterator attribute.",
-        $code = 0,
-        Exception $previous = null
+        $value, $message = "Unsupported value '%s' for iterator attribute."
     ) {
     
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set original value
-     *
-     * @param String $value Original value
-     *
-     * @return MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException
-     */
-    public function setValue($value)
-    {
-    
         assert(is_string($value));
-      
-        $this->message = sprintf($this->message, $value);
-      
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $value));
     }
 }

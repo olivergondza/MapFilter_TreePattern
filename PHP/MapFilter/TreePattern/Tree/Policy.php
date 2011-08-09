@@ -1,6 +1,6 @@
 <?php
 /**
- * Missing attribute value exception
+ * Ancestor of pattern tree nodes.
  *
  * PHP Version 5.1.0
  *
@@ -18,45 +18,29 @@
  *                              
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- *                              
- * @category Pear
- * @package  MapFilter_TreePattern
- * @author   Oliver Gondža <324706@mail.muni.cz>
- * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
- * @link     http://github.com/olivergondza/MapFilter
- * @since    $NEXT$
- */
-
-/**
- * Missing attribute value exception
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_MissingAttributeValueException
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
- * @since    $NEXT$
+ * @since    0.3
  */
-class
-    MapFilter_TreePattern_MissingAttributeValueException
-extends
-    UnexpectedValueException
-{
 
-    /**
-     * Instantiate using default values
-     *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
-     */
-    public function __construct (
-        $message = "There is an Attr node without attribute value specified.",
-        $code = 0,
-        Exception $previous = null
-    ) {
-    
-        parent::__construct($message, $code, $previous);
-    }
+require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
+
+/**
+ * Abstract class for pattern tree node.
+ *
+ * @category Pear
+ * @package  MapFilter_TreePattern
+ * @class    MapFilter_TreePattern_Tree_Policy
+ * @author   Oliver Gondža <324706@mail.muni.cz>
+ * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
+ * @link     http://github.com/olivergondza/MapFilter
+ * @since    0.3
+ */
+abstract class MapFilter_TreePattern_Tree_Policy extends
+    MapFilter_TreePattern_Tree_Node
+{
 }

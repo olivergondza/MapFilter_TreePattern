@@ -117,7 +117,7 @@ implements
             $this->setAssertValue($asserts, $value);
         }
         
-        return $satisfied;
+        return (Bool) $satisfied;
     }
     
     /**

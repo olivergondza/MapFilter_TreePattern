@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE patterns SYSTEM "TreePattern053.dtd">
+<patterns>
+
+  <pattern>
+    <key name="steps">
+      <iterator attachPattern="step" />
+    </key>
+  </pattern>
+
+  <pattern name="step">
+    <one>
+      <key name="turn">
+        <value pattern="left|right" />
+      </key>
+      <key name="walk">
+        <one>
+          <key name="metres" attachPattern="langth" />
+          <key name="yards"  attachPattern="langth" />
+        </one>
+      </key>
+    </one>
+  </pattern>
+
+  <pattern name="length">
+    <value pattern="\d*" />
+  </pattern>
+
+</patterns>
+

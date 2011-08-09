@@ -47,33 +47,18 @@ extends
     /**
      * Instantiate using default values.
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous Exception
+     * @param String $follower Follower name.
+     * @param String $message  Exception message
+     *
+     * @since $NEXT$
      */
     public function __construct (
-        $message = 'Only allowed follower for AliasAttribute is Attr. %s given.',
-        $code = 0,
-        Exception $previous = null
+        $follower, $message = 'Only allowed follower for AliasAttribute is Attr. %s given.'
     ) {
     
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set follower name
-     *
-     * @param String $follower Follower name.
-     *
-     * @return MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
-     */
-    public function setFollower($follower)
-    {
-    
         assert(is_string($follower));
-      
-        $this->message = sprintf($this->message, $follower);
-      
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $follower));
     }
 }

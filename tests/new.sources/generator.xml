@@ -1,0 +1,51 @@
+<!-- UNDONE -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pattern SYSTEM "TreePattern053.dtd">
+<patterns>
+  <pattern>
+    <all>
+
+      <key name="input" assert="no_source">
+        <iterator />
+      </key>
+
+      <key name="output_format">
+        <one>
+          <iterator minLength="1">
+            <one>
+              <value pattern="html" flag="of_html" />
+              <value pattern="xml"  flag="of_xml"  />
+              <value pattern="man"  flag="of_nam"  />
+            </one>
+          </iterator>
+          <value default="html" flag="of_html" />
+        </one>
+      </key>
+
+      <for flag="of_html,of_xml" attachPattern="stylesheet" />
+      <for flag="of_man" attachPattern="extension">
+      <for flag="of_xml" attachPattern="dtd" />
+
+    </all>
+  </pattern>
+  
+  <pattern name="stylesheet">
+    <key name="stylesheet">
+      <iterator>
+        <value default="default.css" pattern=".+\.css">
+      </iterator>
+    </key>
+  </patern>
+  
+  <pattern name="extension">
+    <key name="extension">
+      <value default="3" pattern="[1-8]">
+    </key>
+  </pattern>
+
+  <pattern name="dtd">  
+    <key name="dtd">
+      <value default="default.dtd" pattern=".+\.dtd">
+    </key>
+  </pattern>
+</patterns>

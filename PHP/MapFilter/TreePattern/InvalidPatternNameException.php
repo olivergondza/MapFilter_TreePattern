@@ -38,42 +38,25 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_InvalidPatternNameException
-extends
+class MapFilter_TreePattern_InvalidPatternNameException extends
     UnexpectedValueException
 {
 
     /**
      * Instantiate using default values
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
+     * @param String $name    Pattern name
+     * @param String $message Exception message
+     *
+     * @since   $NEXT$
      */
-    public function __construct (
-        $message = "Pattern '%s' can not be attached.",
-        $code = 0,
-        Exception $previous = null
+    public function __construct(
+        $name, $message = "Pattern '%s' can not be attached."
     ) {
     
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set pattern name
-     *
-     * @param String $name Pattern name
-     *
-     * @return MapFilter_TreePattern_InvalidPatternElementException
-     */
-    public function setName($name)
-    {
-    
         assert(is_string($name));
-      
-        $this->message = sprintf($this->message, $name);
-      
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $name));
     }
 }

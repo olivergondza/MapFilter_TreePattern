@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE patterns SYSTEM "TreePattern053.dtd">
+<patterns>
+
+  <pattern>
+    <some>
+      <one>
+        <key name="top" attachPattern="distance" />
+        <key name="bottom" attachPattern="distance" />
+      </one>
+      <one>
+        <key name="right" attachPattern="distance" />
+        <key name="left" attachPattern="distance" />
+      </one>
+    </some>
+  </pattern>
+
+  <pattern name="distance">
+    <all>
+      <key name="count">
+        <int min="0" />
+      </key>
+      <key name="unit">
+        <string valuePattern="meter|yard" />
+      </key>
+    </all>
+  </pattern>
+
+</patterns>

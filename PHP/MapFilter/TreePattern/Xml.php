@@ -36,13 +36,12 @@ require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/KeyAttr/Builder.php';
 require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/AliasAttr/Builder.php';
 require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr/Builder.php';
 
+require_once 'PHP/MapFilter/TreePattern/Tree/Value/Builder.php';
+
+require_once 'PHP/MapFilter/TreePattern/Xml/LibXmlException.php';
 require_once 'PHP/MapFilter/TreePattern/InvalidPatternElementException.php';
 require_once 'PHP/MapFilter/TreePattern/NotExactlyOneFollowerException.php';
 require_once 'PHP/MapFilter/TreePattern/InvalidPatternAttributeException.php';
-require_once 'PHP/MapFilter/TreePattern/MissingAttributeValueException.php';
-
-require_once 'PHP/MapFilter/TreePattern/Xml/LibXmlException.php';
-require_once 'PHP/MapFilter/TreePattern/Xml/InvalidXmlContentException.php';
 require_once 'PHP/MapFilter/TreePattern/ColidingPatternNamesException.php';
 require_once 'PHP/MapFilter/TreePattern/NoPatternSpecifiedException.php';
 require_once 'PHP/MapFilter/TreePattern/NoMainPatternException.php';
@@ -91,11 +90,12 @@ class MapFilter_TreePattern_Xml
     const NODE_ALL = 'all';
     const NODE_ONE = 'one';
     const NODE_OPT = 'opt';
+    const NODE_SOME = 'some';
     const NODE_KEYATTR = 'key_attr';
     const NODE_ATTR = 'attr';
-    const NODE_SOME = 'some';
     const NODE_NODEATTR = 'node_attr';
     const NODE_ALIAS = 'alias';
+    const NODE_VALUE = 'value';
     /**@}*/
     
     /**
@@ -114,6 +114,7 @@ class MapFilter_TreePattern_Xml
         self::NODE_KEYATTR => 'MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder',
         self::NODE_ATTR => 'MapFilter_TreePattern_Tree_Leaf_Attr_Builder',
         self::NODE_ALIAS => 'MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder',
+        self::NODE_VALUE => 'MapFilter_TreePattern_Tree_Value_Builder',
     );
     
     /**
@@ -298,8 +299,9 @@ class MapFilter_TreePattern_Xml
             $this->_unwrapMultiplePatterns();
         } else {
 
-            $ex = new MapFilter_TreePattern_InvalidPatternElementException;
-            throw $ex->setName($tagName);
+            throw new MapFilter_TreePattern_InvalidPatternElementException(
+                $tagName
+            );
         }
         
         $this->_xmlElement = null;
@@ -315,11 +317,12 @@ class MapFilter_TreePattern_Xml
     private function _unwrapPattern()
     {
     
-        $count = (Int) $this->_xmlElement->count();
+        $count = (Int) count($this->_xmlElement->children());
         if ( $count !== 1) {
         
-            $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-            throw $ex->setNodeAndCount(self::PATTERN, $count);
+            throw new MapFilter_TreePattern_NotExactlyOneFollowerException(
+                self::PATTERN, $count
+            );
         }
         
         $name = $this->_getElementName($this->_xmlElement);
@@ -341,19 +344,20 @@ class MapFilter_TreePattern_Xml
     private function _unwrapMultiplePatterns()
     {
     
-        if ($this->_xmlElement->count() < 1) {
+        if (count($this->_xmlElement->children()) < 1) {
         
             throw new MapFilter_TreePattern_NoPatternSpecifiedException;
         }
       
         $this->_sideTreeElements = Array();
-        foreach (iterator_to_array($this->_xmlElement, false) as $child) {
+        foreach ($this->_xmlElement->children() as $child) {
           
-            $count = (Int) $child->count();
+            $count = (Int) count($child->children());
             if ($count !== 1) {
 
-                $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-                throw $ex->setNodeAndCount(self::PATTERN, $count);
+                throw new MapFilter_TreePattern_NotExactlyOneFollowerException(
+                    self::PATTERN, $count
+                );
             }
 
             $this->_store($child);
@@ -412,8 +416,7 @@ class MapFilter_TreePattern_Xml
             return;
         }
         
-        $ex = new MapFilter_TreePattern_ColidingPatternNamesException;
-        throw $ex->setName($name);
+        throw new MapFilter_TreePattern_ColidingPatternNamesException($name);
     }
     
     /**
@@ -432,17 +435,18 @@ class MapFilter_TreePattern_Xml
         $tagName = $this->_validateTagName($xml);
 
         /** Parse followers recursively */
-        $followers = array_map(
-            Array($this, '_parseTree'),
-            iterator_to_array($xml->children(), false)
-        );
+        $followers = Array ();
+        foreach ( $xml->children() as $child ) {
+        
+            $followers[] = $this->_parseTree($child);
+        }
 
         $node = $this->_createNodeBuilder($tagName, $followers);
 
         $node = $this->_parseTagAttributes($xml, $node, $tagName);
         
-        $textContent =trim((String) $xml[ 0 ]);
-        if ((Bool) strlen($textContent)) {
+        $textContent = trim((String) $xml[ 0 ]);
+        if (!empty($textContent)) {
 
             $node->setTextContent($textContent);
         }
@@ -463,13 +467,18 @@ class MapFilter_TreePattern_Xml
      */
     private function _validateTagName(SimpleXmlElement $xml)
     {
-    
-        $tagName = $xml->getName();
+
+        /**
+         * $tagName = $xml->getName (); can not be used.
+         * Yealds parent name instead in PHP 5.2.3
+         */
+        $tagName = current($xml->xpath('.'))->getName();
 
         if ($this->_isValidTag($tagName)) return $tagName;
 
-        $ex = new MapFilter_TreePattern_InvalidPatternElementException;
-        throw $ex->setName($tagName);
+        throw new MapFilter_TreePattern_InvalidPatternElementException(
+            $tagName
+        );
     }
     
     /**
@@ -507,17 +516,11 @@ class MapFilter_TreePattern_Xml
       
         /** Instantiate pattern node */
         $class = self::$_tagToNode[ $tagName ];
-        $node = new $class;
+        $node = new $class($tagName);
 
         if ($followers === Array()) return $node;
 
-        try {
-        
-            $node->setContent($followers);
-        } catch (MapFilter_TreePattern_Xml_InvalidXmlContentException $ex) {
-        
-            throw $ex->setNodeName($tagName);
-        }
+        $node->setContent($followers);
 
         return $node;
     }
@@ -544,14 +547,8 @@ class MapFilter_TreePattern_Xml
         $attributes = $this->_getAttributes($xml);
         foreach ($attributes as $attrName => $attrVal) {
         
-            try {
-  
-                $method = 'set' . ucfirst($attrName);
-                $nodeBuilder->$method ( $attrVal );
-            } catch (MapFilter_TreePattern_InvalidPatternAttributeException $ex) {
-          
-                throw $ex->setNodeAndAttribute($tagName, $attrName);
-            }
+            $method = MapFilter_TreePattern_Tree_Builder::getSetter($attrName);
+            $nodeBuilder->$method($attrVal);
         }
 
         return $nodeBuilder;

@@ -126,8 +126,9 @@ abstract class MapFilter_TreePattern_Tree_Leaf_Builder extends
 
         if (!is_numeric($depth)) {
         
-            $ex = new MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException;
-            throw $ex->setValue($depth);
+            throw new MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException(
+                $depth
+            );
         }
     
         $this->iterator = (Int) $depth;

@@ -30,7 +30,7 @@
 require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Builder.php';
 require_once 'PHP/MapFilter/TreePattern/Tree/Node/All.php';
 
-require_once 'PHP/MapFilter/TreePattern/Xml/InvalidXmlContentException.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/InvalidContentException.php';
 
 /**
  * Tree All element builder class
@@ -68,13 +68,16 @@ class MapFilter_TreePattern_Tree_Leaf_Attr_Builder extends
      * @param Array $content Content to set.
      *
      * @return null
+     * @throws MapFilter_TreePattern_Tree_InvalidContentException
      *
      * @since   $NEXT$
      */
     public function setContent(Array $content)
     {
     
-        throw new MapFilter_TreePattern_Xml_InvalidXmlContentException;
+        throw new MapFilter_TreePattern_Tree_InvalidContentException(
+            $this->elementName
+        );
     }
 
     /**

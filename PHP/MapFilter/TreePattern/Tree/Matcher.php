@@ -114,8 +114,6 @@ class MapFilter_TreePattern_Tree_Matcher
     
         if ($this->_pattern === null) return true;
 
-        assert(is_string($subject));
-        
         return (Bool) preg_match($this->_pattern, $subject);
     }
 }

@@ -47,35 +47,20 @@ extends
     /**
      * Instantiatate using default values.
      *
-     * @param String    $message  Exception message
-     * @param Int       $code     Exception code
-     * @param Exception $previous Previous exception
-     */
-    public function __construct (
-        $message = "Node '%s' has no attribute like '%s'.",
-        $code = 0,
-        Exception $previous = null
-    ) {
-    
-        parent::__construct($message, $code, $previous);
-    }
-    
-    /**
-     * Set node and attribute name.
-     *
      * @param String $node      Node name
      * @param String $attribute Attribute name
+     * @param String $message   Exception message
      *
-     * @return MapFilter_TreePattern_InvalidPatternAttributeException
+     * @since    $NEXT$
      */
-    public function setNodeAndAttribute($node, $attribute)
-    {
+    public function __construct (
+        $node, $attribute, $message = "Node '%s' has no attribute like '%s'."
+    ) {
     
         assert(is_string($node));
         assert(is_string($attribute));
-        
-        $this->message = sprintf($this->message, $node, $attribute);
-        
-        return $this;
+        assert(is_string($message));
+    
+        parent::__construct(sprintf($message, $node, $attribute));
     }
 }

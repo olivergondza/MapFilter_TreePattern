@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to load Pattern tree from xml.
+ * Missing attribute value exception
  *
  * PHP Version 5.1.0
  *
@@ -18,7 +18,7 @@
  *                              
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *                              
  * @category Pear
  * @package  MapFilter_TreePattern
  * @author   Oliver Gondža <324706@mail.muni.cz>
@@ -27,58 +27,34 @@
  * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr/Builder.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/AliasAttr.php';
-
 /**
- * Tree All element builder class
+ * Missing attribute value exception
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder
+ * @class    MapFilter_TreePattern_Tree_Attribute_MissingValueException
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder extends
-    MapFilter_TreePattern_Tree_Leaf_Attr_Builder
+class MapFilter_TreePattern_Tree_Attribute_MissingValueException extends
+    UnexpectedValueException
 {
 
     /**
-     * Fluent Method; Set content.
+     * Instantiate using default values
      *
-     * @param Array $content A content to set.
-     *
-     * @return MapFilter_TreePattern_Tree_Node
+     * @param String $message Exception message
      *
      * @since $NEXT$
      */
-    public function setContent(Array $content)
-    {
+    public function __construct (
+        $message = "There is an Attr node without attribute value specified."
+    ) {
     
-        foreach ($content as $follower) {
-        
-            $class = get_class($follower);
-        
-            if ($class === 'MapFilter_TreePattern_Tree_Leaf_Attr') continue;
-          
-            throw new MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException(
-                $class
-            );
-        }
-       
-        $this->content = $content;
-    }
-
-    /**
-     * Build tree element
-     *
-     * @return MapFilter_TreePattern_Tree_Leaf_AliasAttr Tree Element
-     */
-    public function build()
-    {
+        assert(is_string($message));
     
-        return new MapFilter_TreePattern_Tree_Leaf_AliasAttr($this);
+        parent::__construct($message);
     }
 }

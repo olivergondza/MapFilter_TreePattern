@@ -134,8 +134,9 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
             return array_shift($content);
         }
 
-        $ex = new MapFilter_TreePattern_NotExactlyOneFollowerException;
-        throw $ex->setNodeAndCount('node_attr', $contentCount);
+        throw new MapFilter_TreePattern_NotExactlyOneFollowerException(
+            'node_attr', $contentCount
+        );
     }
 
     /**

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pattern SYSTEM "TreePattern053.dtd">
+<pattern>
+  <all flag="login">
+
+    <key name="name" assert="no_name" />
+    <key name="pass" assert="no_password" />
+
+    <opt>
+
+      <key name="use-https">
+        <value pattern="yes" flag="use_https" />
+      </key>
+      
+      <all flag="remember">
+
+        <key name="remember" />
+        <one assert="no_remember_method">
+
+          <key name="user" />
+          <key name="server" />
+
+        </one>
+
+      </all>
+
+    </opt>
+
+  </all>
+</pattern>

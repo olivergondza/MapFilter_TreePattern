@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pattern SYSTEM "TreePattern053.dtd">
+<pattern>
+  <all>
+    <key name="action" />
+
+    <one>
+      <key name="nick" />
+
+      <all>
+        <key name="x" />
+        <key name="y" />
+        <key name="z" />
+      </all>
+    </one>
+  </all>
+</pattern>
