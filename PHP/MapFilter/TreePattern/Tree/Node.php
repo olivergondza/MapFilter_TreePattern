@@ -53,10 +53,12 @@ abstract class MapFilter_TreePattern_Tree_Node extends
      *
      * @since     0.3
      */
-    public function pickUp(Array $result)
+    public function pickUp($result)
     {
 
         if (!$this->isSatisfied()) return Array();
+      
+        $result = (Array) $result;
       
         foreach ($this->getContent() as $follower) {
 

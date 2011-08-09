@@ -218,7 +218,7 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
      *
      * @since 0.5.3
      */
-    public function pickUp(Array $result)
+    public function pickUp($result)
     {
 
         if (!$this->isSatisfied()) return Array();
@@ -227,7 +227,7 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
 
         foreach ($this->getContent() as $follower) {
 
-            $followerResult = $follower->pickUp(Array());
+            $followerResult = $follower->pickUp(null);
             
             if ($isIterator) {
 

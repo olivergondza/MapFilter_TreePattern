@@ -105,7 +105,7 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
      *
      * @since     $NEXT$
      */
-    public function pickUp(Array $result)
+    public function pickUp($result)
     {
     
         assert(empty($result));

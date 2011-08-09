@@ -254,7 +254,7 @@ class MapFilter_TreePattern implements
     public function getResults()
     {
 
-        return $this->_tempTree->pickUp(Array());
+        return $this->_tempTree->pickUp(null);
     }
     
     /**

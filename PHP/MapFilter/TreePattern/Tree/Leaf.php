@@ -109,7 +109,7 @@ implements
      *
      * @since     0.3
      */
-    public function pickUp(Array $result)
+    public function pickUp($result)
     {
 
         if (!$this->isSatisfied()) return Array();

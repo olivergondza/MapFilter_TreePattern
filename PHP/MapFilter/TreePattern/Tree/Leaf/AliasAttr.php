@@ -125,10 +125,12 @@ implements
      *
      * @since $NEXT$
      */
-    public function pickUp(Array $result)
+    public function pickUp($result)
     {
 
         if (!$this->isSatisfied()) return Array();
+        
+        $result = (Array) $result;
 
         foreach ($this->getContent() as $follower) {
 

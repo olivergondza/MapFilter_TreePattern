@@ -105,7 +105,7 @@ interface MapFilter_TreePattern_Tree_Interface
      *
      * @since     0.3
      */
-    public function pickUp(Array $result);
+    public function pickUp($result);
     
     /**
      * Get filtering flags.
