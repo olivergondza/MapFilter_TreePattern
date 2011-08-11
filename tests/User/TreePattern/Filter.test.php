@@ -17,7 +17,7 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         // Valid input queries
         Array (
@@ -48,7 +48,7 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
         // Truncate invalid option
         Array (
             Array ( '-m' => NULL ),
-            Array ()
+            null
         ),
         // Truncate redundant argument
         Array (

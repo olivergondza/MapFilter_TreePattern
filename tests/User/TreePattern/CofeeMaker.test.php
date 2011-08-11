@@ -18,7 +18,7 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends PHPUnit_Framework_Test
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         // default values will be assigned
         Array (

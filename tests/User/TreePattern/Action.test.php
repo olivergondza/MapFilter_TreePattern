@@ -20,12 +20,12 @@ class MapFilter_Test_User_TreePattern_Action extends
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         // invalid action will be truncated
         Array (
             Array ( 'action' => 'noSuchAction' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'action' => 'delete', 'id' => 42 ),
@@ -38,7 +38,7 @@ class MapFilter_Test_User_TreePattern_Action extends
         // action without mandatory attribute (id or delete) will be truncated
         Array (
             Array ( 'action' => 'delete', 'wrongAttr' => NULL ),
-            Array ()
+            null
         ),
         // earlier defined value will be kept the rest will be truncated
         Array (
@@ -64,17 +64,17 @@ class MapFilter_Test_User_TreePattern_Action extends
         // action that lacks mandatory attribute (id and old_name) will be truncated
         Array (
             Array ( 'action' => 'rename', 'new_name' => 'myFile' ),
-            Array ()
+            null
         ),
         // action that lacks mandatory attribute (new_name) will be truncated
         Array (
             Array ( 'action' => 'rename', 'old_name' => 'myFile' ),
-            Array ()
+            null
         ),
         // action that lacks mandatory attribute will be truncated
         Array (
             Array ( 'action' => 'rename' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'action' => 'report', 'id' => 42 ),
@@ -83,12 +83,12 @@ class MapFilter_Test_User_TreePattern_Action extends
         // action that lacks mandatory attribute (id) will be truncated
         Array (
             Array ( 'action' => 'report' ),
-            Array ()
+            null
         ),
         // action that lacks mandatory attribute (id) will be truncated
         Array (
             Array ( 'action' => 'report', 'file_name' => 'myName' ),
-            Array ()
+            null
         )
     );
   }

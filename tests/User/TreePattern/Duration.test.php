@@ -21,21 +21,21 @@ class MapFilter_Test_User_TreePattern_Duration extends
         // An absence of query set related assertions
         Array (
             Array (),
-            Array (),
+            null,
             Array (),
             Array ( 'no_beginning_time', 'no_start_hour' )
         ),
         // An absence of termination time set related assertions
         Array (
             Array ( 'start_hour' => 0, 'start_minute' => 0, 'start_second' => 0 ),
-            Array (),
+            null,
             Array (),
             Array ( 'no_duration_hour', 'no_end_hour', 'no_termination_time' )
         ),
         // An invalid value sets an assertion
         Array (
             Array ( 'start_hour' => 0, 'start_minute' => 0, 'start_second' => 'now' ),
-            Array (),
+            null,
             Array (),
             Array ( 'no_beginning_time', 'no_start_second' => Array ( 
                 MapFilter_TreePattern_Asserts::VALUE => 'now'
@@ -57,7 +57,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
         // Invalid value for start_hour set an assertion
         Array (
             Array ( 'start_hour' => -1 ),
-            Array (),
+            null,
             Array (),
             Array ('no_beginning_time', 'no_start_hour' => Array ( 
                 MapFilter_TreePattern_Asserts::VALUE => -1
@@ -66,7 +66,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
         // Invalid value for set_minute set an assertion
         Array (
             Array ( 'start_hour' => 0, 'start_minute' => 60 ),
-            Array (),
+            null,
             Array (),
             Array ( 'no_beginning_time', 'no_start_minute' => Array ( 
                 MapFilter_TreePattern_Asserts::VALUE => 60

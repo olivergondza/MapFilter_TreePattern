@@ -15,8 +15,12 @@ class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {
   
     return Array (
         Array (
+            Array (),
+            null
+        ),
+        Array (
             Array ( 'Attr0' => 0 ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'Attr0' => 0, 'Attr1' => 1 ),

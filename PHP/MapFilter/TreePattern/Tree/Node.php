@@ -56,16 +56,19 @@ abstract class MapFilter_TreePattern_Tree_Node extends
     public function pickUp($result)
     {
 
-        if (!$this->isSatisfied()) return Array();
-      
-        $result = (Array) $result;
+        if (!$this->isSatisfied()) return null;
       
         foreach ($this->getContent() as $follower) {
 
-            $result = array_merge(
-                $result,
-                $follower->pickUp($result)
-            );
+            $data = $follower->pickUp($result);
+            
+            if ( $data === null ) continue;
+
+            foreach ( $data as $key => $val ) {
+
+                $result[ $key ] = $val;
+            }
+            
         }
         
         return $result;

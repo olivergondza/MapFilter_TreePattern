@@ -129,7 +129,11 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         ),
         Array (
             Array ( '-o' => 'a.out' ),
-            Array ()
+            null
+        ),
+        Array (
+            Array (),
+            null
         )
     );
   }
@@ -205,7 +209,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         Array (
             Array ( '-h' => NULL, '-v' => NULL ),

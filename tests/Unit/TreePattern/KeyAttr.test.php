@@ -33,29 +33,29 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
   
     return Array (
         Array (
-            Array (),
-            Array ( 'no' => 'action' )
+            Array ( 'no' => 'action' ),
+            null,
         ),
         Array (
-            Array (),
-            Array ( 'action' => 'sickAction', 'task' => 'sickTask')
+            Array ( 'action' => 'sickAction', 'task' => 'sickTask'),
+            null,
+        ),
+        Array (
+            Array ( 'action' => 'do', 'nothing' => 'All Day' ),
+            null,
         ),
         Array (
             Array ( 'action' => 'do', 'task' => 'myTask' ),
-            Array ( 'action' => 'do', 'task' => 'myTask' )
+            Array ( 'action' => 'do', 'task' => 'myTask' ),
         ),
         Array (
             Array ( 'action' => 'schedule', 'tasks' => 'All My Tasks' ),
-            Array ( 'action' => 'schedule', 'tasks' => 'All My Tasks' )
+            Array ( 'action' => 'schedule', 'tasks' => 'All My Tasks' ),
         ),
         Array (
+            Array ( 'action' => 'do', 'task' => 'myTask', 'tasks' => 'My Tasks' ),
             Array ( 'action' => 'do', 'task' => 'myTask' ),
-            Array ( 'action' => 'do', 'task' => 'myTask', 'tasks' => 'My Tasks' )
         ),
-        Array (
-            Array (),
-            Array ( 'action' => 'do', 'nothing' => 'All Day' )
-        )
     );
   }
   
@@ -67,7 +67,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
   *
   * @dataProvider provideKeyAttrCreate
   */
-  public function testKeyAttrCreate ( $result, $query ) {
+  public function testKeyAttrCreate ( $query, $result ) {
 
     $pattern = '
         <pattern>

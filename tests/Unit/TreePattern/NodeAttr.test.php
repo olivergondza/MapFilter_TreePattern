@@ -152,19 +152,19 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         Array (
             Array ( 'value' => 1 ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'value' => 1, 'one' => 'one' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'value' => 1, 'zero' => 'zero' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'value' => 1, 'one' => 'one', 'left' => 'hand' ),
@@ -185,7 +185,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
         ),
         Array (
             Array ( 'value' => 2, 'one' => 'one', 'left' => 'hand' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'value' => 1, 'one' => 'one', 'up' => 'up', 'down' => 'down' ),
@@ -288,15 +288,15 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         Array (
             Array ( 'left' => Array ( 'value' => 1 ) ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'left' => 1 ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'value' => 42 ),

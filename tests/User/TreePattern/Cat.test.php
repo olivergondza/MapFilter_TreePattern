@@ -18,7 +18,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
     return Array (
         Array (
             Array (),
-            Array (),
+            null,
             Array (),
         ),
         Array (
@@ -33,7 +33,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
         ),
         Array (
             Array ( 'no_such_option' => '' ),
-            Array (),
+            null,
             Array (),
         ),
         Array (
@@ -48,7 +48,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
         ),
         Array (
             Array ( 'u' => '' ),
-            Array (),
+            null,
             Array (),
             Array ( 'deprecated' => Array (
                 MapFilter_TreePattern_Asserts::VALUE => ''

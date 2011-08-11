@@ -200,7 +200,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         Array (
             Array ( 'a' => 'val' ),
@@ -208,7 +208,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
         ),
         Array (
             Array ( 'b' => 'val' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'a' => 'val', 'b' => 'var' ),

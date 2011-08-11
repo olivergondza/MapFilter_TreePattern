@@ -112,17 +112,21 @@ implements
     public function pickUp($result)
     {
 
-        if (!$this->isSatisfied()) return Array();
+        if (!$this->isSatisfied()) return null;
 
         $attrName = $this->attribute->getAttribute();
         $result[ $attrName ] = $this->attribute->getValue();
 
         foreach ($this->getContent() as $follower) {
 
-            $result = array_merge(
-                $result,
-                $follower->pickUp($result)
-            );
+            $data = $follower->pickUp($result);
+            
+            if ( $data === null ) continue;
+
+            foreach ( $data as $key => $val ) {
+
+                $result[ $key ] = $val;
+            }
         }
 
         return $result;

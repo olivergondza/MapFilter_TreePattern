@@ -17,6 +17,10 @@ class MapFilter_Test_Unit_TreePattern_One extends
   
     return Array (
         Array (
+            Array (),
+            null
+        ),
+        Array (
             Array ( 'Attr0' => 0 ),
             Array ( 'Attr0' => 0 )
         ),

@@ -142,7 +142,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         ),
         Array (
             Array ( 'an_attr' => Array ( 'val2', 'val2' ) ),
-            Array (),
+            null,
             Array ( 'wrong_attr' => Array (
                 MapFilter_TreePattern_Asserts::VALUE => Array ( 'val2', 'val2' )
             ) ),
@@ -150,13 +150,13 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         ),
         Array (
             Array ( 'an_attr' => Array () ),
-            Array (),
+            null,
             Array ( 'wrong_attr' => 'wrong_attr' ),
             Array (),
         ),
         Array (
             Array (),
-            Array (),
+            null,
             Array ( 'wrong_attr' => 'wrong_attr' ),
             Array ()
         ),
@@ -437,11 +437,11 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     return Array (
         Array (
             Array ( 'name' => '' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'name' => 'away' ),
-            Array ()
+            null
         ),
         Array (
             Array ( 'name' => '0' ),
@@ -502,12 +502,12 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         ),
         Array (
             Array (),
-            Array (),
+            null,
             Array ( 'nExist' => 'nExist' )
         ),
         Array (
             Array ( 'attr' => 'asdf' ),
-            Array (),
+            null,
             Array ( 'nValid' => Array (
                 MapFilter_TreePattern_Asserts::VALUE => 'asdf'
             ) )

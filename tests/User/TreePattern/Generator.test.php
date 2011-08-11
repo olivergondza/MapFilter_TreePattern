@@ -20,7 +20,7 @@ class MapFilter_Test_User_TreePattern_Generator extends
         // No source specified
         Array (
             Array (),
-            Array (),
+            null,
             Array (),
             Array ( 'no_source' )
         ),

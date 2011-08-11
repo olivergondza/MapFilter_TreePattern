@@ -55,14 +55,14 @@ class MapFilter_Test_User_TreePattern_Login extends
         // Since 'name' is a mandatory attributes the following set is invalid
         Array (
             Array (),
-            Array (),
+            null,
             Array (),
             Array ( 'no_name' )
         ),
         // Since 'password' is a mandatory attributes the following set is invalid
         Array (
             Array ( 'name' => 'me' ),
-            Array (),
+            null,
             Array (),
             Array ( 'no_password' )
         ),

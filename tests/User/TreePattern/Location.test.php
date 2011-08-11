@@ -20,7 +20,7 @@ class MapFilter_Test_User_TreePattern_Location extends
     return Array (
         Array (
             Array (),
-            Array ()
+            null
         ),
         // Valid set
         Array (
@@ -44,12 +44,12 @@ class MapFilter_Test_User_TreePattern_Location extends
         // Missing 'z' coordinate => remaining coordinates will be trimmed => action will be truncated
         Array (
             Array ( 'action' => 'delete', 'x' => 1, 'y' => 1 ),
-            Array ()
+            null
         ),
         // Action without coordinates
         Array (
             Array ( 'action' => 'delete' ),
-            Array ()
+            null
         ),
         // Redundant attribute will be truncated
         Array (
