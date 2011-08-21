@@ -237,6 +237,6 @@ abstract class MapFilter_TreePattern_Tree_Builder
     public static function getAttribute($setterName)
     {
     
-        return lcfirst(substr($setterName, 3));
+        return strtolower($setterName[3]) . substr($setterName, 4);
     }
 }
