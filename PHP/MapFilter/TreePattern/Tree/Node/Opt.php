@@ -65,6 +65,7 @@ final class MapFilter_TreePattern_Tree_Node_Opt extends
             $follower->satisfy($query, $asserts);
         }
 
+        $this->data = $query;
         return $this->satisfied = true;
     }
 }

@@ -70,6 +70,7 @@ final class MapFilter_TreePattern_Tree_Node_All extends
             }
         }
       
+        $this->data = $query;
         return $this->satisfied = true;
     }
 }

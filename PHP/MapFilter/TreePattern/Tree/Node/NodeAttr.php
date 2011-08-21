@@ -206,6 +206,7 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
             $this->setAssertValue($asserts);
         }
 
+        $this->data = $query;
         return $this->satisfied;
     }
     

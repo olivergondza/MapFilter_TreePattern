@@ -63,19 +63,18 @@ final class MapFilter_TreePattern_Tree_Node_Some extends
         $satisfiedFollowers = Array();
         foreach ($this->getContent() as $follower) {
 
-            $satisfiedFollowers[] = $follower->satisfy($query, $asserts);
+            if ( $follower->satisfy($query, $asserts) ) {
+            
+                $this->satisfied = true;
+            }
         }
-        
-        $this->satisfied = in_array(
-            true,
-            $satisfiedFollowers
-        );
-        
-        if ($this->satisfied) {
+
+        if (!$this->satisfied) {
           
             $this->setAssertValue($asserts);
         }
         
+        $this->data = $query;
         return $this->satisfied;
     }
 }

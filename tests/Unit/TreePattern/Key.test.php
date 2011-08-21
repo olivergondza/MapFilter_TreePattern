@@ -209,14 +209,20 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   
     return Array (
         Array (
-            Array (),
+            null,
             null,
             Array (),
             Array ( 'number', 'string' )
         ),
         Array (
+            Array (),
+            Array (),
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
             new ArrayObject ( Array () ),
-            null,
+            new ArrayObject ( Array () ),
             Array (),
             Array ( 'number', 'string' )
         ),

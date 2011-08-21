@@ -16,21 +16,34 @@ class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {
     return Array (
         Array (
             Array (),
-            null
+            null,
+            Array ( 'a0', 'all' ),
+            Array (),
         ),
         Array (
             Array ( 'Attr0' => 0 ),
-            null
+            null,
+            Array ( 'a1', 'all' ),
+            Array (),
+        ),
+        Array (
+            Array ( 'Attr1' => 1 ),
+            null,
+            Array ( 'a0', 'all' ),
+            Array (),
         ),
         Array (
             Array ( 'Attr0' => 0, 'Attr1' => 1 ),
-            Array ( 'Attr0' => 0, 'Attr1' => 1 )
+            Array ( 'Attr0' => 0, 'Attr1' => 1 ),
+            Array (),
+            Array ( 'all', 'f0', 'f1' ),
         ),
         Array (
             Array ( 'Attr0' => 0, 'Attr1' => 1, 'Attr2' => 2 ),
-            Array ( 'Attr0' => 0, 'Attr1' => 1 )
+            Array ( 'Attr0' => 0, 'Attr1' => 1 ),
+            Array (),
+            Array ( 'all', 'f0', 'f1' ),
         )
-    
     );
   }
   
@@ -39,13 +52,13 @@ class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {
    *
    * @dataProvider      provideSimpleAllNode
    */
-  public function testSimpleAllNode ( $query, $result ) {
+  public function testSimpleAllNode ( $query, $result, $asserts, $flags ) {
 
     $pattern = MapFilter_TreePattern::load ( '
         <pattern>
-          <all>
-            <attr>Attr0</attr>
-            <attr>Attr1</attr>
+          <all flag="all" assert="all">
+            <attr flag="f0" assert="a0">Attr0</attr>
+            <attr flag="f1" assert="a1">Attr1</attr>
           </all>
         </pattern>
     '
@@ -53,11 +66,10 @@ class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {
 
     $filter = new MapFilter ( $pattern );
     
-    $filter->setQuery ( $query );
+    $given = $filter->setQuery ( $query )->fetchResult ();
 
-    $this->assertEquals (
-      $result,
-      $filter->fetchResult ()->getResults ()
-    );
+    $this->assertSame ( $result, $given->getResults () );
+    $this->assertSame ( $asserts, $given->getAsserts ()->getAll () );
+    $this->assertSame ( $flags, $given->getFlags ()->getAll () );
   }
 }

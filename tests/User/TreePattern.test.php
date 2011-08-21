@@ -209,7 +209,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     return Array (
         Array (
             Array (),
-            null
+            Array ()
         ),
         Array (
             Array ( '-h' => NULL, '-v' => NULL ),

@@ -45,6 +45,15 @@ abstract class MapFilter_TreePattern_Tree_Node extends
 {
 
     /**
+     * Element data
+     *
+     * @var     mixed   $data
+     *
+     * @since   $NEXT$
+     */
+    protected $data = null;
+
+    /**
      * Pick-up satisfaction results.
      *
      * @param Array $result Existing results.
@@ -68,7 +77,14 @@ abstract class MapFilter_TreePattern_Tree_Node extends
 
                 $result[ $key ] = $val;
             }
-            
+        }
+        
+        if ($result === null && $this->data !== null) {
+        
+            $result = ($this->data instanceof ArrayAccess)
+                ? new ArrayObject
+                : Array ()
+            ;
         }
         
         return $result;
