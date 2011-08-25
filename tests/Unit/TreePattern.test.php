@@ -389,4 +389,42 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
   
     MapFilter_TreePattern_Xml::load ( $pattern );
   }
+  
+  public function test () {
+  
+    $query = 42;
+    $differentQuery = 43;
+  
+    $pattern = MapFilter_TreePattern::load ( '
+        <pattern>
+          <value />
+        </pattern>
+    ' );
+    
+    $differentPattern = MapFilter_TreePattern::load ( '
+        <pattern>
+          <all />
+        </pattern>
+    ' );
+    
+    $this->assertEquals (
+        new MapFilter ( $pattern, $query ),
+        $pattern->getFilter ( $query )
+    );
+    
+    $this->assertNotEquals (
+        new MapFilter ( $pattern, $query ),
+        $pattern->getFilter ( $differentQuery )
+    );
+    
+    $this->assertNotEquals (
+        new MapFilter ( $pattern, $query ),
+        $differentPattern->getFilter ( $query )
+    );
+    
+    $this->assertNotEquals (
+        new MapFilter ( $pattern, $query ),
+        $differentPattern->getFilter ( $differentQuery )
+    );
+  }
 }

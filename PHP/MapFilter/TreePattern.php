@@ -292,6 +292,21 @@ class MapFilter_TreePattern implements
     
         return $this->_asserts;
     }
+    
+    /**
+     * Get MapFilter instance initialized ba pattern and query
+     *
+     * @param Mixed $query A query to use
+     *
+     * @return MapFilter_Interface New filter instance
+     *
+     * @since   $NEXT$
+     */
+    public function getFilter($query)
+    {
+    
+        return new MapFilter($this, $query);
+    }
 
     /**
      * Set Pattern tree.
