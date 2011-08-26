@@ -122,30 +122,56 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
   /**
    * @dataProvider      provideParseCat
    */
-  public function testParseCat (
+  public function testCat (
       $query, $result, $flags, $asserts = Array ()
   ) {
   
-    $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT
-        ),
-        $query
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT
     );
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+    ;
+    
+    $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
+    );
+  }
+  
+  /**
+   * @dataProvider      provideParseCat
+   */
+  public function testNewCat (
+      $query, $result, $flags, $asserts = Array ()
+  ) {
+  
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT_NEW
+    );
+    
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+    ;
+    
+    $this->assertEquals ( $result, $actual->getResults () );
+    
+    $this->assertEquals (
+        new MapFilter_TreePattern_Flags ( $flags ),
+        $actual->getFlags ()
+    );
+    
+    $this->assertEquals (
+        new MapFilter_TreePattern_Asserts ( $asserts ),
+        $actual->getAsserts ()
     );
   }
 }

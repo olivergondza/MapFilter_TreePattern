@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pattern SYSTEM "TreePattern053.dtd">
-<pattern>
-  <all flag="duration">
+<patterns>
+  <pattern>
+    <all flag="duration">
 
-    <all assert="no_beginning_time">
-      <key name="start_hour"   assert="no_start_hour"   attachPattern="hour" />
-      <key name="start_minute" assert="no_start_minute" attachPattern="minute" />
-      <key name="start_second" assert="no_start_second" attachPattern="second" />
+      <all assert="no_beginning_time">
+        <key name="start_hour"   assert="no_start_hour"   attachPattern="hour" />
+        <key name="start_minute" assert="no_start_minute" attachPattern="minute" />
+        <key name="start_second" assert="no_start_second" attachPattern="second" />
+      </all>
+
+      <one assert="no_termination_time">
+
+        <all flag="ending_time">
+          <key name="end_hour"   assert="no_end_hour"   attachPattern="hour" />
+          <key name="end_minute" assert="no_end_minute" attachPattern="minute" />
+          <key name="end_second" assert="no_end_second" attachPattern="second" />
+        </all>
+
+        <all flag="duration_time">
+          <key name="duration_hour"   assert="no_duration_hour"   attachPattern="hour" />
+          <key name="duration_minute" assert="no_duration_minute" attachPattern="minute" />
+          <key name="duration_second" assert="no_duration_second" attachPattern="second" />
+        </all>
+
+      </one>
+
     </all>
+  </pattern>
 
-    <one assert="no_termination_time">
+  <pattern name="hour">
+    <value pattern="/^[1-9][0-9]*|0$/" />
+  </pattern>
 
-      <all flag="ending_time">
-        <key name="end_hour"   assert="no_end_hour"   attachPattern="hour" />
-        <key name="end_minute" assert="no_end_minute" attachPattern="minute" />
-        <key name="end_second" assert="no_end_second" attachPattern="second" />
-      </all>
+  <pattern name="minute">
+    <value pattern="/^[1-5]?[0-9]$/" />
+  </pattern>
 
-      <all flag="duration_time">
-        <key name="duration_hour"   assert="no_duration_hour"   attachPattern="hour" />
-        <key name="duration_minute" assert="no_duration_minute" attachPattern="minute" />
-        <key name="duration_second" assert="no_duration_second" attachPattern="second" />
-      </all>
-
-    </one>
-
-  </all>
-</pattern>
-
-<pattern name="hour">
-  <int min="0" />
-</pattern>
-
-<pattern name="minute">
-  <int min="0" max="59" />
-</pattern>
-
-<pattern name="second">
-  <int min="0" max="59" />
-</pattern>
+  <pattern name="second">
+    <value pattern="/^[1-5]?[0-9]$/" />
+  </pattern>
+</patterns>

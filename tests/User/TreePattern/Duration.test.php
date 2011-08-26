@@ -76,72 +76,51 @@ class MapFilter_Test_User_TreePattern_Duration extends
   }
   /**@}*/
   
-  /**@{*/
   /**
    * @dataProvider      provideDuration
    */
   public function testDuration ( $query, $result, $flags, $asserts ) {
   
-    $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION
-        ),
-        $query
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION
     );
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
+    
+    $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
     );
   }
-  /**@}*/
   
-  /**{@*/
   /**
-    * @dataProvider     provideDuration
-    */
-  public function testDurationArrayAccess (
-      $query, $result, $flags, $asserts
-  ) {
+   * @dataProvider      provideDuration
+   */
+  public function testNewDuration ( $query, $result, $flags, $asserts ) {
   
-    $filterObject = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION
-        ),
-        new ArrayObject ( $query )
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION_NEW
     );
     
-    $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION
-        ),
-        $query
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
+    
+    $this->assertEquals ( $result, $actual->getResults () );
+    
+    $this->assertEquals (
+        new MapFilter_TreePattern_Flags ( $flags ),
+        $actual->getFlags ()
     );
     
     $this->assertEquals (
-        $filterObject->fetchResult ()->getResults (),
-        $filter->fetchResult ()->getResults ()
-    );
-    
-    $this->assertEquals (
-        $filterObject->fetchResult ()->getFlags (),
-        $filter->fetchResult ()->getFlags ()
-    );
-    
-    $this->assertEquals (
-        $filterObject->fetchResult ()->getAsserts (),
-        $filter->fetchResult ()->getAsserts ()
+        new MapFilter_TreePattern_Asserts ( $asserts ),
+        $actual->getAsserts ()
     );
   }
-  /**@}*/
 }

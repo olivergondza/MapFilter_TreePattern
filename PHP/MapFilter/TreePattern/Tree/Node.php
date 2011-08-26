@@ -67,6 +67,14 @@ abstract class MapFilter_TreePattern_Tree_Node extends
 
         if (!$this->isSatisfied()) return null;
       
+        if ($result === null && $this->data !== null) {
+        
+            $result = ($this->data instanceof ArrayAccess)
+                ? new ArrayObject
+                : Array ()
+            ;
+        }
+      
         foreach ($this->getContent() as $follower) {
 
             $data = $follower->pickUp($result);
@@ -79,13 +87,7 @@ abstract class MapFilter_TreePattern_Tree_Node extends
             }
         }
         
-        if ($result === null && $this->data !== null) {
         
-            $result = ($this->data instanceof ArrayAccess)
-                ? new ArrayObject
-                : Array ()
-            ;
-        }
         
         return $result;
     }

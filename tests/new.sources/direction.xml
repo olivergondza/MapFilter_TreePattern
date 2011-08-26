@@ -18,10 +18,10 @@
   <pattern name="distance">
     <all>
       <key name="count">
-        <int min="0" />
+        <value pattern="/^\d+$/" />
       </key>
       <key name="unit">
-        <string valuePattern="meter|yard" />
+        <value pattern="/^(?:meter|yard)$/" />
       </key>
     </all>
   </pattern>

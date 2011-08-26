@@ -74,21 +74,36 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * Test parse external source and validate
    * @dataProvider      provideParseFilterUtility
    */
-  public function testParseFilterUtility ( $query, $result ) {
+  public function testFilterUtility ( $query, $result ) {
 
-    $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER
-        ),
-        $query
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER
     );
+
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults()
+    $this->assertSame ( $result, $actual );
+  }
+  
+  /**
+   * @dataProvider      provideParseFilterUtility
+   */
+  public function testNewFilterUtility ( $query, $result ) {
+
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER_NEW
     );
+
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
+    
+    $this->assertSame ( $result, $actual );
   }
 }

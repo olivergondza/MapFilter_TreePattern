@@ -14,7 +14,7 @@ class MapFilter_Test_User_TreePattern_Login extends
     PHPUnit_Framework_TestCase
 {
 
-  public function provideParseLogin () {
+  public function provideLogin () {
   
     return Array (
         // Valid set; 'login' flag will be set
@@ -77,33 +77,54 @@ class MapFilter_Test_User_TreePattern_Login extends
   }
 
   /**
-   * Test parse external source and validate
-   * @dataProvider      provideParseLogin
+   * @dataProvider      provideLogin
    */
-  public function testParseLogin ( $query, $result, $flags, $asserts ) {
+  public function testLogin ( $query, $result, $flags, $asserts ) {
   
     sort ( $flags );
   
-    $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN
-        ),
-        $query
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN
     );
+    
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertSame ( $result, $actual->getResults () );
 
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
 
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
+    );
+  }
+  
+  /**
+   * @dataProvider      provideLogin
+   */
+  public function testNewLogin ( $query, $result, $flags, $asserts ) {
+  
+    sort ( $flags );
+  
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN_NEW
+    );
+    
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
+
+    $this->assertSame ( $result, $actual->getResults () );
+
+    $this->assertEquals (
+        new MapFilter_TreePattern_Flags ( $flags ),
+        $actual->getFlags ()
+    );
+
+    $this->assertEquals (
+        new MapFilter_TreePattern_Asserts ( $asserts ),
+        $actual->getAsserts ()
     );
   }
 }

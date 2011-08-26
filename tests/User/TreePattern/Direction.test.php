@@ -15,7 +15,7 @@ class MapFilter_Test_User_TreePattern_Direction extends
 {
   
   /**@{*/
-  public function provideParse () {
+  public function provideDirection () {
   
     return Array (
         // Single direction
@@ -101,24 +101,36 @@ class MapFilter_Test_User_TreePattern_Direction extends
   /**@}*/
   
   /**
-   * test parse
-   *
-   * @dataProvider      provideParse
+   * @dataProvider      provideDirection
    */
-  public function testParse ( $query, $result ) {
+  public function testDirection ( $query, $result ) {
   
     $pattern = MapFilter_TreePattern::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DIRECTION
     );
 
-    $filter = new MapFilter (
-        $pattern,
-        $query
-    );
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
+    $this->assertEquals ( $result, $actual );
+  }
+  
+  /**
+   * @dataProvider      provideDirection
+   */
+  public function testNewDirection ( $query, $result ) {
+  
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DIRECTION_NEW
     );
+
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
+
+    $this->assertEquals ( $result, $actual );
   }
 }

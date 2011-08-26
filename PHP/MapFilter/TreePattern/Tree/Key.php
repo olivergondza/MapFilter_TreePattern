@@ -88,13 +88,11 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree
     public function pickUp($result)
     {
     
-        assert(empty($result));
-      
         if (!$this->isSatisfied()) return null;
 
         if ($result === null && $this->data instanceof ArrayAccess) {
         
-          $result = new ArrayObject ();
+            $result = new ArrayObject ();
         }
 
         $result[$this->_name] = $this->data[$this->_name];
@@ -115,11 +113,17 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree
     public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
 
-        $this->satisfied = $this->_isSatisfied($query);
+        $this->satisfied = $this->_isSatisfied($query, $asserts);
         
         if (!$this->satisfied) {
         
-            $this->setAssertValue($asserts);
+            if ($this->_isPresent($query)) {
+
+                $this->setAssertValue($asserts, $query[ $this->_name ]);
+            } else {
+            
+                $this->setAssertValue($asserts);
+            }
             return false;
         }
         
@@ -128,26 +132,57 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree
     }
     
     /**
+     * Determine whether the key is present in the query
+     *
+     * @param Mixed $query A query to examine.
+     *
+     * @return Bool Is present.
+     *
+     * @since $NEXT$
+     */
+    private function _isPresent ($query)
+    {
+    
+        if (!MapFilter_TreePattern::isMap($query)) return false;
+        
+        return is_array($query)
+            ? array_key_exists($this->_name, $query)
+            : $query->offsetExists($this->_name)
+        ;
+    }
+    
+    /**
      * Determine whether the lement is satisfied
      *
      * @param Mixed                         &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
      *
      * @return Bool Satisfied or not.
      *
      * @since     $NEXT$
      */
-    private function _isSatisfied(&$query)
-    {
+    private function _isSatisfied(
+        &$query, MapFilter_TreePattern_Asserts $asserts
+    ) {
     
         if (!MapFilter_TreePattern::isMap($query)) return false;
         
-        $valid = is_array($query)
-            ? array_key_exists($this->_name, $query)
-            : $query->offsetExists($this->_name)
-        ;
+        $valid = $this->_isPresent($query);
 
-        if (!$valid) return false;
+        $followers = $this->getContent();
+        if (empty($followers)) return $valid;
         
-        return true;
+        if (!$valid) {
+        
+            $query[ $this->_name ] = null;
+        }
+        
+        $followerSatisfied = $this->content[ 0 ]->satisfy(
+            $query[ $this->_name ], $asserts
+        );
+        
+        if ($valid && $followerSatisfied) return true;
+        
+        return $followerSatisfied && $query[ $this->_name ] !== null;
     }
 }

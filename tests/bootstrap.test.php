@@ -15,16 +15,23 @@ define ( 'PHP_TREEPATTERN_TEST_DIR', dirname ( __FILE__ ) );
 require_once 'PHP/MapFilter.php';
 
 class MapFilter_Test_Sources {
-  const LOCATION = '/sources/location.xml';
-  const LOGIN = '/sources/login.xml';
-  const COFFEE_MAKER = '/sources/coffee_maker.xml';
-  const CAT = '/sources/cat.xml';
   const ACTION = '/sources/action.xml';
-  const FILTER = '/sources/filter.xml';
-  const DURATION = '/sources/duration.xml';
-  const GENERATOR = '/sources/generator.xml';
+  const CAT_NEW = '/new.sources/cat.xml';
+  const CAT = '/sources/cat.xml';
+  const COFFEE_MAKER_NEW = '/new.sources/coffee_maker.xml';
+  const COFFEE_MAKER = '/sources/coffee_maker.xml';
+  const DIRECTION_NEW = '/new.sources/direction.xml';
   const DIRECTION = '/sources/direction.xml';
-  const PATHWAY = '/sources/pathway.xml';
+  const DURATION_NEW = '/new.sources/duration.xml';
+  const DURATION = '/sources/duration.xml';
+  const FILTER_NEW = '/new.sources/filter.xml';
+  const FILTER = '/sources/filter.xml';
+  const GENERATOR = '/sources/generator.xml';
+  const LOCATION_NEW = '/new.sources/location.xml';
+  const LOCATION = '/sources/location.xml';
+  const LOGIN_NEW = '/new.sources/login.xml';
+  const LOGIN = '/sources/login.xml';
   const PARSEINIFILE_INI = '/sources/parse_ini_file.ini';
   const PARSEINIFILE_XML = '/sources/parse_ini_file.xml';
+  const PATHWAY = '/sources/pathway.xml';
 }

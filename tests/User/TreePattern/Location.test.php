@@ -15,7 +15,7 @@ class MapFilter_Test_User_TreePattern_Location extends
 {
 
   /*@{*/
-  public function provideParseLocation () {
+  public function provideLocation () {
   
     return Array (
         Array (
@@ -61,21 +61,30 @@ class MapFilter_Test_User_TreePattern_Location extends
   /*@}*/
   
   /**
-   * Test parse external source and validate
-   * @dataProvider      provideParseLocation
+   * @dataProvider      provideLocation
    */
-  public function testParseLocation ( $query, $result ) {
+  public function testLocation ( $query, $result ) {
   
-    $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION
-        ),
-        $query
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION
     );
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults()
+    $actual = $pattern->getFilter ( $query )->fetchResult ()->getResults();
+    
+    $this->assertEquals ( $result, $actual );
+  }
+  
+  /**
+   * @dataProvider      provideLocation
+   */
+  public function testNewLocation ( $query, $result ) {
+  
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION_NEW
     );
+    
+    $actual = $pattern->getFilter ( $query )->fetchResult ()->getResults();
+    
+    $this->assertEquals ( $result, $actual );
   }
 }

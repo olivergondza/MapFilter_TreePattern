@@ -5,8 +5,9 @@
     <all>
       <one>
 
-        <attr flag="show_help">help</attr>
-        <attr flag="show_version">version</attr>
+        <key flag="show_help" name="help" />
+        
+        <key flag="show_version" name="version" />
 
         <some flag="perform_action">
 
@@ -62,12 +63,12 @@
           </alias>
 
           <!-- allowed short options -->
-          <attr>b</attr>
-          <attr>E</attr>
-          <attr>n</attr>
-          <attr>s</attr>
-          <attr>T</attr>
-          <attr>v</attr>
+          <key name="b" />
+          <key name="E" />
+          <key name="n" />
+          <key name="s" />
+          <key name="T" />
+          <key name="v" />
         </some>  
 
       </one>

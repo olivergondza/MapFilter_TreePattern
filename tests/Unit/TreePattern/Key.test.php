@@ -9,9 +9,7 @@ require_once PHP_TREEPATTERN_CLASS;
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::Key
  */
-class MapFilter_Test_Unit_TreePattern_Key extends
-    PHPUnit_Framework_TestCase
-{
+class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
 
   /**
    * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
@@ -96,7 +94,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   /**
    * @dataProvider provideKeyOnlyValid
    */
-  public function testKeyOnlyValid ( $data ) {
+  public function testKeyOnlyValid ( $query ) {
 
     $pattern = MapFilter_TreePattern::load ( '
         <pattern>
@@ -105,11 +103,11 @@ class MapFilter_Test_Unit_TreePattern_Key extends
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $pattern, $data );
+    $result = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals ( $data, $filter->fetchResult ()->getResults () );
-    $this->assertSame ( Array ( 'valid' ), $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( Array (), $filter->fetchResult ()->getAsserts ()->getAll () );
+    $this->assertEquals ( $query, $result->getResults () );
+    $this->assertSame ( Array ( 'valid' ), $result->getFlags ()->getAll () );
+    $this->assertSame ( Array (), $result->getAsserts ()->getAll () );
   }
   
   public function provideKeyOnlyInvalid () {
@@ -148,7 +146,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   /**
    * @dataProvider provideKeyOnlyInvalid
    */
-  public function testKeyOnlyInvalid ( $data ) {
+  public function testKeyOnlyInvalid ( $query ) {
 
     $pattern = MapFilter_TreePattern::load ( '
         <pattern>
@@ -157,11 +155,11 @@ class MapFilter_Test_Unit_TreePattern_Key extends
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $pattern, $data );
+    $result = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals ( null, $filter->fetchResult ()->getResults () );
-    $this->assertSame ( Array (), $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( Array ( 'invalid' ), $filter->fetchResult ()->getAsserts ()->getAll () );
+    $this->assertEquals ( null, $result->getResults () );
+    $this->assertSame ( Array (), $result->getFlags ()->getAll () );
+    $this->assertSame ( Array ( 'invalid' ), $result->getAsserts ()->getAll () );
   }
   
   public function provideKeyOnlyRich () {
@@ -198,59 +196,145 @@ class MapFilter_Test_Unit_TreePattern_Key extends
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $pattern, $query );
+    $result = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals ( $results, $filter->fetchResult ()->getResults () );
-    $this->assertSame ( Array ( 'valid' ), $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( Array (), $filter->fetchResult ()->getAsserts ()->getAll () );
+    $this->assertEquals ( $results, $result->getResults () );
+    $this->assertSame ( Array ( 'valid' ), $result->getFlags ()->getAll () );
+    $this->assertSame ( Array (), $result->getAsserts ()->getAll () );
   }
+  
+  const NUMBER_OR_STRING_PATTERN = '
+      <pattern>
+        <opt>
+          <key name="number" flag="number" assert="number">
+            <value pattern="/\d+/" />
+          </key>
+          <key name="string" flag="string" assert="string">
+            <value pattern="/[a-z]+/" />
+          </key>
+        </opt>
+      </pattern>
+  ';
   
   public function provideKeyValue () {
   
     return Array (
+        /** Empty */
         Array (
             null,
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number', 'string' ),
         ),
         Array (
             Array (),
             Array (),
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number', 'string' ),
+        ),
+        /** Valid keys */
+        Array (
+            Array ( 'bool' => true ),
+            Array (),
+            Array (),
+            Array ( 'number', 'string' ),
         ),
         Array (
-            new ArrayObject ( Array () ),
-            new ArrayObject ( Array () ),
-            Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number' => 0 ),
+            Array ( 'number' => 0 ),
+            Array ( 'number' ),
+            Array ( 'string' ),
         ),
+        Array (
+            Array ( 'string' => 'asdf' ),
+            Array ( 'string' => 'asdf' ),
+            Array ( 'string' ),
+            Array ( 'number' ),
+        ),
+        Array (
+            Array ( 'string' => 'asdf', 'number' => 0 ),
+            Array ( 'string' => 'asdf', 'number' => 0 ),
+            Array ( 'number', 'string' ),
+            Array (),
+        ),
+        /** Redundant keys */
+        Array (
+            Array ( 'bool' => true ),
+            Array (),
+            Array (),
+            Array ( 'number', 'string' ),
+        ),
+        Array (
+            Array ( 'string' => 'asdf', 'number' => 0, 'bool' => true ),
+            Array ( 'string' => 'asdf', 'number' => 0 ),
+            Array ( 'number', 'string' ),
+            Array (),
+        ),
+        /** Errors */
+        Array (
+            Array ( 'number' => 'asdf' ),
+            Array (),
+            Array (),
+            Array ( 'number', 'string' ),
+        ),
+
     );
   }
   
   /**
    * @dataProvider provideKeyValue
+   *
+   * @group Unit::TreePattern::Key::TestKeyValue
    */
-  public function testKeyValue ( $query, $results, $flags, $asserts ) {
+  public function testKeyValue (
+      $query, $results, Array $flags, Array $asserts
+  ) {
   
-    $pattern = MapFilter_TreePattern::load ( '
-        <pattern>
-          <opt>
-            <key name="number" flag="number" assert="number">
-              <value pattern="/\d+/" />
-            </key>
-            <key name="string" flag="string" assert="string">
-              <value pattern="/[a-z]+/" />
-            </key>
-          </opt>
-        </pattern>
-    ' );
+    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OR_STRING_PATTERN );
     
-    $filter = new MapFilter ( $pattern, $query );
+    $result = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals ( $results, $filter->fetchResult ()->getResults () );
-    $this->assertSame ( $flags, $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $filter->fetchResult ()->getAsserts ()->getAll () );
+    $this->assertEquals ( $results, $result->getResults () );
+    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
+    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+  }
+  
+  public function provideKeyValueArrayObject () {
+
+    $data = Array ();
+    foreach ( $this->provideKeyValue () as $set ) {
+
+      if ( is_array ( $set[ 0 ] ) ) {
+      
+        $set[ 0 ] = new ArrayObject ( $set[ 0 ] );
+      }
+      
+      if ( is_array ( $set[ 1 ] ) ) {
+      
+        $set[ 1 ] = new ArrayObject ( $set[ 1 ] );
+      }
+      
+      $data[] = $set;
+    }
+    
+    return $data;
+  }
+  
+  /**
+   * @dataProvider provideKeyValueArrayObject
+   *
+   * @group Unit::TreePattern::Key::TestKeyValueArrayObject
+   */
+  public function testKeyValueArrayObject (
+      $query, $results, Array $flags, Array $asserts
+  ) {
+  
+    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OR_STRING_PATTERN );
+    
+    $result = $pattern->getFilter ( $query )->fetchResult ();
+
+    $this->assertEquals ( $results, $result->getResults () );
+    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
+    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
   }
 }
