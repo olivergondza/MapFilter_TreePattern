@@ -1,8 +1,6 @@
 <?php
-/**
- * Require tested class
- */
-require_once PHP_TREEPATTERN_DIR . '/Tree/Matcher.php';
+
+require_once 'PHP/MapFilter/TreePattern.php';
 
 /**
  * @group	Unit

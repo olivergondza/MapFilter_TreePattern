@@ -3,7 +3,7 @@
  * Pathway
  */
 
-require_once PHP_TREEPATTERN_CLASS;
+require_once 'PHP/MapFilter/TreePattern.php';
 
 /**
  * @group	User

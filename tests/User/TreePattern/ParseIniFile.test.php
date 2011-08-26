@@ -3,7 +3,7 @@
  * Parse .ini File
  */
 
-require_once PHP_TREEPATTERN_CLASS;
+require_once 'PHP/MapFilter/TreePattern.php';
 
 /**
  * @group       User
@@ -17,7 +17,7 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
   const EXPAND_SECTIONS = TRUE;
  
   /**@{*/
-  public function testParse () {
+  public function testParseIniFile () {
   
     $content = parse_ini_file (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_INI,
@@ -25,7 +25,7 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
     );
 
     $pattern = MapFilter_TreePattern::fromFile (
-        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE
     );
     
     $filter = new MapFilter ( $pattern, $content );

@@ -1,8 +1,6 @@
 <?php
-/**
- * Require tested class
- */
-require_once PHP_TREEPATTERN_CLASS;
+
+require_once 'PHP/MapFilter/TreePattern.php';
 
 /**
  * @group	Unit
@@ -164,7 +162,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   }
   
   /**
-   * @group policy
+   *
    */
   public function testPolicy () {
   

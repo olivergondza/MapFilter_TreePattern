@@ -3,7 +3,7 @@
 * User Tests
 */  
 
-require_once PHP_TREEPATTERN_CLASS;
+require_once 'PHP/MapFilter/TreePattern.php';
 
 /**
  * @group       User
@@ -270,7 +270,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::GENERATOR ),
         Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DIRECTION ),
         Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY ),
-        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_XML ),
+        Array ( PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE ),
     );
   }
 
@@ -303,7 +303,6 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
 
   /**
    * @dataProvider      provideTautology
-   * @group tautology
    */
   public function testTautology ( $data ) {
   
