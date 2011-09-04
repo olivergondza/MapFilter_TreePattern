@@ -29,6 +29,8 @@ class MapFilter_Test_Sources {
   const LOGIN_NEW = '/new.sources/login.xml';
   const LOGIN = '/sources/login.xml';
   const PARSEINIFILE_INI = '/sources/parse_ini_file.ini';
+  const PARSEINIFILE_NEW = '/new.sources/parse_ini_file.xml';
   const PARSEINIFILE = '/sources/parse_ini_file.xml';
+  const PATHWAY_NEW = '/new.sources/pathway.xml';
   const PATHWAY = '/sources/pathway.xml';
 }

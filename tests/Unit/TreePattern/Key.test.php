@@ -201,7 +201,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
     $this->assertSame ( Array (), $result->getAsserts ()->getAll () );
   }
   
-  const NUMBER_OR_STRING_PATTERN = '
+  const NUMBER_OPT_STRING_PATTERN = '
       <pattern>
         <opt>
           <key name="number" flag="number" assert="number">
@@ -213,8 +213,8 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
         </opt>
       </pattern>
   ';
-  
-  public function provideKeyValue () {
+
+  public function provideOptKeyValue () {
   
     return Array (
         /** Empty */
@@ -231,12 +231,6 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
             Array ( 'number', 'string' ),
         ),
         /** Valid keys */
-        Array (
-            Array ( 'bool' => true ),
-            Array (),
-            Array (),
-            Array ( 'number', 'string' ),
-        ),
         Array (
             Array ( 'number' => 0 ),
             Array ( 'number' => 0 ),
@@ -275,20 +269,23 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
             Array (),
             Array ( 'number', 'string' ),
         ),
-
+        Array (
+            Array ( 'string' => 15 ),
+            Array (),
+            Array (),
+            Array ( 'number', 'string' ),
+        ),
     );
   }
   
   /**
-   * @dataProvider provideKeyValue
-   *
-   * @group Unit::TreePattern::Key::TestKeyValue
+   * @dataProvider provideOptKeyValue
    */
-  public function testKeyValue (
+  public function testOptKeyValue (
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OR_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OPT_STRING_PATTERN );
     
     $result = $pattern->getFilter ( $query )->fetchResult ();
 
@@ -297,10 +294,10 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
     $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
   }
   
-  public function provideKeyValueArrayObject () {
+  public function provideOptKeyValueArrayObject () {
 
     $data = Array ();
-    foreach ( $this->provideKeyValue () as $set ) {
+    foreach ( $this->provideOptKeyValue () as $set ) {
 
       if ( is_array ( $set[ 0 ] ) ) {
       
@@ -319,15 +316,418 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * @dataProvider provideKeyValueArrayObject
-   *
-   * @group Unit::TreePattern::Key::TestKeyValueArrayObject
+   * @dataProvider provideOptKeyValueArrayObject
    */
-  public function testKeyValueArrayObject (
+  public function testOptKeyValueArrayObject (
+      $query, $results, Array $flags, Array $asserts
+  ) {
+
+    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OPT_STRING_PATTERN );
+    
+    $result = $pattern->getFilter ( $query )->fetchResult ();
+
+    $this->assertEquals ( $results, $result->getResults () );
+    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
+    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+  }
+  
+  const NUMBER_AND_STRING_PATTERN = '
+      <pattern>
+        <all>
+          <key name="number" flag="number" assert="number">
+            <value pattern="/\d+/" />
+          </key>
+          <key name="string" flag="string" assert="string">
+            <value pattern="/[a-z]+/" />
+          </key>
+        </all>
+      </pattern>
+  ';
+  
+  public function provideAndKeyValue () {
+  
+    return Array (
+        /** Empty */
+        Array (
+            null,
+            null,
+            Array (),
+            Array ( 'number' ),
+        ),
+        Array (
+            Array (),
+            null,
+            Array (),
+            Array ( 'number' ),
+        ),
+        /** One */
+        Array (
+            Array ( 'number' => 42 ),
+            null,
+            Array (),
+            Array ( 'string' )
+        ),
+        Array (
+            Array ( 'string' => 'str' ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => 'not a number' ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        /** Both */
+        Array (
+            Array ( 'number' => 42, 'string' => 'str' ),
+            Array ( 'number' => 42, 'string' => 'str' ),
+            Array ( 'number', 'string' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'number' => 42, 'string' => 'str', 'something' => 'else' ),
+            Array ( 'number' => 42, 'string' => 'str' ),
+            Array ( 'number', 'string' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'number' => '', 'string' => 'str' ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => 42, 'string' => 42 ),
+            null,
+            Array (),
+            Array ( 'string' )
+        ),
+        Array (
+            Array ( 'number' => '', 'string' => 42 ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        /** Redundant Keys */
+        Array (
+            Array ( 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => '', 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => 42, 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'string' )
+        ),
+        Array (
+            Array ( 'string' => '', 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'string' => 42, 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'string' => 'str', 'number' => 42, 'bool' => true ),
+            Array ( 'string' => 'str', 'number' => 42 ),
+            Array ( 'number', 'string' ),
+            Array ()
+        ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideAndKeyValue
+   */
+  public function testAndKeyValue (
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OR_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern::load ( self::NUMBER_AND_STRING_PATTERN );
+    
+    $result = $pattern->getFilter ( $query )->fetchResult ();
+
+    $this->assertEquals ( $results, $result->getResults () );
+    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
+    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+  }
+  
+  const NUMBER_SOME_STRING_PATTERN = '
+      <pattern>
+        <some>
+          <key name="number" flag="number" assert="number">
+            <value pattern="/\d+/" />
+          </key>
+          <key name="string" flag="string" assert="string">
+            <value pattern="/[a-z]+/" />
+          </key>
+        </some>
+      </pattern>
+  ';
+  
+  public function provideSomeKeyValue () {
+  
+    return Array (
+        /** Empty */
+        Array (
+            null,
+            null,
+            Array (),
+            Array ( 'number', 'string' ),
+        ),
+        Array (
+            Array (),
+            null,
+            Array (),
+            Array ( 'number', 'string' ),
+        ),
+        /** One */
+        Array (
+            Array ( 'number' => 42 ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ( 'string' )
+        ),
+        Array (
+            Array ( 'string' => 'str' ),
+            Array ( 'string' => 'str' ),
+            Array ( 'string' ),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => 'not a number' ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        /** Both */
+        Array (
+            Array ( 'number' => 42, 'string' => 'str' ),
+            Array ( 'number' => 42, 'string' => 'str' ),
+            Array ( 'number', 'string' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'number' => 42, 'string' => 'str', 'something' => 'else' ),
+            Array ( 'number' => 42, 'string' => 'str' ),
+            Array ( 'number', 'string' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'number' => '', 'string' => 'str' ),
+            Array ( 'string' => 'str' ),
+            Array ( 'string' ),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => 42, 'string' => 42 ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ( 'string' )
+        ),
+        Array (
+            Array ( 'number' => '', 'string' => 42 ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        /** Redundant Keys */
+        Array (
+            Array ( 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'number' => '', 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'number' => 42, 'bool' => true ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ( 'string' )
+        ),
+        Array (
+            Array ( 'string' => '', 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'string' => 42, 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'string' => 'str', 'number' => 42, 'bool' => true ),
+            Array ( 'string' => 'str', 'number' => 42 ),
+            Array ( 'number', 'string' ),
+            Array ()
+        ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideSomeKeyValue
+   */
+  public function testSomeKeyValue (
+      $query, $results, Array $flags, Array $asserts
+  ) {
+  
+    $pattern = MapFilter_TreePattern::load ( self::NUMBER_SOME_STRING_PATTERN );
+    
+    $result = $pattern->getFilter ( $query )->fetchResult ();
+
+    $this->assertEquals ( $results, $result->getResults () );
+    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
+    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+  }
+  
+  const NUMBER_ONE_STRING_PATTERN = '
+      <pattern>
+        <one>
+          <key name="number" flag="number" assert="number">
+            <value pattern="/\d+/" />
+          </key>
+          <key name="string" flag="string" assert="string">
+            <value pattern="/[a-z]+/" />
+          </key>
+        </one>
+      </pattern>
+  ';
+  
+  public function provideOneKeyValue () {
+  
+    return Array (
+        /** Empty */
+        Array (
+            null,
+            null,
+            Array (),
+            Array ( 'number', 'string' ),
+        ),
+        Array (
+            Array (),
+            null,
+            Array (),
+            Array ( 'number', 'string' ),
+        ),
+        /** One */
+        Array (
+            Array ( 'number' => 42 ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'string' => 'str' ),
+            Array ( 'string' => 'str' ),
+            Array ( 'string' ),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => 'not a number' ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        /** Both */
+        Array (
+            Array ( 'number' => 42, 'string' => 'str' ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'number' => 42, 'string' => 'str', 'something' => 'else' ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'number' => '', 'string' => 'str' ),
+            Array ( 'string' => 'str' ),
+            Array ( 'string' ),
+            Array ( 'number' )
+        ),
+        Array (
+            Array ( 'number' => 42, 'string' => 42 ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'number' => '', 'string' => 42 ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        /** Redundant Keys */
+        Array (
+            Array ( 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'number' => '', 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'number' => 42, 'bool' => true ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ()
+        ),
+        Array (
+            Array ( 'string' => '', 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'string' => 42, 'bool' => true ),
+            null,
+            Array (),
+            Array ( 'number', 'string' )
+        ),
+        Array (
+            Array ( 'string' => 'str', 'number' => 42, 'bool' => true ),
+            Array ( 'number' => 42 ),
+            Array ( 'number' ),
+            Array ()
+        ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideOneKeyValue
+   */
+  public function testOneKeyValue (
+      $query, $results, Array $flags, Array $asserts
+  ) {
+  
+    $pattern = MapFilter_TreePattern::load ( self::NUMBER_ONE_STRING_PATTERN );
     
     $result = $pattern->getFilter ( $query )->fetchResult ();
 

@@ -89,11 +89,11 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
     public function __construct(MapFilter_TreePattern_Tree_Builder $builder)
     {
     
+        parent::__construct($builder);
+    
         $this->pattern = $builder->pattern;
         $this->replacement = $builder->replacement;
         $this->default = $builder->default;
-        
-        parent::__construct($builder);
     }
 
     /**

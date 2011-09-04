@@ -37,7 +37,9 @@ require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/AliasAttr/Builder.php';
 require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr/Builder.php';
 
 require_once 'PHP/MapFilter/TreePattern/Tree/Value/Builder.php';
+
 require_once 'PHP/MapFilter/TreePattern/Tree/Key/Builder.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Iterator/Builder.php';
 
 require_once 'PHP/MapFilter/TreePattern/Xml/LibXmlException.php';
 require_once 'PHP/MapFilter/TreePattern/InvalidPatternElementException.php';
@@ -98,6 +100,7 @@ class MapFilter_TreePattern_Xml
     const NODE_ALIAS = 'alias';
     const NODE_VALUE = 'value';
     const NODE_KEY = 'key';
+    const NODE_ITERATOR = 'iterator';
     /**@}*/
     
     /**
@@ -118,6 +121,7 @@ class MapFilter_TreePattern_Xml
         self::NODE_ALIAS => 'MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder',
         self::NODE_VALUE => 'MapFilter_TreePattern_Tree_Value_Builder',
         self::NODE_KEY => 'MapFilter_TreePattern_Tree_Key_Builder',
+        self::NODE_ITERATOR => 'MapFilter_TreePattern_Tree_Iterator_Builder',
     );
     
     /**

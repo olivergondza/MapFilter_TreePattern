@@ -11,20 +11,19 @@
   <pattern name="step">
     <one>
       <key name="turn">
-        <value pattern="left|right" />
+        <value pattern="/^(?:left|right)$/" />
       </key>
       <key name="walk">
         <one>
-          <key name="metres" attachPattern="langth" />
-          <key name="yards"  attachPattern="langth" />
+          <key name="metres" attachPattern="length" />
+          <key name="yards"  attachPattern="length" />
         </one>
       </key>
     </one>
   </pattern>
 
   <pattern name="length">
-    <value pattern="\d*" />
+    <value pattern="/^\d*$/" />
   </pattern>
 
 </patterns>
-

@@ -249,7 +249,7 @@ class MapFilter_TreePattern_Tree_Attribute
     public function setValueReplacement($valueReplacement)
     {
 
-        $this->_valueReplacement = new MapFilter_TreePattern_Tree_Replacer (
+        $this->_valueReplacement = new MapFilter_TreePattern_Tree_Replacer(
             $valueReplacement
         );
       

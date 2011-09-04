@@ -40,18 +40,32 @@ class MapFilter_Test_Unit_TreePattern_Replacer extends
   public function provideReplacement () {
   
     return Array (
-        Array ( '/^a$/b/' ),
-        Array ( 's/^a$/b/' ),
-        Array ( 's/^\/$/b/' ),
+        Array ( '/^a$/b/', 'a', 'b' ),
+        Array ( '/^a$/b/', 'c', 'c' ),
+        Array ( '/^a$/b/', 'aa', 'aa' ),
+        Array ( '/^a$/b/', '', '' ),
+        Array ( 's/^a$/b/', 'a', 'b' ),
+        Array ( 's/^a$/b/', 'c', 'c' ),
+        Array ( 's/^a$/b/', 'aa', 'aa' ),
+        Array ( 's/^a$/b/', '', '' ),
+        Array ( 's/^\/$/b/', '/', 'b' ),
+        Array ( 's/^\/$/b/', '!', '!' ),
+        Array ( 's/^\/$/b/', '//', '//' ),
+        Array ( 's/^\/$/b/', '', '' ),
     );
   }
   
   /**
    * @dataProvider      provideReplacement
    */
-  public function testReplacement ( $replacement ) {
+  public function testReplacement ( $replacement, $src, $expected ) {
   
-    new MapFilter_TreePattern_Tree_Replacer ( $replacement );
+    $rep = new MapFilter_TreePattern_Tree_Replacer ( $replacement );
+    
+    $this->assertSame (
+        $expected,
+        $rep->replace ( $src )
+    );
   }
   
   /**

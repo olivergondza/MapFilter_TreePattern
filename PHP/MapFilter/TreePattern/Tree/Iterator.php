@@ -34,35 +34,19 @@ require_once 'PHP/MapFilter/TreePattern/Tree.php';
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Key
+ * @class    MapFilter_TreePattern_Tree_Ieerator
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree
+class MapFilter_TreePattern_Tree_Iterator extends MapFilter_TreePattern_Tree
 {
 
-    /**
-     * Element content
-     *
-     * @var mixed $_data
-     *
-     * @since   $NEXT$
-     */
     private $_data = null;
-    
+
     /**
-     * Key name
-     *
-     * @var String $_name
-     *
-     * @since   $NEXT$
-     */
-    private $_name = null;
-    
-    /**
-     * Instantiate attribute
+     * Instantiate iterator element
      *
      * @param MapFilter_TreePattern_Tree_Builder $builder A builder to use.
      *
@@ -72,8 +56,6 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree
     {
 
         parent::__construct($builder);
-        
-        $this->_name = $builder->name;
     }
 
     /**
@@ -87,23 +69,18 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree
      */
     public function pickUp($result)
     {
-    
+
         if (!$this->isSatisfied()) return null;
 
-        if ($result === null && $this->_data instanceof ArrayAccess) {
-        
-            $result = new ArrayObject();
+        foreach ($this->getContent() as $key => $follower) {
+
+            if ($follower->isSatisfied()) {
+            
+                $this->_data[ $key ] = $follower->pickUp($result);
+            }
         }
 
-        if ( !empty ( $this->content ) ) {
-        
-            $result[$this->_name] = $this->content[0]->pickUp(null);
-        } else {
-        
-            $result[$this->_name] = $this->_data[$this->_name];
-        }
-
-        return $result;
+        return $this->_data;
     }
     
     /**
@@ -118,79 +95,57 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree
      */
     public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
+        assert($this->satisfied === false);
 
-        $this->satisfied = $this->_isSatisfied($query, $asserts);
+        $this->satisfied = MapFilter_TreePattern::isIterator($query);
+        
+        if ($this->getContent()) {
+        
+            if ($this->satisfied) {
+
+                $this->_dispatchFollowers($query, $asserts);
+            }
+        }
         
         if (!$this->satisfied) {
         
-            if ($this->_isPresent($query)) {
-
-                $this->setAssertValue($asserts, $query[ $this->_name ]);
-            } else {
-            
-                $this->setAssertValue($asserts);
-            }
+            $this->setAssertValue($asserts);
             return false;
         }
-        
+
         $this->_data = $query;
-        return true;
+        return $this->satisfied;
     }
     
     /**
-     * Determine whether the key is present in the query
-     *
-     * @param Mixed $query A query to examine.
-     *
-     * @return Bool Is present.
-     *
-     * @since $NEXT$
-     */
-    private function _isPresent ($query)
-    {
-    
-        if (!MapFilter_TreePattern::isMap($query)) return false;
-        
-        if (is_array($query)) {
-        
-            return array_key_exists($this->_name, $query);
-        }
-        
-        return $query->offsetExists($this->_name);
-    }
-    
-    /**
-     * Determine whether the lement is satisfied
+     * Satisfy followers using new pattern for each follower
      *
      * @param Mixed                         &$query  A query to filter.
      * @param MapFilter_TreePattern_Asserts $asserts Asserts.
      *
-     * @return Bool Satisfied or not.
+     * @return  null
      *
      * @since     $NEXT$
      */
-    private function _isSatisfied(
+    private function _dispatchFollowers(
         &$query, MapFilter_TreePattern_Asserts $asserts
     ) {
     
-        if (!MapFilter_TreePattern::isMap($query)) return false;
+        $content = $this->getContent();
+        $follower = $content[ 0 ];
+        $this->content = Array ();
         
-        $valid = $this->_isPresent($query);
+        foreach ($query as $key => &$iteratorItem) {
+        
+            $pattern = clone $follower;
 
-        $followers = $this->getContent();
-        if (empty($followers)) return $valid;
-        
-        if (!$valid) {
-        
-            $query[ $this->_name ] = null;
+            if (!$pattern->satisfy($iteratorItem, $asserts)) {
+
+                unset ($query[ $key ]);
+                continue;
+            }
+            
+            $this->content[ $key ] = $pattern;
         }
-        
-        $followerSatisfied = $this->content[ 0 ]->satisfy(
-            $query[ $this->_name ], $asserts
-        );
-        
-        if ($valid && $followerSatisfied) return true;
-        
-        return $followerSatisfied && $query[ $this->_name ] !== null;
     }
 }

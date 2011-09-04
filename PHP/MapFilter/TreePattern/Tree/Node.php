@@ -81,13 +81,17 @@ abstract class MapFilter_TreePattern_Tree_Node extends
             
             if ( $data === null ) continue;
 
+            if (!MapFilter_TreePattern::isMap($data)) {
+            
+                $result = $data;
+                continue;
+            }
+
             foreach ( $data as $key => $val ) {
 
                 $result[ $key ] = $val;
             }
         }
-        
-        
         
         return $result;
     }

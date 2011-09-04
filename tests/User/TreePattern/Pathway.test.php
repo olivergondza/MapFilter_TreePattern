@@ -14,14 +14,9 @@ class MapFilter_Test_User_TreePattern_Pathway extends
     PHPUnit_Framework_TestCase
 {
   
-  public function provideParse () {
+  public function provide () {
   
     return Array (
-        // Empty; Mandatory attribute "steps" is missing
-        Array (
-            Array (),
-            Array ()
-        ),
         // Just turn
         Array (
             Array ( 'steps' =>
@@ -91,7 +86,6 @@ class MapFilter_Test_User_TreePattern_Pathway extends
                 )
             )
         ),
-
         Array (
             Array ( 'steps' =>
                 Array (
@@ -118,24 +112,76 @@ class MapFilter_Test_User_TreePattern_Pathway extends
         ),
     );
   }
+
+  public function providePathway () {
+  
+    // Empty; Mandatory attribute "steps" is missing
+    $empty = Array (
+        Array (
+            Array (),
+            Array (),
+        ),
+        Array (
+            Array ( 'steps' => Array () ),
+            Array (),
+        ),
+    );
+
+    return array_merge ( $this->provide (), $empty );
+  }
   
   /**
-   * test parse
-   *
-   * @dataProvider      provideParse
+   * @dataProvider      providePathway
    */
-  public function testParse ( $query, $result ) {
+  public function testPathway ( $query, $result ) {
 
     $pattern = MapFilter_TreePattern::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY
     );
 
-    $filter = new MapFilter ( $pattern, $query );
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
+    $this->assertEquals ( $result, $actual );
+  }
+  
+  public function provideNewPathway () {
+  
+    // Empty; Mandatory attribute "steps" is missing
+    $empty = Array (
+        Array (
+            null,
+            null,
+        ),
+        Array (
+            Array (),
+            null,
+        ),
+        Array (
+            Array ( 'steps' => Array () ),
+            Array ( 'steps' => Array () ),
+        ),
+    );
+    
+    return array_merge ( $this->provide (), $empty );
+  }
+  
+  /**
+   * @dataProvider      provideNewPathway
+   */
+  public function testNewPathway ( $query, $result ) {
+
+    $pattern = MapFilter_TreePattern::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY_NEW
     );
 
+    $actual = $pattern->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
+
+    $this->assertEquals ( $result, $actual );
   }
 }
