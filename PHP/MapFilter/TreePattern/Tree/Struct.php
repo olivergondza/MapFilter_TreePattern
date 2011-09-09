@@ -27,20 +27,20 @@
  * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree/Node.php';
+require_once 'PHP/MapFilter/TreePattern/Tree.php';
 
 /**
  * Abstract class for pattern tree node.
  *
  * @category Pear
  * @package  MapFilter_TreePattern
- * @class    MapFilter_TreePattern_Tree_Policy
+ * @class    MapFilter_TreePattern_Tree_Struct
  * @author   Oliver Gondža <324706@mail.muni.cz>
  * @license  http://www.gnu.org/copyleft/lesser.html  LGPL License
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-abstract class MapFilter_TreePattern_Tree_Policy extends
-    MapFilter_TreePattern_Tree_Node
+abstract class MapFilter_TreePattern_Tree_Struct extends
+    MapFilter_TreePattern_Tree
 {
 }

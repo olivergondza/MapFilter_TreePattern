@@ -27,7 +27,7 @@
  * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/TreePattern/Tree.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Struct.php';
 
 /**
  * MapFilter pattern tree attribute leaf.
@@ -40,7 +40,8 @@ require_once 'PHP/MapFilter/TreePattern/Tree.php';
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class MapFilter_TreePattern_Tree_Iterator extends MapFilter_TreePattern_Tree
+class MapFilter_TreePattern_Tree_Iterator extends
+    MapFilter_TreePattern_Tree_Struct
 {
 
     private $_data = null;
