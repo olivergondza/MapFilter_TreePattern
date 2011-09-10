@@ -399,8 +399,8 @@ $data = preg_replace (
  * tag.
  */
 $data = preg_replace (
-    '/^(\s*\*\s*)((\\\|@)link\s+\S+)/',
-    "\\1\\3par URL:\n\\1  \\2 \\3endlink",
+    '/^(\s*\*\s*)(\\\|@)link\s+(\S+)/',
+    "\\1\\2par URL:\n\\1  \\3",
     $data
 );
 

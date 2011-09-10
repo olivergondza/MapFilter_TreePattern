@@ -15,11 +15,8 @@ clean:
 	
 doxygen:
 	$(DOXYGEN)$(USER_INI) > /dev/null
-	-cat ./doxygen/user_warn.log | grep -v \\\\file | grep -v \\\\link
 	$(DOXYGEN)$(PROGRAMMER_INI) > /dev/null
-	-cat ./doxygen/programmer_warn.log | grep -v \\\\file | grep -v \\\\link
 	$(DOXYGEN)$(INTERNAL_INI) > /dev/null
-	-cat ./doxygen/internal_warn.log | grep -v \\\\file | grep -v \\\\link
 
 phpdoc:
 	$(PHPDOC)$(USER_INI) > /dev/null
