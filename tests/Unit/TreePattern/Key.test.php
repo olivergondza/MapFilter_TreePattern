@@ -6,12 +6,18 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::Key
+ *
+ * @covers MapFilter_TreePattern_Tree_Key
+ * @covers MapFilter_TreePattern_Tree_Key_Builder
  */
 class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
 
   /**
    * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
    * @expectedExceptionMessage Node 'key' has no content.
+   *
+   * @covers MapFilter_TreePattern_Tree_InvalidContentException
+   * @covers MapFilter_TreePattern_Tree_Key_Builder<extended>
    */
   public function testTextContent () {
   
@@ -41,6 +47,8 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   /**
    * @expectedException MapFilter_TreePattern_NotExactlyOneFollowerException
    * @expectedExceptionMessage The 'key' node must have exactly one follower but 2 given.
+   *
+   * @covers MapFilter_TreePattern_NotExactlyOneFollowerException
    */
   public function testNotExactlyOneFollower () {
   

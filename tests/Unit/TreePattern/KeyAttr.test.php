@@ -6,6 +6,10 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::KeyAttr
+ *
+ * @covers MapFilter_TreePattern_Tree_Leaf_KeyAttr<extended>
+ * @covers MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder<extended>
+ * @covers MapFilter_TreePattern_Tree_Attribute
  */
 class MapFilter_Test_Unit_TreePattern_KeyAttr extends
     PHPUnit_Framework_TestCase

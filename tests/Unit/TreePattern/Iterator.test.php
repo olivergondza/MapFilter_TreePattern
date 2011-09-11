@@ -6,12 +6,18 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::Iterator
+ *
+ * @covers MapFilter_TreePattern_Tree_Iterator
+ * @covers MapFilter_TreePattern_Tree_Iterator_Builder
  */
 class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCase {
 
   /**
    * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
    * @expectedExceptionMessage Node 'iterator' has no content.
+   *
+   * @covers MapFilter_TreePattern_Tree_InvalidContentException
+   * @covers MapFilter_TreePattern_Tree_Iterator_Builder<extended>
    */
   public function testTextContent () {
   
@@ -25,6 +31,9 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
   /**
    * @expectedException MapFilter_TreePattern_NotExactlyOneFollowerException
    * @expectedExceptionMessage The 'iterator' node must have exactly one follower but 2 given.
+   *
+   * @covers MapFilter_TreePattern_NotExactlyOneFollowerException
+   * @covers MapFilter_TreePattern_Tree_Iterator_Builder
    */
   public function testNotExactlyOneFollower () {
   
@@ -208,6 +217,8 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
   
   /**
    * @dataProvider provideStructIterator
+   *
+   * @covers MapFilter_TreePattern_Tree_Node
    */
   public function testStructIterator ( $query, $result, $asserts, $flags ) {
 

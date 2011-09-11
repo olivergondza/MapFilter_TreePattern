@@ -1,15 +1,15 @@
 <?php
 /**
-* User Tests using action.xml
-*/
+ * User Tests using action.xml
+ */
 
 require_once 'PHP/MapFilter/TreePattern.php';
 
 /**
-* @group	User
-* @group	User::TreePattern
-* @group	User::TreePattern::Action
-*/
+ * @group	User
+ * @group	User::TreePattern
+ * @group	User::TreePattern::Action
+ */
 class MapFilter_Test_User_TreePattern_Action extends
     PHPUnit_Framework_TestCase
 {

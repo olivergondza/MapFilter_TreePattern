@@ -6,10 +6,33 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::AliasAttr
+ *
+ * @covers MapFilter_TreePattern_Tree_Leaf_AliasAttr<extended>
+ * @covers MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder<extended>
+ * @covers MapFilter_TreePattern_Tree_Attribute
  */
 class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     PHPUnit_Framework_TestCase
 {
+  
+  /**
+   * @expectedException MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
+   * @expectedExceptionMessage  Only allowed follower for AliasAttribute is Attr.
+   *
+   * @covers MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
+   */
+  public function testDisallowedFollowerException () {
+  
+    $pattern = '
+        <pattern>
+          <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/">
+            <alias attr="other_num" />
+          </alias>
+        </pattern>
+    ';
+  
+    MapFilter_TreePattern_Xml::load ( $pattern );
+  }
   
   public function provideEmptyAliasAttr () {
   
@@ -76,23 +99,6 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
         new MapFilter_TreePattern_Asserts ( $asserts ),
         $filter->fetchResult ()->getAsserts ()
     );
-  }
-  
-  /**
-   * @expectedException MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
-   * @expectedExceptionMessage  Only allowed follower for AliasAttribute is Attr.
-   */
-  public function testDisallowedFollowerException () {
-  
-    $pattern = '
-        <pattern>
-          <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/">
-            <alias attr="other_num" />
-          </alias>
-        </pattern>
-    ';
-  
-    $pattern = MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   public function provideOneToOneAliasAttr () {

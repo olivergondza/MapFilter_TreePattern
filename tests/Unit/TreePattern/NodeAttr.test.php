@@ -6,31 +6,13 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::NodeAttr
+ *
+ * @covers MapFilter_TreePattern_Tree_Node_NodeAttr<extended>
+ * @covers MapFilter_TreePattern_Tree_Node_NodeAttr_Builder<extended>
  */
 class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     PHPUnit_Framework_TestCase
 {
-  
-  /**
-   * try attach nothing
-   *
-   * @expectedException MapFilter_TreePattern_InvalidPatternNameException
-   * @expectedExceptionMessage  Pattern 'NoSuchPattern' can not be attached.
-   */
-  public function testWrongPatternAttachment () {
-  
-    $pattern = '
-        <pattern>
-          <all attachPattern="NoSuchPattern" />
-        </pattern>
-    ';
-    
-    $filter = new MapFilter (
-          MapFilter_TreePattern_Xml::load ( $pattern )
-    );
-    
-    $filter->fetchResult ();
-  }
   
   /**
    * More than one node_attr follower

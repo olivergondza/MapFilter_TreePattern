@@ -44,7 +44,6 @@ require_once 'PHP/MapFilter/TreePattern/Tree/Iterator/Builder.php';
 require_once 'PHP/MapFilter/TreePattern/Xml/LibXmlException.php';
 require_once 'PHP/MapFilter/TreePattern/InvalidPatternElementException.php';
 require_once 'PHP/MapFilter/TreePattern/NotExactlyOneFollowerException.php';
-require_once 'PHP/MapFilter/TreePattern/InvalidPatternAttributeException.php';
 require_once 'PHP/MapFilter/TreePattern/ColidingPatternNamesException.php';
 require_once 'PHP/MapFilter/TreePattern/NoPatternSpecifiedException.php';
 require_once 'PHP/MapFilter/TreePattern/NoMainPatternException.php';

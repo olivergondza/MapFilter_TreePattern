@@ -28,9 +28,7 @@
  */
 
 require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Builder.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/Node/All.php';
-
-require_once 'PHP/MapFilter/TreePattern/Tree/InvalidContentException.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Leaf/Attr.php';
 
 /**
  * Tree All element builder class
@@ -46,39 +44,6 @@ require_once 'PHP/MapFilter/TreePattern/Tree/InvalidContentException.php';
 class MapFilter_TreePattern_Tree_Leaf_Attr_Builder extends
     MapFilter_TreePattern_Tree_Leaf_Builder
 {
-
-    /**
-     * Set text content for the element
-     *
-     * @param String $name Attribute name.
-     *
-     * @return null
-     *
-     * @since   $NEXT$
-     */
-    public function setTextContent($name)
-    {
-    
-        $this->setAttr($name);
-    }
-
-    /**
-     * Set element content
-     *
-     * @param Array $content Content to set.
-     *
-     * @return null
-     * @throws MapFilter_TreePattern_Tree_InvalidContentException
-     *
-     * @since   $NEXT$
-     */
-    public function setContent(Array $content)
-    {
-    
-        throw new MapFilter_TreePattern_Tree_InvalidContentException(
-            $this->elementName
-        );
-    }
 
     /**
      * Build tree element

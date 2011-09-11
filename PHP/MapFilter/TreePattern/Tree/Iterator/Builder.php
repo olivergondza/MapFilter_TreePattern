@@ -56,24 +56,6 @@ class MapFilter_TreePattern_Tree_Iterator_Builder extends
     public $content = Array();
     
     /**
-     * Set text content for the element
-     *
-     * @param String $name Attribute name.
-     *
-     * @return null
-     * @throws MapFilter_TreePattern_Tree_InvalidContentException
-     *
-     * @since   $NEXT$
-     */
-    public function setTextContent($name)
-    {
-    
-        throw new MapFilter_TreePattern_Tree_InvalidContentException(
-            $this->elementName
-        );
-    }
-
-    /**
      * Set element content
      *
      * @param Array $content Content to set.

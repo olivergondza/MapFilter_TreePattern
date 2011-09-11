@@ -6,6 +6,9 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::Value
+ *
+ * @covers MapFilter_TreePattern_Tree_Value
+ * @covers MapFilter_TreePattern_Tree_Value_Builder
  */
 class MapFilter_Test_Unit_TreePattern_Value extends
     PHPUnit_Framework_TestCase
@@ -118,6 +121,9 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   /**
    * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
    * @expectedExceptionMessage Node 'value' has no content.
+   *
+   * @covers MapFilter_TreePattern_Tree_InvalidContentException
+   * @covers MapFilter_TreePattern_Tree_Value_Builder<extended>
    */
   public function testTextContent () {
   

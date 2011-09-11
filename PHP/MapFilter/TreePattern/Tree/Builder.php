@@ -27,6 +27,7 @@
  * @since    $NEXT$
  */
 
+require_once 'PHP/MapFilter/TreePattern/Tree/InvalidContentException.php';
 require_once 'PHP/MapFilter/TreePattern/InvalidPatternAttributeException.php';
 
 /**
@@ -42,6 +43,15 @@ require_once 'PHP/MapFilter/TreePattern/InvalidPatternAttributeException.php';
  */
 abstract class MapFilter_TreePattern_Tree_Builder
 {
+    
+    /**
+     * Element Name
+     *
+     * @var String $validatetionAssert
+     *
+     * @since   $NEXT$
+     */
+    public $elementName = null;
     
     /**
      * Validation assert
@@ -188,13 +198,22 @@ abstract class MapFilter_TreePattern_Tree_Builder
     }
     
     /**
-     * Build tree element
+     * Set text content for the element
      *
-     * @return MapFilter_TreePattern_Tree Tree Element
+     * @param String $name Attribute name.
      *
-     * @since    $NEXT$
+     * @return null
+     * @throws MapFilter_TreePattern_Tree_InvalidContentException
+     *
+     * @since   $NEXT$
      */
-    abstract public function build();
+    public function setTextContent($name)
+    {
+    
+        throw new MapFilter_TreePattern_Tree_InvalidContentException(
+            $this->elementName
+        );
+    }
     
     /**
      * Prohibit all the other setters
@@ -213,6 +232,15 @@ abstract class MapFilter_TreePattern_Tree_Builder
             self::getAttribute($name)
         );
     }
+    
+    /**
+     * Build tree element
+     *
+     * @return MapFilter_TreePattern_Tree Tree Element
+     *
+     * @since    $NEXT$
+     */
+    abstract public function build();
     
     /**
      * Get name of setter method for given attribute name

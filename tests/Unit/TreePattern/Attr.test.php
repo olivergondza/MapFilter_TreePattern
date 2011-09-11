@@ -6,6 +6,10 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::Attr
+ *
+ * @covers MapFilter_TreePattern_Tree_Leaf_Attr<extended>
+ * @covers MapFilter_TreePattern_Tree_Leaf_Attr_Builder<extended>
+ * @covers MapFilter_TreePattern_Tree_Attribute
  */
 class MapFilter_Test_Unit_TreePattern_Attr extends
     PHPUnit_Framework_TestCase
@@ -74,10 +78,13 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    *
    * @expectedException MapFilter_TreePattern_Tree_Attribute_MissingValueException
    * @expectedExceptionMessage There is an Attr node without attribute value specified.
+   *
+   * @covers MapFilter_TreePattern_Tree_Attribute_MissingValueException 
+   * @covers MapFilter_TreePattern_Tree_Attribute
    */
   public function testAssertEmptyAttr ( $pattern ) {
   
-    $pattern = MapFilter_TreePattern_Xml::load ( $pattern );
+    MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   /**
@@ -111,6 +118,9 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    *
    * @expectedException MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException
    * @expectedExceptionMessage Unsupported value 'auto' for iterator attribute.
+   *
+   * @covers MapFilter_TreePattern_Tree_Leaf_InvalidDepthIndicatorException 
+   * @covers MapFilter_TreePattern_Tree_Leaf_Attr_Builder<extended>
    */
   public function testInvalidIteratorValue () {
   
@@ -549,6 +559,8 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   /**
    * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
    * @expectedExceptionMessage Node 'attr' has no content
+   *
+   * @covers MapFilter_TreePattern_Tree_InvalidContentException
    */
   public function testContent () {
   

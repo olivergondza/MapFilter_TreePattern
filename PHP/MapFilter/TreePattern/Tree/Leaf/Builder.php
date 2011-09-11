@@ -256,4 +256,37 @@ abstract class MapFilter_TreePattern_Tree_Leaf_Builder extends
     
         $this->name = $name;
     }
+    
+    /**
+     * Set element content
+     *
+     * @param Array $content Content to set.
+     *
+     * @return null
+     * @throws MapFilter_TreePattern_Tree_InvalidContentException
+     *
+     * @since   $NEXT$
+     */
+    public function setContent(Array $content)
+    {
+    
+        throw new MapFilter_TreePattern_Tree_InvalidContentException(
+            $this->elementName
+        );
+    }
+    
+    /**
+     * Set text content for the element
+     *
+     * @param String $name Attribute name.
+     *
+     * @return null
+     *
+     * @since   $NEXT$
+     */
+    public function setTextContent($name)
+    {
+    
+        $this->setAttr($name);
+    }
 }

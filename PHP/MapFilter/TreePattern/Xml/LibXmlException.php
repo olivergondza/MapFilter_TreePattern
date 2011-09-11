@@ -38,9 +38,7 @@
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-abstract class
-    MapFilter_TreePattern_Xml_LibXmlException
-extends
+abstract class MapFilter_TreePattern_Xml_LibXmlException extends
     UnexpectedValueException
 {
 
@@ -102,9 +100,7 @@ extends
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Xml_LibXmlWarningException
-extends
+class MapFilter_TreePattern_Xml_LibXmlWarningException extends
     MapFilter_TreePattern_Xml_LibXmlException
 {
 }
@@ -120,9 +116,7 @@ extends
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Xml_LibXmlErrorException
-extends
+class MapFilter_TreePattern_Xml_LibXmlErrorException extends
     MapFilter_TreePattern_Xml_LibXmlException
 {
 }
@@ -138,9 +132,7 @@ extends
  * @link     http://github.com/olivergondza/MapFilter
  * @since    $NEXT$
  */
-class
-    MapFilter_TreePattern_Xml_LibXmlFatalException
-extends
+class MapFilter_TreePattern_Xml_LibXmlFatalException extends
     MapFilter_TreePattern_Xml_LibXmlException
 {
 }

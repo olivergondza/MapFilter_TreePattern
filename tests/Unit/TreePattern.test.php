@@ -54,7 +54,41 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     MapFilter_TreePattern::fromFile ( null );
   }
   
-  /** Parse a tag that hes not been wrapped in <pattern> tags */
+  /**
+   * @expectedException MapFilter_TreePattern_InvalidPatternElementException
+   * @expectedExceptionMessage  Invalid pattern element 'lantern'.
+   *
+   * @covers MapFilter_TreePattern_Xml::_unwrap
+   * @covers MapFilter_TreePattern_Xml::_validateTagName
+   * @covers MapFilter_TreePattern_InvalidPatternElementException
+   */
+  public function testInvalidRootElement () {
+
+    MapFilter_TreePattern_Xml::load ( '<lantern></lantern>' );
+  }
+  
+  /**
+   * @expectedException MapFilter_TreePattern_InvalidPatternElementException
+   * @expectedExceptionMessage  Invalid pattern element 'wrongnode'.
+   *
+   * @covers MapFilter_TreePattern_Xml::_unwrap
+   * @covers MapFilter_TreePattern_Xml::_validateTagName
+   * @covers MapFilter_TreePattern_InvalidPatternElementException
+   */
+  public function testInvalidPatternElement () {
+  
+    MapFilter_TreePattern_Xml::load (
+        '<pattern><wrongnode></wrongnode></pattern>'
+    );
+  }
+  
+  /**
+   * Parse a tag that hes not been wrapped in <pattern> tags
+   *
+   * @covers    MapFilter_TreePattern_Xml::_unwrap
+   * @covers    MapFilter_TreePattern_Xml::_unwrapPattern
+   * @covers    MapFilter_TreePattern_Xml::_unwrapMultiplePatterns
+   */
   public function testUnwrapped () {
 
     $lazyPattern = '<attr>anAttribute</attr>';
@@ -72,13 +106,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     );
   }
   
-  /**
-   * @expectedException MapFilter_TreePattern_Xml_LibXmlException
-   */
-  public function testWrongFile () {
   
-    $filter = MapFilter_TreePattern_Xml::fromFile ( 'no_such_file.xml' );
-  }
   
   public function provideWrongAttribute () {
   
@@ -215,6 +243,8 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    * Get wrong attribute
    *
    * @dataProvider provideWrongAttribute
+   *
+   * @covers MapFilter_TreePattern_Tree_Builder
    */
   public function testWrongAttribute ( $pattern, $exception ) {
 
@@ -332,6 +362,9 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    * @dataProvider provideColidingPatternNames
    *
    * @expectedException MapFilter_TreePattern_ColidingPatternNamesException
+   *
+   * @covers    MapFilter_TreePattern_ColidingPatternNamesException
+   * @covers    MapFilter_TreePattern_Xml
    */
   public function testColidingPatternNames ( $pattern ) {
 
@@ -351,6 +384,9 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    *
    * @expectedException MapFilter_TreePattern_NoPatternSpecifiedException
    * @expectedExceptionMessage No pattern specified.
+   *
+   * @covers    MapFilter_TreePattern_NoPatternSpecifiedException
+   * @covers    MapFilter_TreePattern_Xml
    */  
   public function testNoPatternSpecified ( $pattern ) {
   
@@ -390,6 +426,9 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    *
    * @expectedException MapFilter_TreePattern_NoMainPatternException
    * @expectedExceptionMessage No main pattern specified.
+   *
+   * @covers    MapFilter_TreePattern_NoMainPatternException
+   * @covers    MapFilter_TreePattern_Xml
    */
   public function testNoMainPattern ( $pattern ) {
   
@@ -417,13 +456,30 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    * @dataProvider provideInvalidXml
    *
    * @expectedException MapFilter_TreePattern_Xml_LibXmlFatalException
+   *
+   * @covers    MapFilter_TreePattern_Xml_LibXmlFatalException<extended>
+   * @covers    MapFilter_TreePattern_Xml::_loadXml
    */
   public function testInvalidXml ( $pattern ) {
   
     MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
-  public function test () {
+  /**
+   * @expectedException MapFilter_TreePattern_Xml_LibXmlException
+   *
+   * @covers    MapFilter_TreePattern_Xml::_loadXml
+   * @covers    MapFilter_TreePattern_Xml_LibXmlException
+   */
+  public function testWrongFile () {
+  
+    $filter = MapFilter_TreePattern_Xml::fromFile ( 'no_such_file.xml' );
+  }
+  
+  /**
+   * @covers MapFilter_TreePattern::getFilter
+   */
+  public function testGetFilter () {
   
     $query = 42;
     $differentQuery = 43;
@@ -459,5 +515,26 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
         new MapFilter ( $pattern, $query ),
         $differentPattern->getFilter ( $differentQuery )
     );
+  }
+  
+  /**
+   * @expectedException MapFilter_TreePattern_InvalidPatternNameException
+   * @expectedExceptionMessage  Pattern 'NoSuchPattern' can not be attached.
+   *
+   * @covers    MapFilter_TreePattern_InvalidPatternNameException
+   * @covers    MapFilter_TreePattern
+   */
+  public function testWrongPatternAttachment () {
+  
+    $pattern = '
+        <pattern>
+          <all attachPattern="NoSuchPattern" />
+        </pattern>
+    ';
+    
+    MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( false )
+        ->fetchResult ()
+    ;
   }
 }

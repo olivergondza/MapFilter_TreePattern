@@ -12,17 +12,6 @@ require_once 'PHP/MapFilter/TreePattern.php';
 class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
 
   /**@{*/
-  /**
-   * Use slightly wrong pattern
-   * @expectedException MapFilter_TreePattern_InvalidPatternElementException
-   * @expectedExceptionMessage  Invalid pattern element 'lantern'.
-   */
-  public function testWrongPattern () {
-
-    $pattern = MapFilter_TreePattern_Xml::load ( '<lantern></lantern>' );
-    $this->fail ( 'No exception risen' );
-  }
-  
   public function provideWrongCount () {
   
     return Array (
@@ -78,36 +67,24 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   }
   
   /**
-   * Invalid node
-   *
-   * @expectedException MapFilter_TreePattern_InvalidPatternElementException
-   * @expectedExceptionMessage  Invalid pattern element 'wrongnode'.
-   */
-  public function testWrongTag () {
-  
-    $pattern = MapFilter_TreePattern_Xml::load (
-        '<pattern><wrongnode></wrongnode></pattern>'
-    );
-  }
-  
-  /**
-   * Multiple tree deserialization
    * @expectedException MapFilter_TreePattern_NotExactlyOneFollowerException
    * @expectedExceptionMessage  The 'pattern' node must have exactly one follower but 2 given.
    */
   public function testMultipleTree () {
   
-    $pattern = MapFilter_TreePattern_Xml::load (
+    MapFilter_TreePattern_Xml::load (
         '<pattern><opt></opt><all></all></pattern>'
     );
   }
   
   /**
-   * Invalid attr
    * @expectedException MapFilter_TreePattern_InvalidPatternAttributeException
    * @expectedExceptionMessage Node 'key_attr' has no attribute like 'wrongattr'.
+   *
+   * @covers MapFilter_TreePattern_InvalidPatternAttributeException
+   * @covers MapFilter_TreePattern_Tree_Builder
    */
-  public function testWrongAttr () {
+  public function testInvalidAttr () {
   
     $pattern = '
         <pattern>
@@ -141,6 +118,8 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   /**@{*/
   /**
    * @dataProvider      provideSimpleOneWhitelist
+   *
+   * @covers MapFilter_TreePattern_Tree_Node_One
    */
   public function testSimpleOneWhitelist ( $query, $result ) {
   
@@ -180,6 +159,8 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   /*@{*/
   /**
    * @dataProvider      provideSimpleAllWhitelist
+   *
+   * @covers MapFilter_TreePattern_Tree_Node_All
    */
   public function testSimpleAllWhitelist ( $query, $result ) {
   
@@ -233,6 +214,8 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
   /*@{*/
   /**
    * @dataProvider      provideSimpleOptWhitelist
+   *
+   * @covers MapFilter_TreePattern_Tree_Node_Opt
    */
   public function testSimpleOptWhitelist ( $query, $result ) {
     
@@ -276,6 +259,8 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
 
   /**
    * @dataProvider      provideCompareStringAndFileLoad
+   *
+   * @covers MapFilter_TreePattern_Xml::_loadXml
    */
   public function testCompareStringAndFileLoad ( $url ) {
 
@@ -303,6 +288,8 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
 
   /**
    * @dataProvider      provideTautology
+   * 
+   * @covers MapFilter_TreePattern_Tree_Value
    */
   public function testTautology ( $data ) {
   

@@ -6,6 +6,9 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::All
+ *
+ * @covers MapFilter_TreePattern_Tree_Node_All<extended>
+ * @covers MapFilter_TreePattern_Tree_Node_All_Builder
  */
 class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {  
   

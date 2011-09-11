@@ -32,7 +32,6 @@ require_once 'PHP/MapFilter/TreePattern/Tree/Builder.php';
 require_once 'PHP/MapFilter/TreePattern/Tree/Value.php';
 
 require_once 'PHP/MapFilter/TreePattern/NotExactlyOneFollowerException.php';
-require_once 'PHP/MapFilter/TreePattern/Tree/InvalidContentException.php';
 
 /**
  * Tree All element builder class
@@ -84,24 +83,6 @@ class MapFilter_TreePattern_Tree_Value_Builder extends
      * @since   $NEXT$
      */
     public $content = Array();
-
-    /**
-     * Set text content for the element
-     *
-     * @param String $name Attribute name.
-     *
-     * @return null
-     * @throws MapFilter_TreePattern_Tree_InvalidContentException
-     *
-     * @since   $NEXT$
-     */
-    public function setTextContent($name)
-    {
-    
-        throw new MapFilter_TreePattern_Tree_InvalidContentException(
-            $this->elementName
-        );
-    }
 
     /**
      * Set element content
