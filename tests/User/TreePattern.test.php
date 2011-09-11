@@ -56,7 +56,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
 
     try {
 
-      $pattern = MapFilter_TreePattern_Xml::load ( $patternStr );
+      MapFilter_TreePattern_Xml::load ( $patternStr );
     } catch ( MapFilter_TreePattern_NotExactlyOneFollowerException $ex ) {
 
       $this->assertEquals (
@@ -162,7 +162,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    *
    * @covers MapFilter_TreePattern_Tree_Node_All
    */
-  public function testSimpleAllWhitelist ( $query, $result ) {
+  public function testSimpleAllWhitelist ( $query, $expected ) {
   
     $pattern = '
         <pattern>
@@ -173,15 +173,13 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         </pattern>
     ';
     
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::load ( $pattern ),
-        $query
-    );
+    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $expected, $actual );
   }
   /*@}*/
   
@@ -217,7 +215,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    *
    * @covers MapFilter_TreePattern_Tree_Node_Opt
    */
-  public function testSimpleOptWhitelist ( $query, $result ) {
+  public function testSimpleOptWhitelist ( $query, $expected ) {
     
     $pattern = '
         <pattern>
@@ -228,15 +226,13 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         </pattern>
     ';
     
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::load ( $pattern ),
-        $query
-    );
+    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $expected, $actual );
   }
   /*@{*/
   
@@ -299,12 +295,14 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $tautology, $data );
+    $flags = Array ( 'valueFlag' );
     
-    $result = $filter->fetchResult ();
-    
+    $result = $tautology->getFilter ( $data )
+        ->fetchResult ()
+    ;
+
     $this->assertEquals ( $data, $result->getResults () );
     $this->assertEquals ( Array (), $result->getAsserts ()->getAll () );
-    $this->assertEquals ( Array ( 'valueFlag' ), $result->getFlags ()->getAll () );
+    $this->assertEquals ( $flags, $result->getFlags ()->getAll () );
   }
 }

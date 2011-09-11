@@ -130,9 +130,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT
     );
     
-    $actual = $pattern->getFilter ( $query )
-        ->fetchResult ()
-    ;
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
     
     $this->assertEquals ( $result, $actual->getResults () );
     
@@ -158,9 +156,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT_NEW
     );
     
-    $actual = $pattern->getFilter ( $query )
-        ->fetchResult ()
-    ;
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
     
     $this->assertEquals ( $result, $actual->getResults () );
     

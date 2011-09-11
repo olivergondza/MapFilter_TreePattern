@@ -42,11 +42,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
 
-    $filter = new MapFilter ( $pattern, $string );
+    $actual = $pattern->getFilter ( $string )->fetchResult ();
     
-    $this->assertSame ( $result, $filter->fetchResult ()->getResults () );
-    $this->assertSame ( $flags, $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $filter->fetchResult ()->getAsserts ()->getAll () );
+    $this->assertSame ( $result, $actual->getResults () );
+    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
+    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
   }
   
   public function provideValueReplacement () {
@@ -77,11 +77,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $pattern, $string );
+    $actual = $pattern->getFilter ( $string )->fetchResult ();
     
-    $this->assertSame ( $result, $filter->fetchResult ()->getResults () );
-    $this->assertSame ( $flags, $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( Array (), $filter->fetchResult ()->getAsserts ()->getAll () );
+    $this->assertSame ( $result, $actual->getResults () );
+    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
+    $this->assertSame ( Array (), $actual->getAsserts ()->getAll () );
   }
   
   public function provideDefault () {
@@ -111,11 +111,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $pattern, $string );
+    $actual = $pattern->getFilter ( $string )->fetchResult ();
     
-    $this->assertSame ( $result, $filter->fetchResult ()->getResults () );
-    $this->assertSame ( $flags, $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $filter->fetchResult ()->getAsserts ()->getAll () );
+    $this->assertSame ( $result, $actual->getResults () );
+    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
+    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
   }
   
   /**
@@ -160,11 +160,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $pattern, $data );
+    $actual = $pattern->getFilter ( $data )->fetchResult ();
     
-    $this->assertSame ( $asserts, $filter->fetchResult ()->getAsserts ()->getAll () );
-    $this->assertSame ( $flags, $filter->fetchResult ()->getFlags ()->getAll () );
-    $this->assertSame ( $result, $filter->fetchResult ()->getResults () );
+    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
+    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
+    $this->assertSame ( $result, $actual->getResults () );
   }
   
   /**

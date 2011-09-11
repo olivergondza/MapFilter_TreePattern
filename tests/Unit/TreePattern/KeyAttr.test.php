@@ -80,14 +80,13 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         </pattern>
     ';
 
-    $filter = new MapFilter ( MapFilter_TreePattern_Xml::load ( $pattern ) );
+    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
 
-    $filter->setQuery ( $query );
-
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $result, $actual );
   }
   
   public function provideKeyAttrArrayValue () {
@@ -260,24 +259,21 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         </pattern>
     ';
     
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::load ( $pattern ),
-        $query
-    );
+    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( $query )
+        ->fetchResult ()
+    ;
     
-    $this->assertEquals (
-        $results,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $results, $actual->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
   }
 
@@ -374,15 +370,13 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         </pattern>
     ';
     
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::load ( $pattern ),
-        $query
-    );
+    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $result, $actual );
   }
   
   public function provideValidationAndAssertationDefault () {
@@ -436,14 +430,12 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         </pattern>
     ';
     
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::load ( $pattern ),
-        $query
-    );
+    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $result, $actual );
   }
 }

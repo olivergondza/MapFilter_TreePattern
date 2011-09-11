@@ -10,7 +10,9 @@ require_once 'PHP/MapFilter/TreePattern.php';
 * @group	User::TreePattern
 * @group	User::TreePattern::CoffeeMaker
 */
-class MapFilter_Test_User_TreePattern_CoffeeMaker extends PHPUnit_Framework_TestCase {
+class MapFilter_Test_User_TreePattern_CoffeeMaker extends
+    PHPUnit_Framework_TestCase
+{
 
   /*@}*/
   public function provideCoffeeMaker () {

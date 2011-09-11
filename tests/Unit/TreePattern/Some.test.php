@@ -72,9 +72,7 @@ class MapFilter_Test_Unit_TreePattern_Some extends
         </pattern>
     ' );
 
-    $filter = new MapFilter ( $pattern );
-
-    $given = $filter->setQuery ( $query )->fetchResult ();
+    $given = $pattern->getFilter ( $query )->fetchResult ();
 
     $this->assertSame ( $result, $given->getResults () );
     $this->assertSame ( $asserts, $given->getAsserts ()->getAll () );

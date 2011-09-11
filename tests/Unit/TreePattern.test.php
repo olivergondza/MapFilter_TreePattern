@@ -106,7 +106,40 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     );
   }
   
+  /**
+   * @dataProvider provideColidingPatternNames
+   *
+   * @expectedException MapFilter_TreePattern_ColidingPatternNamesException
+   *
+   * @covers    MapFilter_TreePattern_ColidingPatternNamesException
+   * @covers    MapFilter_TreePattern_Xml
+   */
+  public function testColidingPatternNames ( $pattern ) {
+
+    MapFilter_TreePattern_Xml::load ( $pattern );
+  }
+
+  public function provideNoPatternSpecified () {
   
+    return Array (
+        Array ( '<patterns/>' ),
+        Array ( '<patterns></patterns>' ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideNoPatternSpecified
+   *
+   * @expectedException MapFilter_TreePattern_NoPatternSpecifiedException
+   * @expectedExceptionMessage No pattern specified.
+   *
+   * @covers    MapFilter_TreePattern_NoPatternSpecifiedException
+   * @covers    MapFilter_TreePattern_Xml
+   */  
+  public function testNoPatternSpecified ( $pattern ) {
+  
+    MapFilter_TreePattern_Xml::load ( $pattern );
+  }
   
   public function provideWrongAttribute () {
   
@@ -293,8 +326,6 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
         </pattern>
     ' );
     
-    $simple = new MapFilter ( $simple, $query );
-    
     $assembled = MapFilter_TreePattern_Xml::load ( '
         <patterns>
           <pattern>
@@ -306,17 +337,18 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
         </patterns>
     ' );
 
-    $assembled = new MapFilter ( $assembled, $query );
+    $simple = $simple->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
+    $assembled = $assembled->getFilter ( $query )
+        ->fetchResult ()
+        ->getResults ()
+    ;
     
-    $this->assertEquals (
-        $result,
-        $simple->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $result, $assembled );
+    $this->assertEquals ( $result, $simple );
   }
   
   public function provideColidingPatternNames () {
@@ -356,41 +388,6 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
             </patterns>'
         ),
     );
-  }
-  
-  /**
-   * @dataProvider provideColidingPatternNames
-   *
-   * @expectedException MapFilter_TreePattern_ColidingPatternNamesException
-   *
-   * @covers    MapFilter_TreePattern_ColidingPatternNamesException
-   * @covers    MapFilter_TreePattern_Xml
-   */
-  public function testColidingPatternNames ( $pattern ) {
-
-    MapFilter_TreePattern_Xml::load ( $pattern );
-  }
-
-  public function provideNoPatternSpecified () {
-  
-    return Array (
-        Array ( '<patterns/>' ),
-        Array ( '<patterns></patterns>' ),
-    );
-  }
-  
-  /**
-   * @dataProvider provideNoPatternSpecified
-   *
-   * @expectedException MapFilter_TreePattern_NoPatternSpecifiedException
-   * @expectedExceptionMessage No pattern specified.
-   *
-   * @covers    MapFilter_TreePattern_NoPatternSpecifiedException
-   * @covers    MapFilter_TreePattern_Xml
-   */  
-  public function testNoPatternSpecified ( $pattern ) {
-  
-    MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   public function provideNoMainPattern () {
@@ -473,13 +470,13 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    */
   public function testWrongFile () {
   
-    $filter = MapFilter_TreePattern_Xml::fromFile ( 'no_such_file.xml' );
+    MapFilter_TreePattern_Xml::fromFile ( 'no_such_file.xml' );
   }
   
   /**
    * @covers MapFilter_TreePattern::getFilter
    */
-  public function testGetFilter () {
+  public function testGetFilterEquivalency () {
   
     $query = 42;
     $differentQuery = 43;

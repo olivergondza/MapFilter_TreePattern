@@ -141,26 +141,22 @@ class MapFilter_Test_User_TreePattern_Generator extends
       $query, $result, $flags, $asserts
   ) {
   
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::GENERATOR
-        ),
-        $query
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::GENERATOR
     );
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
+    
+    $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ($asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
     );
   }
 }

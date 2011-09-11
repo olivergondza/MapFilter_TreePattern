@@ -70,9 +70,7 @@ class MapFilter_Test_Unit_TreePattern_Opt extends PHPUnit_Framework_TestCase {
         </pattern>
     ' );
 
-    $filter = new MapFilter ( $pattern, $query );
-
-    $given = $filter->setQuery ( $query )->fetchResult ();
+    $given = $pattern->getFilter ( $query )->fetchResult ();
 
     $this->assertSame ( $result, $given->getResults () );
     $this->assertSame ( $asserts, $given->getAsserts ()->getAll () );

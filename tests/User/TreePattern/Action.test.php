@@ -95,7 +95,6 @@ class MapFilter_Test_User_TreePattern_Action extends
   /*@}*/
   
   /**
-   * Test parse external source and validate
    * @dataProvider      provideParseAction
    */
   public function testParseAction ( $query, $result ) {
@@ -104,11 +103,8 @@ class MapFilter_Test_User_TreePattern_Action extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::ACTION
     );
     
-    $filter = $pattern->getFilter ( $query );
+    $actual = $pattern->getFilter ( $query )->fetchResult ()->getResults ();
     
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults()
-    );
+    $this->assertEquals ( $result, $actual );
   }
 }

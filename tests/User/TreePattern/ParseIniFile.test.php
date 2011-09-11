@@ -28,14 +28,9 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE
     );
     
-    $filter = new MapFilter ( $pattern, $content );
-    
-    $result = $filter->fetchResult ();
+    $actual = $pattern->getFilter ( $content )->fetchResult ()->getResults ();
 
-    $this->assertEquals (
-        $content,
-        $result->getResults ()
-    );
+    $this->assertEquals ( $content, $actual );
   }
   /**@}*/
   
@@ -51,14 +46,9 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_NEW
     );
     
-    $filter = new MapFilter ( $pattern, $content );
-    
-    $result = $filter->fetchResult ();
+    $actual = $pattern->getFilter ( $content )->fetchResult ()->getResults ();
 
-    $this->assertEquals (
-        $content,
-        $result->getResults ()
-    );
+    $this->assertEquals ( $content, $actual );
   }
   /**@}*/
 }

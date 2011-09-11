@@ -81,23 +81,18 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
         </pattern>
     ' );
 
-    $filter = new MapFilter ( $pattern );
-    
-    $filter->setQuery ( $query );
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
     );
   }
   
@@ -152,23 +147,18 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     '
     );
 
-    $filter = new MapFilter ( $pattern );
-    
-    $filter->setQuery ( $query );
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
     );
   }
   
@@ -224,23 +214,18 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     '
     );
 
-    $filter = new MapFilter ( $pattern );
-    
-    $filter->setQuery ( $query );
+    $actual = $pattern->getFilter ( $query )->fetchResult ();
 
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
+    $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $filter->fetchResult ()->getFlags ()
+        $actual->getFlags ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $filter->fetchResult ()->getAsserts ()
+        $actual->getAsserts ()
     );
   }
 }

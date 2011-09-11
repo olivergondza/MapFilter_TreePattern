@@ -21,7 +21,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
    */
   public function testTextContent () {
   
-    $pattern = MapFilter_TreePattern_Xml::load ( '
+    MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <iterator>value</iterator>
         </pattern>

@@ -23,12 +23,12 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
   public function testMultipleFollower () {
   
     $pattern = '
-      <pattern>
-        <node_attr attr="attr">
-          <attr>a</attr>
-          <attr>b</attr>
-        </node_attr>
-      </pattern>
+        <pattern>
+          <node_attr attr="attr">
+            <attr>a</attr>
+            <attr>b</attr>
+          </node_attr>
+        </pattern>
     ';
 
     MapFilter_TreePattern_Xml::load ( $pattern );
@@ -42,20 +42,18 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
   public function testNoFollower () {
   
     $pattern = '
-    <pattern>
-      <node_attr attr="attr">
-      </node_attr>
-    </pattern>
+        <pattern>
+          <node_attr attr="attr">
+          </node_attr>
+        </pattern>
     ';
   
     $query = Array ( 'attr' => Array ( 'attr' ) );
   
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::load ( $pattern ),
-        $query
-    );
-
-    $filter->fetchResult ();
+    MapFilter_TreePattern_Xml::load ( $pattern )
+        ->getFilter ( $query )
+        ->fetchResult ()
+    ;
   }
   
   public function provideAssertAndFlags () {
@@ -109,21 +107,18 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
           </pattern>
     ' );
 
-    $assembled = new MapFilter ( $assembled, $query );
-
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
+    $assembled = $assembled->getFilter ( $query )->fetchResult ();
+    
+    $this->assertEquals ( $result, $assembled->getResults () );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Flags ( $flags ),
-        $assembled->fetchResult ()->getFlags ()
+        $assembled->getFlags ()
     );
     
     $this->assertEquals (
         new MapFilter_TreePattern_Asserts ( $asserts ),
-        $assembled->fetchResult ()->getAsserts ()
+        $assembled->getAsserts ()
     );
   }
   
@@ -201,7 +196,6 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
             </all>
         </pattern>
     ' );
-    $simple = new MapFilter ( $simple, $query );
     
     $assembled = MapFilter_TreePattern_Xml::load ( '
         <patterns>
@@ -236,7 +230,8 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
         </patterns>
     ' );
 
-    $assembled = new MapFilter ( $assembled, $query );
+    $simple = $simple->getFilter ( $query );
+    $assembled = $assembled->getFilter ( $query );
 
     $this->assertEquals (
         $result,
@@ -343,7 +338,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
         </patterns>
     ' );
 
-    $assembled = new MapFilter ( $assembled, $query );
+    $assembled = $assembled->getFilter ( $query );
 
     $this->assertEquals (
         $result,
@@ -519,7 +514,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
         </pattern>
     ' );
 
-    $assembled = new MapFilter ( $assembled, $query );
+    $assembled = $assembled->getFilter ( $query );
 
     $this->assertEquals (
         $result,
