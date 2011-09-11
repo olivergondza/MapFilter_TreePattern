@@ -135,7 +135,7 @@ class MapFilter_Test_User_TreePattern_Pathway extends
    */
   public function testPathway ( $query, $result ) {
 
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY
     );
 
@@ -173,7 +173,7 @@ class MapFilter_Test_User_TreePattern_Pathway extends
    */
   public function testNewPathway ( $query, $result ) {
 
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY_NEW
     );
 

@@ -105,7 +105,7 @@ class MapFilter_Test_User_TreePattern_Direction extends
    */
   public function testDirection ( $query, $result ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DIRECTION
     );
 
@@ -122,7 +122,7 @@ class MapFilter_Test_User_TreePattern_Direction extends
    */
   public function testNewDirection ( $query, $result ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DIRECTION_NEW
     );
 

@@ -11,13 +11,47 @@ require_once 'PHP/MapFilter/TreePattern.php';
 class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {  
   
   /**
-   * Test whether MapFilter_TreePattern implements MapFilter_PatternInterface
+   * Test whether MapFilter_TreePattern_Xml::load returns
+   * MapFilter_PatternInterface
+   *
+   * @covers    MapFilter_TreePattern_Xml::load
    */
-  public function testInterface () {
+  public function testPatternLoadInterface () {
   
-    $pattern = MapFilter_TreePattern::load ( '<attr>attr</attr>' );
+    $pattern = MapFilter_TreePattern_Xml::load ( '<attr>attr</attr>' );
+    $this->assertInstanceOf ( 'MapFilter_PatternInterface', $pattern );
+  }
   
-    $this->assertTrue ( $pattern instanceof MapFilter_PatternInterface );
+  /**
+   * Test whether MapFilter_TreePattern_Xml::fromFile returns
+   * MapFilter_PatternInterface
+   *
+   * @covers    MapFilter_TreePattern_Xml::fromFile
+   */
+  public function testPatternFromFileInterface () {
+  
+    $file = PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT;
+  
+    $pattern = MapFilter_TreePattern_Xml::fromFile ( $file );
+    $this->assertInstanceOf ( 'MapFilter_PatternInterface', $pattern );
+  }
+  
+  /**
+   * @expectedException PHPUnit_Framework_Error
+   * @expectedExceptionMessage MapFilter_TreePattern::load is deprecated
+   */
+  public function testTreePatternLoadDeprecated () {
+  
+    MapFilter_TreePattern::load ( null );
+  }
+  
+  /**
+   * @expectedException PHPUnit_Framework_Error
+   * @expectedExceptionMessage MapFilter_TreePattern::fromFile is deprecated
+   */
+  public function testTreePatternFromFileDeprecated () {
+  
+    MapFilter_TreePattern::fromFile ( null );
   }
   
   /** Parse a tag that hes not been wrapped in <pattern> tags */
@@ -28,23 +62,22 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     $deepPattern = '<patterns><pattern><attr>anAttribute</attr></pattern></patterns>';
   
     $this->assertEquals (
-        MapFilter_TreePattern::load ( $pattern ),
-        MapFilter_TreePattern::load ( $lazyPattern )
+        MapFilter_TreePattern_Xml::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $lazyPattern )
     );
     
     $this->assertEquals (
-        MapFilter_TreePattern::load ( $pattern ),
-        MapFilter_TreePattern::load ( $deepPattern )
+        MapFilter_TreePattern_Xml::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $deepPattern )
     );
   }
   
   /**
-   * Invalid file
    * @expectedException MapFilter_TreePattern_Xml_LibXmlException
    */
   public function testWrongFile () {
   
-    $filter = MapFilter_TreePattern::fromFile ( 'no_such_file.xml' );
+    $filter = MapFilter_TreePattern_Xml::fromFile ( 'no_such_file.xml' );
   }
   
   public function provideWrongAttribute () {
@@ -187,7 +220,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
 
     try {
 
-      MapFilter_TreePattern::load ( $pattern );
+      MapFilter_TreePattern_Xml::load ( $pattern );
       $this->fail ( 'No exception risen.' );
     } catch ( MapFilter_TreePattern_InvalidPatternAttributeException $ex ) {
 
@@ -222,7 +255,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
    */
   public function testSimpleCompareAttached ( $query, $result ) {
 
-    $simple = MapFilter_TreePattern::load ( '
+    $simple = MapFilter_TreePattern_Xml::load ( '
         <pattern>
             <all>
               <attr>a</attr>
@@ -232,7 +265,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     
     $simple = new MapFilter ( $simple, $query );
     
-    $assembled = MapFilter_TreePattern::load ( '
+    $assembled = MapFilter_TreePattern_Xml::load ( '
         <patterns>
           <pattern>
             <all attachPattern="second" />
@@ -395,13 +428,13 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     $query = 42;
     $differentQuery = 43;
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value />
         </pattern>
     ' );
     
-    $differentPattern = MapFilter_TreePattern::load ( '
+    $differentPattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <all />
         </pattern>

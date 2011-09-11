@@ -26,7 +26,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     ';
     
     $filter = new MapFilter (
-          MapFilter_TreePattern::load ( $pattern )
+          MapFilter_TreePattern_Xml::load ( $pattern )
     );
     
     $filter->fetchResult ();
@@ -49,7 +49,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
       </pattern>
     ';
 
-    MapFilter_TreePattern::load ( $pattern );
+    MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   /**
@@ -69,7 +69,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     $query = Array ( 'attr' => Array ( 'attr' ) );
   
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
 
@@ -119,7 +119,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
       $query, $result, $flags, $asserts
   ) {
   
-    $assembled = MapFilter_TreePattern::load ( '
+    $assembled = MapFilter_TreePattern_Xml::load ( '
           <pattern>
             <node_attr attr="attr0">
               <attr flag="attr1" assert="attr1">attr1</attr>
@@ -201,7 +201,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    */
   public function testMultipleCompare ( $query, $result ) {
 
-    $simple = MapFilter_TreePattern::load ( '
+    $simple = MapFilter_TreePattern_Xml::load ( '
         <pattern>
             <all>
               <key_attr attr="value">
@@ -221,7 +221,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
     ' );
     $simple = new MapFilter ( $simple, $query );
     
-    $assembled = MapFilter_TreePattern::load ( '
+    $assembled = MapFilter_TreePattern_Xml::load ( '
         <patterns>
           <pattern>
             <all>
@@ -347,7 +347,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    */
   public function testCyclicParse ( $query, $result ) {
 
-    $assembled = MapFilter_TreePattern::load ( '
+    $assembled = MapFilter_TreePattern_Xml::load ( '
         <patterns>
           <pattern>
             <one>
@@ -526,7 +526,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
       $query, $result, $flags, $asserts
   ) {
   
-    $assembled = MapFilter_TreePattern::load ( '
+    $assembled = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <node_attr attr="links" iterator="yes" flag="links" assert="links">
             <all>

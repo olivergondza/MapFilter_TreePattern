@@ -81,7 +81,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
    */
   public function testDuration ( $query, $result, $flags, $asserts ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION
     );
     
@@ -105,7 +105,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
    */
   public function testNewDuration ( $query, $result, $flags, $asserts ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION_NEW
     );
     

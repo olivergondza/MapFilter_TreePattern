@@ -126,7 +126,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
       $query, $result, $flags, $asserts = Array ()
   ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT
     );
     
@@ -154,7 +154,7 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
       $query, $result, $flags, $asserts = Array ()
   ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT_NEW
     );
     

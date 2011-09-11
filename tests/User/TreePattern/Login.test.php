@@ -83,7 +83,7 @@ class MapFilter_Test_User_TreePattern_Login extends
   
     sort ( $flags );
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN
     );
     
@@ -109,7 +109,7 @@ class MapFilter_Test_User_TreePattern_Login extends
   
     sort ( $flags );
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN_NEW
     );
     

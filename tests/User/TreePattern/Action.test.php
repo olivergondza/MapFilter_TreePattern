@@ -100,12 +100,11 @@ class MapFilter_Test_User_TreePattern_Action extends
    */
   public function testParseAction ( $query, $result ) {
   
-    $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
-            PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::ACTION
-        ),
-        $query
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
+        PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::ACTION
     );
+    
+    $filter = $pattern->getFilter ( $query );
     
     $this->assertEquals (
         $result,

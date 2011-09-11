@@ -18,8 +18,8 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     $pattern = '<attr attr="wrongAttribute">anAttribute</attr>';
     
     $this->assertEquals (
-        MapFilter_TreePattern::load ( $lazyPattern ),
-        MapFilter_TreePattern::load ( $pattern )
+        MapFilter_TreePattern_Xml::load ( $lazyPattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern )
     );
   }
   
@@ -30,8 +30,8 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     $pattern = '<attr attr="anAttribute"></attr>';
     
     $this->assertEquals (
-        MapFilter_TreePattern::load ( $lazyPattern ),
-        MapFilter_TreePattern::load ( $pattern )
+        MapFilter_TreePattern_Xml::load ( $lazyPattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern )
     );
   }
   
@@ -42,7 +42,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     
     $query = Array ( 'attr0' => 'value' );
 
-    $pattern = MapFilter_TreePattern::load (
+    $pattern = MapFilter_TreePattern_Xml::load (
         '<pattern><attr>attr0</attr></pattern>'
     );
 
@@ -77,7 +77,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    */
   public function testAssertEmptyAttr ( $pattern ) {
   
-    $pattern = MapFilter_TreePattern::load ( $pattern );
+    $pattern = MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   /**
@@ -91,8 +91,8 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     $patternDefault = '<pattern><attr>an_attr</attr></pattern>';
     
     $this->assertEquals (
-        MapFilter_TreePattern::load ( $patternNoArrayValue ),
-        MapFilter_TreePattern::load ( $patternDefault )
+        MapFilter_TreePattern_Xml::load ( $patternNoArrayValue ),
+        MapFilter_TreePattern_Xml::load ( $patternDefault )
     );
     
     $patternNoArrayValue =
@@ -101,8 +101,8 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     $patternDefault = '<pattern><key_attr attr="an_attr"></key_attr></pattern>';
     
     $this->assertEquals (
-        MapFilter_TreePattern::load ( $patternNoArrayValue ),
-        MapFilter_TreePattern::load ( $patternDefault )
+        MapFilter_TreePattern_Xml::load ( $patternNoArrayValue ),
+        MapFilter_TreePattern_Xml::load ( $patternDefault )
     );
   }
   
@@ -114,7 +114,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    */
   public function testInvalidIteratorValue () {
   
-    MapFilter_TreePattern::load ( '
+    MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <attr iterator="auto">attr</attr>
         </pattern>
@@ -181,7 +181,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     </pattern>';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -240,7 +240,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -287,7 +287,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -396,7 +396,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -420,7 +420,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     $result = $query = Array ( 'name' => 'as/df/gh' );
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -480,7 +480,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -531,7 +531,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -558,6 +558,6 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         </attr>
     ';
     
-    MapFilter_TreePattern::load ( $pattern );
+    MapFilter_TreePattern_Xml::load ( $pattern );
   }
 }

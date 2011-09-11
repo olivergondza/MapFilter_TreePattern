@@ -7,9 +7,7 @@ require_once 'PHP/MapFilter/TreePattern.php';
  * @group	Unit::TreePattern
  * @group	Unit::TreePattern::AliasAttr
  */
-class
-    MapFilter_Test_Unit_TreePattern_AliasAttr
-extends
+class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     PHPUnit_Framework_TestCase
 {
   
@@ -54,7 +52,7 @@ extends
       $query, $result, $flags, $asserts
   ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/"/>
         </pattern>
@@ -94,7 +92,7 @@ extends
         </pattern>
     ';
   
-    $pattern = MapFilter_TreePattern::load ( $pattern );
+    $pattern = MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   public function provideOneToOneAliasAttr () {
@@ -139,7 +137,7 @@ extends
       $query, $result, $flags, $asserts
   ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/">
             <attr>number</attr>
@@ -210,7 +208,7 @@ extends
       $query, $result, $flags, $asserts
   ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/">
             <attr>number</attr>

@@ -15,7 +15,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
    */
   public function testTextContent () {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <key name="name">value</key>
         </pattern>
@@ -27,11 +27,11 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
    */
   public function testEmpty () {
   
-    $a = MapFilter_TreePattern::load ( '
+    $a = MapFilter_TreePattern_Xml::load ( '
         <pattern><key name="name"/></pattern>
     ' );
     
-    $b = MapFilter_TreePattern::load ( '
+    $b = MapFilter_TreePattern_Xml::load ( '
         <pattern><key name="name"></key></pattern>
     ' );
     
@@ -44,7 +44,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
    */
   public function testNotExactlyOneFollower () {
   
-    MapFilter_TreePattern::load ( '
+    MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <key name="name">
             <all />
@@ -94,7 +94,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
    */
   public function testKeyOnlyValid ( $query ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <key name="name" flag="valid" assert="invalid">
           </key>
@@ -146,7 +146,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
    */
   public function testKeyOnlyInvalid ( $query ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <key name="not_provided_name" flag="valid" assert="invalid">
           </key>
@@ -187,7 +187,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
    */
   public function testKeyOnlyRich ( $query, $results ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <key name="name" flag="valid" assert="invalid">
           </key>
@@ -285,7 +285,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OPT_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_OPT_STRING_PATTERN );
     
     $result = $pattern->getFilter ( $query )->fetchResult ();
 
@@ -322,7 +322,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
       $query, $results, Array $flags, Array $asserts
   ) {
 
-    $pattern = MapFilter_TreePattern::load ( self::NUMBER_OPT_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_OPT_STRING_PATTERN );
     
     $result = $pattern->getFilter ( $query )->fetchResult ();
 
@@ -457,7 +457,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( self::NUMBER_AND_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_AND_STRING_PATTERN );
     
     $result = $pattern->getFilter ( $query )->fetchResult ();
 
@@ -592,7 +592,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( self::NUMBER_SOME_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_SOME_STRING_PATTERN );
     
     $result = $pattern->getFilter ( $query )->fetchResult ();
 
@@ -727,7 +727,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( self::NUMBER_ONE_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_ONE_STRING_PATTERN );
     
     $result = $pattern->getFilter ( $query )->fetchResult ();
 

@@ -52,7 +52,7 @@ class MapFilter_Test_Unit_TreePattern_All extends PHPUnit_Framework_TestCase {
    */
   public function testSimpleAllNode ( $query, $result, $asserts, $flags ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <all flag="all" assert="all">
             <attr flag="f0" assert="a0">Attr0</attr>

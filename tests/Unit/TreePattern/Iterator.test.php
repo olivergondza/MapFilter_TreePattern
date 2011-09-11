@@ -15,7 +15,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
    */
   public function testTextContent () {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <iterator>value</iterator>
         </pattern>
@@ -28,7 +28,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
    */
   public function testNotExactlyOneFollower () {
   
-    MapFilter_TreePattern::load ( '
+    MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <iterator>
             <all />
@@ -43,11 +43,11 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
    */
   public function testEmpty () {
   
-    $a = MapFilter_TreePattern::load ( '
+    $a = MapFilter_TreePattern_Xml::load ( '
         <pattern><iterator /></pattern>
     ' );
     
-    $b = MapFilter_TreePattern::load ( '
+    $b = MapFilter_TreePattern_Xml::load ( '
         <pattern><iterator></iterator></pattern>
     ' );
     
@@ -113,7 +113,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
    */
   public function testEmptyIterator ( $query, $result, $asserts, $flags ) {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <iterator flag="iterator" assert="no_iterator" />
         </pattern>
@@ -211,7 +211,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
    */
   public function testStructIterator ( $query, $result, $asserts, $flags ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <iterator flag="iterator" assert="no_iterator">
             <one flag="int" assert="no_int">
@@ -390,7 +390,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
    */
   public function testKeyIterator ( $query, $result, $asserts, $flags ) {
 
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <iterator flag="iterator" assert="no_iterator">
             <one>

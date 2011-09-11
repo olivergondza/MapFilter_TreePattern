@@ -78,7 +78,7 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
    */
   public function testFilterUtility ( $query, $result ) {
 
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER
     );
 
@@ -95,7 +95,7 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
    */
   public function testNewFilterUtility ( $query, $result ) {
 
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER_NEW
     );
 

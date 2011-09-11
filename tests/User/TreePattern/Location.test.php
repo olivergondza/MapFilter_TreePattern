@@ -65,7 +65,7 @@ class MapFilter_Test_User_TreePattern_Location extends
    */
   public function testLocation ( $query, $result ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION
     );
     
@@ -79,7 +79,7 @@ class MapFilter_Test_User_TreePattern_Location extends
    */
   public function testNewLocation ( $query, $result ) {
   
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION_NEW
     );
     

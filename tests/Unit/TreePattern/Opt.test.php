@@ -58,7 +58,7 @@ class MapFilter_Test_Unit_TreePattern_Opt extends PHPUnit_Framework_TestCase {
    */
   public function testSimpleOptNode ( $query, $result, $flags, $asserts ) {
     
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <opt flag="opt" assert="opt">
             <attr flag="f0" assert="a0">Attr0</attr>

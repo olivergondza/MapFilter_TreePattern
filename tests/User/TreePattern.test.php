@@ -19,7 +19,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    */
   public function testWrongPattern () {
 
-    $pattern = MapFilter_TreePattern::load ( '<lantern></lantern>' );
+    $pattern = MapFilter_TreePattern_Xml::load ( '<lantern></lantern>' );
     $this->fail ( 'No exception risen' );
   }
   
@@ -67,7 +67,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
 
     try {
 
-      $pattern = MapFilter_TreePattern::load ( $patternStr );
+      $pattern = MapFilter_TreePattern_Xml::load ( $patternStr );
     } catch ( MapFilter_TreePattern_NotExactlyOneFollowerException $ex ) {
 
       $this->assertEquals (
@@ -85,7 +85,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    */
   public function testWrongTag () {
   
-    $pattern = MapFilter_TreePattern::load (
+    $pattern = MapFilter_TreePattern_Xml::load (
         '<pattern><wrongnode></wrongnode></pattern>'
     );
   }
@@ -97,7 +97,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    */
   public function testMultipleTree () {
   
-    $pattern = MapFilter_TreePattern::load (
+    $pattern = MapFilter_TreePattern_Xml::load (
         '<pattern><opt></opt><all></all></pattern>'
     );
   }
@@ -117,7 +117,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
         </pattern>
     ';
   
-    MapFilter_TreePattern::load ( $pattern );
+    MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   public function provideSimpleOneWhitelist () {
@@ -155,7 +155,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     
     // Instantiate MapFilter with pattern and query
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -193,7 +193,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -246,7 +246,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -279,8 +279,8 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    */
   public function testCompareStringAndFileLoad ( $url ) {
 
-    $fromFile = MapFilter_TreePattern::fromFile ( $url );
-    $fromString = MapFilter_TreePattern::load (
+    $fromFile = MapFilter_TreePattern_Xml::fromFile ( $url );
+    $fromString = MapFilter_TreePattern_Xml::load (
         file_get_contents ( $url )
     );
 
@@ -306,7 +306,7 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
    */
   public function testTautology ( $data ) {
   
-    $tautology = MapFilter_TreePattern::load ( '
+    $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value flag="valueFlag" assert="valueAssert" />
         </pattern>

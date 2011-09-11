@@ -76,7 +76,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         </pattern>
     ';
 
-    $filter = new MapFilter ( MapFilter_TreePattern::load ( $pattern ) );
+    $filter = new MapFilter ( MapFilter_TreePattern_Xml::load ( $pattern ) );
 
     $filter->setQuery ( $query );
 
@@ -257,7 +257,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -371,7 +371,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     
@@ -433,7 +433,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
     ';
     
     $filter = new MapFilter (
-        MapFilter_TreePattern::load ( $pattern ),
+        MapFilter_TreePattern_Xml::load ( $pattern ),
         $query
     );
     

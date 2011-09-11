@@ -62,7 +62,7 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends PHPUnit_Framework_Test
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::COFFEE_MAKER
     ;
   
-    $actual = MapFilter_TreePattern::fromFile ( $filename )
+    $actual = MapFilter_TreePattern_Xml::fromFile ( $filename )
         ->getFilter ( $query )
         ->fetchResult ()
         ->getResults ()
@@ -80,7 +80,7 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends PHPUnit_Framework_Test
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::COFFEE_MAKER_NEW
     ;
   
-    $actual = MapFilter_TreePattern::fromFile ( $filename )
+    $actual = MapFilter_TreePattern_Xml::fromFile ( $filename )
         ->getFilter ( $query )
         ->fetchResult ()
         ->getResults ()

@@ -33,7 +33,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
       $string, $result, $flags, $asserts = Array ()
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value pattern="/\d+/" flag="flag" assert="assert" />
         </pattern>
@@ -68,7 +68,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
    */
   public function testValueReplacement ( $string, $result, $flags ) {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value replacement="/1/2/" flag="flag" assert="assert" />
         </pattern>
@@ -100,7 +100,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
       $string, $result, $flags, $asserts = Array ()
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value pattern="/\d+/" default="val ue" replacement="/\s//"
               flag="flag" assert="assert"
@@ -121,7 +121,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
    */
   public function testTextContent () {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value>value</value>
         </pattern>
@@ -146,7 +146,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
       $data, $result, Array $flags = Array (), Array $asserts = Array ()
   ) {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value pattern="/^[_0-9a-f]*$/" replacement="/_//" assert="content">
             <value pattern="/^(..)+$/" assert="length" flag="valid" />
@@ -166,7 +166,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
    */
   public function testPolicy () {
   
-    $pattern = MapFilter_TreePattern::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value pattern="/^\d+$/">
             <one>
@@ -198,11 +198,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
    */
   public function testEmpty () {
   
-    $a = MapFilter_TreePattern::load ( '
+    $a = MapFilter_TreePattern_Xml::load ( '
         <pattern><value pattern="asdf" /></pattern>
     ' );
     
-    $b = MapFilter_TreePattern::load ( '
+    $b = MapFilter_TreePattern_Xml::load ( '
         <pattern><value pattern="asdf"></value></pattern>
     ' );
     
@@ -215,7 +215,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
    */
   public function testNotExactlyOneFollower () {
   
-    MapFilter_TreePattern::load ( '
+    MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value pattern="asdf">
             <all />

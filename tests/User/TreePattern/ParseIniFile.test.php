@@ -24,7 +24,7 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
         self::EXPAND_SECTIONS
     );
 
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE
     );
     
@@ -47,7 +47,7 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
         self::EXPAND_SECTIONS
     );
 
-    $pattern = MapFilter_TreePattern::fromFile (
+    $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_NEW
     );
     

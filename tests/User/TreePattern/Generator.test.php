@@ -142,7 +142,7 @@ class MapFilter_Test_User_TreePattern_Generator extends
   ) {
   
     $filter = new MapFilter (
-        MapFilter_TreePattern::fromFile (
+        MapFilter_TreePattern_Xml::fromFile (
             PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::GENERATOR
         ),
         $query

@@ -155,12 +155,15 @@ class MapFilter_TreePattern implements
      *
      * @return MapFilter_TreePattern Pattern created from $xmlSource string
      *
-     * @see       fromFile(), MapFilter_TreePattern_Xml::load()
+     * @see       MapFilter_TreePattern_Xml::fromFile(), MapFilter_TreePattern_Xml::load()
      *
      * @since     0.1
+     * @deprecated since $NEXT$
      */
     public static function load($xmlSource)
     {
+      
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
       
         assert(is_string($xmlSource));
       
@@ -174,12 +177,15 @@ class MapFilter_TreePattern implements
      *
      * @return MapFilter_TreePattern Pattern created from $url file
      * 
-     * @see       load(), MapFilter_TreePattern_Xml::fromFile()
+     * @see       MapFilter_TreePattern_Xml::load(), MapFilter_TreePattern_Xml::fromFile()
      *
      * @since     0.1
+     * @deprecated since $NEXT$
      */
     public static function fromFile($url)
     {
+    
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated');
     
         assert(is_string($url));
     
