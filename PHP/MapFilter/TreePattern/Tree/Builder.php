@@ -47,7 +47,7 @@ abstract class MapFilter_TreePattern_Tree_Builder
     /**
      * Element Name
      *
-     * @var String $validatetionAssert
+     * @var String $elementName
      *
      * @since   $NEXT$
      */

@@ -28,8 +28,10 @@
  */
 
 require_once 'PHP/MapFilter/TreePattern/Tree/Builder.php';
-
 require_once 'PHP/MapFilter/TreePattern/Tree/Iterator.php';
+
+require_once 'PHP/MapFilter/TreePattern/Tree/Iterator/InvalidLengthConstraintException.php';
+require_once 'PHP/MapFilter/TreePattern/Tree/Iterator/EmptyIntervalSpecifiedException.php';
 
 /**
  * Tree All element builder class
@@ -49,11 +51,29 @@ class MapFilter_TreePattern_Tree_Iterator_Builder extends
     /**
      * Element folowers
      *
-     * @var Array                               $content
+     * @var Array $content
      *
-     * @since   $NEXT$
+     * @since $NEXT$
      */
     public $content = Array();
+    
+    /**
+     * Lower boundary
+     *
+     * @var Int $lowerBoundary
+     *
+     * @since $NEXT$
+     */
+    public $lowerBoundary = 0;
+    
+    /**
+     * Upper boundary
+     *
+     * @var Int $upperBoundary
+     *
+     * @since $NEXT$
+     */
+    public $upperBoundary = null;
     
     /**
      * Set element content
@@ -77,6 +97,50 @@ class MapFilter_TreePattern_Tree_Iterator_Builder extends
 
         $this->content = $content;
     }
+    
+    /**
+     * Set lower boundary
+     *
+     * @param Int $lowerBoundary Lower bondary
+     *
+     * @return null
+     *
+     * @since $NEXT$
+     */
+    public function setMin($lowerBoundary)
+    {
+    
+        if (!preg_match('/^\d+$/', $lowerBoundary)) {
+        
+            throw new MapFilter_TreePattern_Tree_Iterator_InvalidLengthConstraintException(
+                $lowerBoundary
+            );
+        }
+        
+        $this->lowerBoundary = (Int)$lowerBoundary;
+    }
+    
+    /**
+     * Set upper boundary
+     *
+     * @param Int $upperBoundary Upper bondary
+     *
+     * @return null
+     *
+     * @since $NEXT$
+     */
+    public function setMax($upperBoundary)
+    {
+    
+        if (!preg_match('/^\d+$/', $upperBoundary)) {
+        
+            throw new MapFilter_TreePattern_Tree_Iterator_InvalidLengthConstraintException(
+                $upperBoundary
+            );
+        }
+        
+        $this->upperBoundary = (Int)$upperBoundary;
+    }
 
     /**
      * Build tree element
@@ -90,6 +154,16 @@ class MapFilter_TreePattern_Tree_Iterator_Builder extends
     public function build()
     {
     
+        $hasTopLimit = is_int($this->upperBoundary);
+        $empty = $hasTopLimit && $this->lowerBoundary > $this->upperBoundary;
+    
+        if ($empty) {
+        
+            throw new MapFilter_TreePattern_Tree_Iterator_EmptyIntervalSpecifiedException(
+                $this->lowerBoundary, $this->upperBoundary
+            );
+        }
+
         return new MapFilter_TreePattern_Tree_Iterator($this);
     }
 }
