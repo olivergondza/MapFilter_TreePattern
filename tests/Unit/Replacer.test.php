@@ -3,9 +3,7 @@
 require_once 'PHP/MapFilter/TreePattern.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::Replacer
+ *
  */
 class MapFilter_Test_Unit_TreePattern_Replacer extends
     PHPUnit_Framework_TestCase

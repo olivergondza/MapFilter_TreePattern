@@ -1,17 +1,14 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::NodeAttr
- *
  * @covers MapFilter_TreePattern_Tree_Node_NodeAttr<extended>
  * @covers MapFilter_TreePattern_Tree_Node_NodeAttr_Builder<extended>
  */
 class MapFilter_Test_Unit_TreePattern_NodeAttr extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
   
   /**
@@ -41,19 +38,16 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
    */
   public function testNoFollower () {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <node_attr attr="attr">
           </node_attr>
         </pattern>
-    ';
+    ' );
   
     $query = Array ( 'attr' => Array ( 'attr' ) );
   
-    MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-    ;
+    $this->assertResultsEquals ( $pattern, $query, $query );
   }
   
   public function provideAssertAndFlags () {
@@ -75,7 +69,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
             Array ( 'attr0' => Array ( 'attr0' => 'val0' ) ),
             Array (),
             Array (),
-            Array ( 'attr1' => 'attr1' )
+            Array ( 'attr1' )
         ),
         Array (
             Array ( 'attr0' => Array ( 'attr1' => 'val1', 'attr0' => 'val0' ) ),
@@ -95,11 +89,9 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
   /**
    * @dataProvider      provideAssertAndFlags
    */
-  public function testAssertAndFlags (
-      $query, $result, $flags, $asserts
-  ) {
+  public function testAssertAndFlags ( $query, $result, $flags, $asserts ) {
   
-    $assembled = MapFilter_TreePattern_Xml::load ( '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
           <pattern>
             <node_attr attr="attr0">
               <attr flag="attr1" assert="attr1">attr1</attr>
@@ -107,19 +99,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
           </pattern>
     ' );
 
-    $assembled = $assembled->getFilter ( $query )->fetchResult ();
-    
-    $this->assertEquals ( $result, $assembled->getResults () );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $assembled->getFlags ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $assembled->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideMultipleCompare () {
@@ -230,32 +210,8 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
         </patterns>
     ' );
 
-    $simple = $simple->getFilter ( $query );
-    $assembled = $assembled->getFilter ( $query );
-
-    $this->assertEquals (
-        $result,
-        $simple->fetchResult ()->getResults ()
-    );
-
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
-    
-    /** Try pattern resuse */
-    $simple->setQuery ( $query );
-    $assembled->setQuery ( $query );
-
-    $this->assertEquals (
-        $result,
-        $simple->fetchResult ()->getResults ()
-    );
-
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
+    $this->assertResultsEquals ( $simple, $query, $result );
+    $this->assertResultsEquals ( $assembled, $query, $result );
   }
   
   public function provideCyclicParse () {
@@ -320,7 +276,6 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
   
   /**
    * @dataProvider      provideCyclicParse
-   * @group	        Unit::TreePattern::NodeAttr::testCyclicParse
    */
   public function testCyclicParse ( $query, $result ) {
 
@@ -338,20 +293,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
         </patterns>
     ' );
 
-    $assembled = $assembled->getFilter ( $query );
-
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
-    
-    /** Try pattern resuse */
-    $assembled->setQuery ( $query );
-
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
+    $this->assertResultsEquals ( $assembled, $query, $result );
   }
   
   public function provideIteratorParse () {
@@ -361,31 +303,31 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
             Array (),
             Array (),
             Array (),
-            Array ( 'links' => 'links' )
+            Array ( 'links' )
         ),
         Array (
             Array ( 'url' => 'my.url.com' ),
             Array (),
             Array (),
-            Array ( 'links' => 'links' )
+            Array ( 'links' )
         ),
         Array (
-            Array ( 'links' => 'my.url.com'),
+            Array ( 'links' => 'my.url.com' ),
             Array (),
             Array (),
-            Array ( 'links' => 'links' )
+            Array ( 'links' )
         ),
         Array (
             Array ( 'links' => Array ( 'link' => 'my.url.com' ) ),
             Array (),
             Array (),
-            Array ( 'links' => 'links' )
+            Array ( 'links' )
         ),
         Array (
             Array ( 'links' => Array ( 'url' => 'my.url.com', 'title' => 'A' ) ),
             Array (),
             Array (),
-            Array ( 'links' => 'links' )
+            Array ( 'links' )
         ),
         Array (
             Array (
@@ -398,7 +340,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
                     Array ( 'url' => 'my.url.com', 'title' => 'A' )
                 )
             ),
-            Array ( 'links', 'url', 'title' ),
+            Array ( 'links', 'title', 'url' ),
             Array ()
         ),
         Array (
@@ -413,8 +355,8 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
                     Array ( 'url' => 'my.url.com', 'title' => 'A' )
                 )
             ),
-            Array ( 'links', 'url', 'title' ),
-            Array ( 'title' => 'title' )
+            Array ( 'links', 'title', 'url' ),
+            Array ( 'title' )
         ),
         Array (
             Array (
@@ -428,8 +370,8 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
                     Array ( 'url' => 'my.url.com', 'title' => 'A' )
                 )
             ),
-            Array ( 'links', 'url', 'title' ),
-            Array ( 'title' => 'title' )
+            Array ( 'links', 'title', 'url' ),
+            Array ( 'title' )
         ),
         Array (
             Array (
@@ -443,8 +385,8 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
                     Array ( 'url' => 'my.url.com', 'title' => 'A' )
                 )
             ),
-            Array ( 'links', 'url', 'title' ),
-            Array ( 'title' => 'title' )
+            Array ( 'links', 'title', 'url' ),
+            Array ( 'title' )
         ),
         Array (
             Array (
@@ -459,7 +401,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
                     Array ( 'url' => 'my.url.com', 'title' => 'B' )
                 )
             ),
-            Array ( 'links', 'url', 'title' ),
+            Array ( 'links', 'title', 'url' ),
             Array ()
         ),
         Array (
@@ -474,7 +416,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
                     Array ( 'url' => 'my.url.com', 'title' => 'A' )
                 )
             ),
-            Array ( 'links', 'url', 'title' ),
+            Array ( 'links', 'title', 'url' ),
             Array ()
         ),
         Array (
@@ -483,7 +425,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
             ),
             Array (),
             Array (),
-            Array ( 'links' => 'links', 'title' => 'title' ),
+            Array ( 'links', 'title' ),
         ),
         Array (
             Array (
@@ -491,7 +433,7 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
             ),
             Array (),
             Array (),
-            Array ( 'links' => 'links' ),
+            Array ( 'links' ),
         ),
     );
   }
@@ -514,39 +456,6 @@ class MapFilter_Test_Unit_TreePattern_NodeAttr extends
         </pattern>
     ' );
 
-    $assembled = $assembled->getFilter ( $query );
-
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $assembled->fetchResult ()->getFlags ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $assembled->fetchResult ()->getAsserts ()
-    );
-    
-    /** Try pattern reuse */
-    $assembled->setQuery ( $query );
-
-    $this->assertEquals (
-        $result,
-        $assembled->fetchResult ()->getResults ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $assembled->fetchResult ()->getFlags ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $assembled->fetchResult ()->getAsserts ()
-    );
+    $this->assertResultsEquals ( $assembled, $query, $result, $asserts, $flags );
   }
 }

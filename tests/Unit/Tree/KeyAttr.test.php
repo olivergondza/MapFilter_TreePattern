@@ -1,18 +1,15 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::KeyAttr
- *
  * @covers MapFilter_TreePattern_Tree_Leaf_KeyAttr<extended>
  * @covers MapFilter_TreePattern_Tree_Leaf_KeyAttr_Builder<extended>
  * @covers MapFilter_TreePattern_Tree_Attribute
  */
 class MapFilter_Test_Unit_TreePattern_KeyAttr extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
   
   /** Obtain an attribute from KeyAttr node */
@@ -29,6 +26,26 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         $attr,
         $node->getAttribute ()
     );
+  }
+  
+  /**
+   * @expectedException MapFilter_TreePattern_InvalidPatternAttributeException
+   * @expectedExceptionMessage Node 'key_attr' has no attribute like 'wrongattr'.
+   *
+   * @covers MapFilter_TreePattern_InvalidPatternAttributeException
+   * @covers MapFilter_TreePattern_Tree_Builder
+   */
+  public function testInvalidAttr () {
+  
+    $pattern = '
+        <pattern>
+          <key_attr attr="attrName" wrongattr="wrongAttrName">
+            <attr forValue="thisName">thisAttr</attr>
+          </key_attr>
+        </pattern>
+    ';
+  
+    MapFilter_TreePattern_Xml::load ( $pattern );
   }
   
   public function provideKeyAttrCreate () {
@@ -71,22 +88,16 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
   */
   public function testKeyAttrCreate ( $query, $result ) {
 
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load (  '
         <pattern>
           <key_attr attr="action">
             <attr forValue="do">task</attr>
             <attr forValue="schedule">tasks</attr>
           </key_attr>
         </pattern>
-    ';
+    ' );
 
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   public function provideKeyAttrArrayValue () {
@@ -231,7 +242,6 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
    * Test array filtering
    *
    * @dataProvider      provideKeyAttrArrayValue
-   * @group             Unit::TreePattern::KeyAttr::testKeyAttrArrayValue
    */
   public function testKeyAttrArrayValue (
       $query, $results, $asserts, $flags
@@ -272,8 +282,8 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
     );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
   }
 
@@ -350,13 +360,13 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         ),
     );
   }
-  
+
   /**
    * @dataProvider      provideKeyAttrDefaultValuePattern
    */
   public function testKeyAttrDefaultValuePattern ( $query, $result ) {
-  
-    $pattern = '
+
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <key_attr
               iterator="yes"
@@ -368,17 +378,11 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
             <attr forValue="value([0-9]*[02468])" default="yes">odd</attr>
           </key_attr>
         </pattern>
-    ';
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
-  
+
   public function provideValidationAndAssertationDefault () {
   
     return Array (
@@ -408,15 +412,15 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         )
     );
   }
-  
+
   /**
    * @dataProvider      provideValidationAndAssertationDefault
    */
   public function testValidationAndAssertationDefault (
       $query, $result
   ) {
-  
-    $pattern = '
+ 
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <key_attr
               attr="number"
@@ -428,14 +432,8 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
             <attr forValue="[01]*1" existenceDefault="1">odd</attr>
           </key_attr>
         </pattern>
-    ';
-    
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    ' );
+
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
 }

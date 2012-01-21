@@ -1,16 +1,15 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::Iterator
- *
  * @covers MapFilter_TreePattern_Tree_Iterator
  * @covers MapFilter_TreePattern_Tree_Iterator_Builder
  */
-class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCase {
+class MapFilter_Test_Unit_TreePattern_Iterator extends
+    MapFilter_TreePattern_Test_Functional
+{
 
   /**
    * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
@@ -141,14 +140,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideStructIterator () {
@@ -249,14 +241,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
 
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideKeyIterator () {
@@ -433,14 +418,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
 
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideConstrainedIterator () {
@@ -496,14 +474,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideTopConstrainedIterator () {
@@ -557,13 +528,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideBottomConstrainedIterator () {
@@ -617,13 +582,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideValidatingConstrainedIterator () {
@@ -703,13 +662,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideExactlyConstrainedIterator () {
@@ -789,57 +742,6 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends PHPUnit_Framework_TestCas
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    $this->_compare ( $actual, $result, $asserts, $flags );
-    
-    if ( !is_array ( $query ) ) return;
-    
-    $actual = $this->_getIteratorResult ( $pattern, $query );
-    $this->_compareIterator ( $actual, $result, $asserts, $flags );
-  }
-  
-  /**
-   *
-   */
-  private function _getIteratorResult ( $pattern, $query ) {
-  
-    $iterator = ( empty ( $query ) )
-        ? new EmptyIterator
-        : new ArrayIterator ( $query )
-    ;
-  
-    $wrappedQuery = ( is_array ( $query ) )
-        ? new LimitIterator ( $iterator )
-        : $query
-    ;
-  
-    return $pattern->getFilter ( $wrappedQuery )->fetchResult ();
-  }
-  
-  /**
-   *
-   */
-  private function _compare ( $actual, $result, $asserts, $flags ) {
-  
-    $this->assertEquals ( $result, $actual->getResults () );
-    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
-  }
-  
-  /**
-   *
-   */
-  private function _compareIterator ( $actual, $result, $asserts, $flags ) {
-  
-    if ( $actual->getResults () instanceof Traversable ) {
-    
-        $this->assertEquals (
-            $result,
-            iterator_to_array ( $actual->getResults () )
-        );
-    }
-
-    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }

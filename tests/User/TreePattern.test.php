@@ -4,12 +4,14 @@
 */  
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group       User
- * @group	User::TreePattern
+ *
  */
-class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
+class MapFilter_Test_User_TreePattern extends
+    MapFilter_TreePattern_Test_Functional
+{
 
   /**@{*/
   public function provideWrongCount () {
@@ -37,14 +39,6 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
             </patterns>',
             2,
             'pattern'
-        ),
-        Array ( '
-            <node_attr attr="attr">
-              <all />
-              <all />
-            </node_attr>',
-            2,
-            'node_attr'
         ),
     );
   }
@@ -77,165 +71,6 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     );
   }
   
-  /**
-   * @expectedException MapFilter_TreePattern_InvalidPatternAttributeException
-   * @expectedExceptionMessage Node 'key_attr' has no attribute like 'wrongattr'.
-   *
-   * @covers MapFilter_TreePattern_InvalidPatternAttributeException
-   * @covers MapFilter_TreePattern_Tree_Builder
-   */
-  public function testInvalidAttr () {
-  
-    $pattern = '
-        <pattern>
-          <key_attr attr="attrName" wrongattr="wrongAttrName">
-            <attr forValue="thisName">thisAttr</attr>
-          </key_attr>
-        </pattern>
-    ';
-  
-    MapFilter_TreePattern_Xml::load ( $pattern );
-  }
-  
-  public function provideSimpleOneWhitelist () {
-  
-    return Array (
-        Array (
-            Array ( '-h' => NULL, '-v' => NULL, '-o' => 'a.out' ),
-            Array ( '-h' => NULL )
-        ),
-        Array (
-            Array ( '-o' => 'a.out' ),
-            null
-        ),
-        Array (
-            Array (),
-            null
-        )
-    );
-  }
-  
-  /**@{*/
-  /**
-   * @dataProvider      provideSimpleOneWhitelist
-   *
-   * @covers MapFilter_TreePattern_Tree_Node_One
-   */
-  public function testSimpleOneWhitelist ( $query, $result ) {
-  
-    $pattern = '
-        <pattern>
-          <one>
-            <attr>-h</attr>
-            <attr>-v</attr>
-          </one>
-        </pattern>
-    ';
-    
-    // Instantiate MapFilter with pattern and query
-    $filter = new MapFilter (
-        MapFilter_TreePattern_Xml::load ( $pattern ),
-        $query
-    );
-    
-    // Get desired result
-    $this->assertEquals (
-        $result,
-        $filter->fetchResult ()->getResults ()
-    );
-  }
-  /**@}*/
-
-  public function provideSimpleAllWhitelist () {
-  
-    return Array (
-        Array (
-            Array ( '-f' => NULL, '-o' => NULL, '-v' => NULL ),
-            Array ( '-f' => NULL, '-o' => NULL )
-        )
-    );
-  }
-
-  /*@{*/
-  /**
-   * @dataProvider      provideSimpleAllWhitelist
-   *
-   * @covers MapFilter_TreePattern_Tree_Node_All
-   */
-  public function testSimpleAllWhitelist ( $query, $expected ) {
-  
-    $pattern = '
-        <pattern>
-          <all>
-            <attr>-f</attr>
-            <attr>-o</attr>
-          </all>
-        </pattern>
-    ';
-    
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $expected, $actual );
-  }
-  /*@}*/
-  
-  public function provideSimpleOptWhitelist () {
-  
-    return Array (
-        Array (
-            Array (),
-            Array ()
-        ),
-        Array (
-            Array ( '-h' => NULL, '-v' => NULL ),
-            Array ( '-h' => NULL, '-v' => NULL )
-        ),
-        Array (
-            Array ( '-v' => NULL ),
-            Array ( '-v' => NULL )
-        ),
-        Array (
-            Array ( '-h' => NULL ),
-            Array ( '-h' => NULL )
-        ),
-        Array (
-            Array ( '-h' => NULL, '-v' => NULL, '-o' => 'a.out' ),
-            Array ( '-h' => NULL, '-v' => NULL )
-        )
-    );
-  }
-  
-  /*@{*/
-  /**
-   * @dataProvider      provideSimpleOptWhitelist
-   *
-   * @covers MapFilter_TreePattern_Tree_Node_Opt
-   */
-  public function testSimpleOptWhitelist ( $query, $expected ) {
-    
-    $pattern = '
-        <pattern>
-          <opt>
-            <attr>-h</attr>
-            <attr>-v</attr>
-          </opt>
-        </pattern>
-    ';
-    
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $expected, $actual );
-  }
-  /*@{*/
-  
   public function provideCompareStringAndFileLoad () {
   
     return Array (
@@ -266,43 +101,5 @@ class MapFilter_Test_User_TreePattern extends PHPUnit_Framework_TestCase {
     );
 
     $this->assertEquals ( $fromFile, $fromString );
-  }
-
-  public function provideTautology () {
-
-    return Array (
-        Array ( NULL ),
-        Array ( TRUE ),
-        Array ( 0 ),
-        Array ( .1 ),
-        Array ( 'a' ),
-        Array ( Array ( 'a' ) ),
-        Array ( new MapFilter ),
-        Array ( xml_parser_create () ),
-    );
-  }
-
-  /**
-   * @dataProvider      provideTautology
-   * 
-   * @covers MapFilter_TreePattern_Tree_Value
-   */
-  public function testTautology ( $data ) {
-  
-    $tautology = MapFilter_TreePattern_Xml::load ( '
-        <pattern>
-          <value flag="valueFlag" assert="valueAssert" />
-        </pattern>
-    ' );
-    
-    $flags = Array ( 'valueFlag' );
-    
-    $result = $tautology->getFilter ( $data )
-        ->fetchResult ()
-    ;
-
-    $this->assertEquals ( $data, $result->getResults () );
-    $this->assertEquals ( Array (), $result->getAsserts ()->getAll () );
-    $this->assertEquals ( $flags, $result->getFlags ()->getAll () );
   }
 }

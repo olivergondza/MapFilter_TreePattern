@@ -1,17 +1,16 @@
 <?php
 /**
-* User Tests using duration.xml
-*/  
+ * User Tests using duration.xml
+ */  
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
-* @group	User
-* @group	User::TreePattern
-* @group	User::TreePattern::Duration
-*/
+ *
+ */
 class MapFilter_Test_User_TreePattern_Duration extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
 
     /**@{*/
@@ -88,10 +87,10 @@ class MapFilter_Test_User_TreePattern_Duration extends
     $actual = $pattern->getFilter ( $query )->fetchResult ();
     
     $this->assertEquals ( $result, $actual->getResults () );
-    
+
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
     
     $this->assertEquals (
@@ -114,8 +113,8 @@ class MapFilter_Test_User_TreePattern_Duration extends
     $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
     
     $this->assertEquals (

@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pattern>
-  <key_attr attr="action">
 
-    <!--// "id" or "file_name" must be used -->
-    <for value="delete">
+  <all>
+
+    <key attr="action">
       <one>
-        <attr>id</attr>
-        <attr>file_name</attr>
+        <value pattern="/delete/" flag="action.delete" />
+        <value pattern="/create/" flag="action.create" />
+        <value pattern="/rename/" flag="action.rename" />
+        <value pattern="/report/" flag="action.report" />
       </one>
-    </for>
+    </key>
 
-    <!--// "new_file" is mandatory and "new_name" is optional attribute -->
-    <for value="create">
-      <all>
-        <attr>new_file</attr>
-        <opt>
-          <attr>new_name</attr>
-        </opt>
-      </all>
-    </for>
-
-    <!--// "new_name" is now mandatory with one of "id" or "old_name" -->
-    <for value="rename">
-      <all>
+    <one>
+      <!--// "id" or "file_name" must be used -->
+      <for flag="action.delete">
         <one>
-          <attr>id</attr>
-          <attr>old_name</attr>
+          <key>id</key>
+          <key>file_name</key>
         </one>
-        <attr>new_name</attr>
-      </all>
-    </for>
-    
-    <!--// "id" is mandatory argument for "report" action. -->
-    <for value="report">
-      <attr>id</attr>
-    </for>
-    <!--        
-    //  Consider equivalent but slightly clumsy statement:
-    //
-    //  <for value="report">
-    //    <all>
-    //      <attr>id</attr>
-    //    </all>
-    //  </for>
-    -->
+      </for>
 
-  </key_attr>
+      <!--// "new_file" is mandatory and "new_name" is optional attribute -->
+      <for flag="action.create">
+        <all>
+          <key>new_file</key>
+          <opt>
+            <key>new_name</key>
+          </opt>
+        </all>
+      </for>
+
+      <!--// "new_name" is now mandatory with one of "id" or "old_name" -->
+      <for flag="action.rename">
+        <all>
+          <one>
+            <key>id</key>
+            <key>old_name</key>
+          </one>
+          <key>new_name</key>
+        </all>
+      </for>
+
+      <!--// "id" is mandatory argument for "report" action. -->
+      <for flag="action.report">
+        <key>id</key>
+      </for>
+
+    </one>
+
+  </all>
+
 </pattern>

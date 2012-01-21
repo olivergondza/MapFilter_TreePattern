@@ -1,18 +1,15 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::AliasAttr
- *
  * @covers MapFilter_TreePattern_Tree_Leaf_AliasAttr<extended>
  * @covers MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder<extended>
  * @covers MapFilter_TreePattern_Tree_Attribute
  */
 class MapFilter_Test_Unit_TreePattern_AliasAttr extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
   
   /**
@@ -86,8 +83,8 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
     
     $this->assertEquals (
@@ -152,8 +149,8 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
     
     $this->assertEquals (
@@ -219,8 +216,8 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
     
     $this->assertEquals (

@@ -4,14 +4,15 @@
  */
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group       User
- * @group       User::TreePattern
- * @group       User::TreePattern::ParseIniFile
+ * Test .ini file parsing
+ *
+ * Better not use assertResultsEquals since methods are used as examples.
  */
 class MapFilter_Test_User_TreePattern_ParseIniFile extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
 
   const EXPAND_SECTIONS = TRUE;

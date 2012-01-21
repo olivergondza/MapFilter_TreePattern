@@ -4,14 +4,13 @@
  */  
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	User
- * @group	User::TreePattern
- * @group	User::TreePattern::Generator
+ *
  */
 class MapFilter_Test_User_TreePattern_Generator extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
 
   public function provideGenerator () {
@@ -145,18 +144,6 @@ class MapFilter_Test_User_TreePattern_Generator extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::GENERATOR
     );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->assertEquals ( $result, $actual->getResults () );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ($asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }

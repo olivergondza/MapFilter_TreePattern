@@ -1,18 +1,15 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::Attr
- *
  * @covers MapFilter_TreePattern_Tree_Leaf_Attr<extended>
  * @covers MapFilter_TreePattern_Tree_Leaf_Attr_Builder<extended>
  * @covers MapFilter_TreePattern_Tree_Attribute
  */
 class MapFilter_Test_Unit_TreePattern_Attr extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
   
   /** Attribute tag value should overwrite attribute value */
@@ -40,7 +37,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   }
   
   /**
-   * @group     Unit::TreePattern::Attr::testAttr
+   *
    */
   public function testAttr () {
     
@@ -49,13 +46,8 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     $pattern = MapFilter_TreePattern_Xml::load (
         '<pattern><attr>attr0</attr></pattern>'
     );
-
-    $actual = $pattern->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-
-    $this->assertEquals ( $query, $actual );
+    
+    $this->assertResultsEquals ( $pattern, $query, $query );
   }
     
   public function provideAssertEmptyAttr () {
@@ -172,7 +164,6 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    * Test array filtering
    *
    * @dataProvider      provideAttrArrayValue
-   * @group             Unit::TreePattern::Attr::testAttrArrayValue
    */
   public function testAttrArrayValue (
       $query, $results, $asserts, $flags
@@ -200,8 +191,8 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
     );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
   }
   
@@ -229,11 +220,9 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   /**
    * @dataProvider      provideValidationAndExistenceDefaults
    */
-  public function testValidationAndExistenceDefaults (
-      $query, $result
-  ) {
+  public function testValidationAndExistenceDefaults ( $query, $result ) {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <attr
               existenceDefault="New value"
@@ -241,15 +230,9 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
               valuePattern="[^0-9]*"
           >attr</attr>
         </pattern>
-    ';
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   public function provideValidationAndExistenceDefaultsOnArray () {
@@ -277,7 +260,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
       $query, $result
   ) {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <attr
               existenceDefault="New value"
@@ -286,15 +269,9 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
               iterator="1"
           >attr</attr>
         </pattern>
-    ';
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   public function provideLargeDepthIterator () {
@@ -381,11 +358,9 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   /**
    * @dataProvider      provideLargeDepthIterator
    */
-  public function testLargeDepthIterator (
-      Array $query, Array $result
-  ) {
+  public function testLargeDepthIterator ( Array $query, Array $result ) {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <attr
               valuePattern="[0-9][0-9]*"
@@ -393,15 +368,9 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
               iterator="3"
           >weight</attr>
         </pattern>
-    ';
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   /**
@@ -409,21 +378,15 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
    */
   public function testSpecialChars () {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <attr valuePattern="as/df/gh">name</attr>
         </pattern>
-    ';
+    ' );
     
     $result = $query = Array ( 'name' => 'as/df/gh' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   public function provideValueReplacement () {
@@ -462,26 +425,19 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   
   /**
    * @dataProvider      provideValueReplacement
-   * @group	        Unit::TreePattern::Attr::testValueReplacement
    */
   public function testValueReplacement ( $query, $result ) {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <attr
               valuePattern="/\d+/"
               valueReplacement="/^\D*(\d+).*$/$1/"
           >name</attr>
         </pattern>
-    ';
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   public function provideValidationExistenceAssert () {

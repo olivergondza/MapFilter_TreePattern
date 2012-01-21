@@ -1,16 +1,15 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::Key
- *
  * @covers MapFilter_TreePattern_Tree_Key
  * @covers MapFilter_TreePattern_Tree_Key_Builder
  */
-class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
+class MapFilter_Test_Unit_TreePattern_Key extends
+    MapFilter_TreePattern_Test_Functional
+{
 
   /**
    * @expectedException MapFilter_TreePattern_Tree_InvalidContentException
@@ -26,22 +25,6 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
           <key name="name">value</key>
         </pattern>
     ' );
-  }
-  
-  /**
-   *
-   */
-  public function testEmpty () {
-  
-    $a = MapFilter_TreePattern_Xml::load ( '
-        <pattern><key name="name"/></pattern>
-    ' );
-    
-    $b = MapFilter_TreePattern_Xml::load ( '
-        <pattern><key name="name"></key></pattern>
-    ' );
-    
-    $this->assertEquals ( $a, $b );
   }
   
   /**
@@ -99,21 +82,20 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
   /**
    * @dataProvider provideKeyOnlyValid
+   *
+   * @covers MapFilter_TreePattern_Tree_Key
    */
   public function testKeyOnlyValid ( $query ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <key name="name" flag="valid" assert="invalid">
-          </key>
+          <key name="name" flag="valid" assert="invalid" />
         </pattern>
     ' );
     
-    $result = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $query, $result->getResults () );
-    $this->assertSame ( Array ( 'valid' ), $result->getFlags ()->getAll () );
-    $this->assertSame ( Array (), $result->getAsserts ()->getAll () );
+    $this->assertResultsEquals (
+        $pattern, $query, $query, Array (), Array ( 'valid' )
+    );
   }
   
   public function provideKeyOnlyInvalid () {
@@ -151,21 +133,20 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
   /**
    * @dataProvider provideKeyOnlyInvalid
+   *
+   * @covers MapFilter_TreePattern_Tree_Key
    */
   public function testKeyOnlyInvalid ( $query ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <key name="not_provided_name" flag="valid" assert="invalid">
-          </key>
+          <key name="not_provided_name" flag="valid" assert="invalid" />
         </pattern>
     ' );
     
-    $result = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( null, $result->getResults () );
-    $this->assertSame ( Array (), $result->getFlags ()->getAll () );
-    $this->assertSame ( Array ( 'invalid' ), $result->getAsserts ()->getAll () );
+    $this->assertResultsEquals (
+        $pattern, $query, null, Array ( 'invalid' )
+    );
   }
   
   public function provideKeyOnlyRich () {
@@ -192,21 +173,20 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
   /**
    * @dataProvider provideKeyOnlyRich
+   *
+   * @covers MapFilter_TreePattern_Tree_Key
    */
   public function testKeyOnlyRich ( $query, $results ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <key name="name" flag="valid" assert="invalid">
-          </key>
+          <key name="name" flag="valid" assert="invalid" />
         </pattern>
     ' );
     
-    $result = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $results, $result->getResults () );
-    $this->assertSame ( Array ( 'valid' ), $result->getFlags ()->getAll () );
-    $this->assertSame ( Array (), $result->getAsserts ()->getAll () );
+    $this->assertResultsEquals (
+        $pattern, $query, $results, Array (), Array ( 'valid' )
+    );
   }
   
   const NUMBER_OPT_STRING_PATTERN = '
@@ -288,57 +268,20 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
   /**
    * @dataProvider provideOptKeyValue
+   *
+   * @covers MapFilter_TreePattern_Tree_Key
    */
   public function testOptKeyValue (
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_OPT_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern_Xml::load (
+        self::NUMBER_OPT_STRING_PATTERN
+    );
     
-    $result = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $results, $result->getResults () );
-    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
-  
-  public function provideOptKeyValueArrayObject () {
 
-    $data = Array ();
-    foreach ( $this->provideOptKeyValue () as $set ) {
-
-      if ( is_array ( $set[ 0 ] ) ) {
-      
-        $set[ 0 ] = new ArrayObject ( $set[ 0 ] );
-      }
-      
-      if ( is_array ( $set[ 1 ] ) ) {
-      
-        $set[ 1 ] = new ArrayObject ( $set[ 1 ] );
-      }
-      
-      $data[] = $set;
-    }
-    
-    return $data;
-  }
-  
-  /**
-   * @dataProvider provideOptKeyValueArrayObject
-   */
-  public function testOptKeyValueArrayObject (
-      $query, $results, Array $flags, Array $asserts
-  ) {
-
-    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_OPT_STRING_PATTERN );
-    
-    $result = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $results, $result->getResults () );
-    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
-  }
-  
   const NUMBER_AND_STRING_PATTERN = '
       <pattern>
         <all>
@@ -460,6 +403,8 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
   /**
    * @dataProvider provideAndKeyValue
+   *
+   * @covers MapFilter_TreePattern_Tree_Key
    */
   public function testAndKeyValue (
       $query, $results, Array $flags, Array $asserts
@@ -467,11 +412,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
     $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_AND_STRING_PATTERN );
     
-    $result = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $results, $result->getResults () );
-    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
   
   const NUMBER_SOME_STRING_PATTERN = '
@@ -595,18 +536,18 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
   /**
    * @dataProvider provideSomeKeyValue
+   *
+   * @covers MapFilter_TreePattern_Tree_Key
    */
   public function testSomeKeyValue (
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_SOME_STRING_PATTERN );
-    
-    $result = $pattern->getFilter ( $query )->fetchResult ();
+    $pattern = MapFilter_TreePattern_Xml::load (
+        self::NUMBER_SOME_STRING_PATTERN
+    );
 
-    $this->assertEquals ( $results, $result->getResults () );
-    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
   
   const NUMBER_ONE_STRING_PATTERN = '
@@ -730,17 +671,17 @@ class MapFilter_Test_Unit_TreePattern_Key extends PHPUnit_Framework_TestCase {
   
   /**
    * @dataProvider provideOneKeyValue
+   *
+   * @covers MapFilter_TreePattern_Tree_Key
    */
   public function testOneKeyValue (
       $query, $results, Array $flags, Array $asserts
   ) {
   
-    $pattern = MapFilter_TreePattern_Xml::load ( self::NUMBER_ONE_STRING_PATTERN );
+    $pattern = MapFilter_TreePattern_Xml::load (
+        self::NUMBER_ONE_STRING_PATTERN
+    );
     
-    $result = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $results, $result->getResults () );
-    $this->assertSame ( $flags, $result->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $result->getAsserts ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
 }

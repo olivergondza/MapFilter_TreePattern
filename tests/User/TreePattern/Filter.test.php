@@ -1,16 +1,15 @@
 <?php
 /**
-* User Tests using filter.xml
-*/  
+ * User Tests using filter.xml
+ */  
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
-* @group	User
-* @group	User::TreePattern
-* @group	User::TreePattern::Filter
-*/
-class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
+ *
+ */
+class MapFilter_TestUserFilter extends MapFilter_TreePattern_Test_Functional {
 
   public function provideParseFilterUtility () {
   
@@ -82,12 +81,7 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER
     );
 
-    $actual = $pattern->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertSame ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   /**
@@ -99,11 +93,6 @@ class MapFilter_TestUserFilter extends PHPUnit_Framework_TestCase {
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::FILTER_NEW
     );
 
-    $actual = $pattern->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertSame ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
 }

@@ -1,17 +1,14 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::Some
- *
  * @covers MapFilter_TreePattern_Tree_Node_Some<extended>
  * @covers MapFilter_TreePattern_Tree_Node_Some_Builder
  */
 class MapFilter_Test_Unit_TreePattern_Some extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
   
   public function provideSimpleSomeNode () {
@@ -72,10 +69,6 @@ class MapFilter_Test_Unit_TreePattern_Some extends
         </pattern>
     ' );
 
-    $given = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertSame ( $result, $given->getResults () );
-    $this->assertSame ( $asserts, $given->getAsserts ()->getAll () );
-    $this->assertSame ( $flags, $given->getFlags ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }

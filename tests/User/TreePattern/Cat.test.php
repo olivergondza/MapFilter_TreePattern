@@ -4,13 +4,14 @@
 */  
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
-* @group	User
-* @group	User::TreePattern
-* @group	User::TreePattern::Cat
-*/
-class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
+ *
+ */
+class MapFilter_Test_User_TreePattern_Cat extends
+    MapFilter_TreePattern_Test_Functional
+{
 
   /*@}*/
   public function provideParseCat () {
@@ -135,8 +136,8 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
     $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
     
     $this->assertEquals (
@@ -161,8 +162,8 @@ class MapFilter_Test_User_TreePattern_Cat extends PHPUnit_Framework_TestCase {
     $this->assertEquals ( $result, $actual->getResults () );
     
     $this->assertEquals (
-        new MapFilter_TreePattern_Flags ( $flags ),
-        $actual->getFlags ()
+        $flags,
+        $actual->getFlags ()->getAll ()
     );
     
     $this->assertEquals (

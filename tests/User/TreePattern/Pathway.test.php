@@ -4,14 +4,13 @@
  */
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	User
- * @group	User::TreePattern
- * @group	User::TreePattern::Pathway
+ *
  */
 class MapFilter_Test_User_TreePattern_Pathway extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
   
   public function provide () {
@@ -139,12 +138,7 @@ class MapFilter_Test_User_TreePattern_Pathway extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY
     );
 
-    $actual = $pattern->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-    
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
   
   public function provideNewPathway () {
@@ -177,11 +171,6 @@ class MapFilter_Test_User_TreePattern_Pathway extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PATHWAY_NEW
     );
 
-    $actual = $pattern->getFilter ( $query )
-        ->fetchResult ()
-        ->getResults ()
-    ;
-
-    $this->assertEquals ( $result, $actual );
+    $this->assertResultsEquals ( $pattern, $query, $result );
   }
 }

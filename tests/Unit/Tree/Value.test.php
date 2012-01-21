@@ -1,23 +1,52 @@
 <?php
 
 require_once 'PHP/MapFilter/TreePattern.php';
+require_once 'tests/Functional.php';
 
 /**
- * @group	Unit
- * @group	Unit::TreePattern
- * @group	Unit::TreePattern::Value
- *
  * @covers MapFilter_TreePattern_Tree_Value
  * @covers MapFilter_TreePattern_Tree_Value_Builder
  */
 class MapFilter_Test_Unit_TreePattern_Value extends
-    PHPUnit_Framework_TestCase
+    MapFilter_TreePattern_Test_Functional
 {
+
+  public function provideTautology () {
+
+    return Array (
+        Array ( NULL ),
+        Array ( TRUE ),
+        Array ( 0 ),
+        Array ( .1 ),
+        Array ( 'a' ),
+        Array ( Array ( 'a' ) ),
+        Array ( new MapFilter ),
+        Array ( xml_parser_create () ),
+    );
+  }
+
+  /**
+   * @dataProvider      provideTautology
+   * 
+   * @covers MapFilter_TreePattern_Tree_Value
+   */
+  public function testTautology ( $data ) {
+  
+    $tautology = MapFilter_TreePattern_Xml::load ( '
+        <pattern>
+          <value flag="valueFlag" assert="valueAssert" />
+        </pattern>
+    ' );
+    
+    $flags = Array ( 'valueFlag' );
+    
+    $this->assertResultsEquals ( $tautology, $data, $data, Array (), $flags );
+  }
 
   public function provideValuePattern () {
   
-    $two = new StringClass( '2' );
-    $word = new StringClass( 'word' );
+    $two = new StringClass ( '2' );
+    $word = new StringClass ( 'word' );
   
     return Array (
         Array ( 1, 1, Array ( 'flag' ) ),
@@ -42,11 +71,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
 
-    $actual = $pattern->getFilter ( $string )->fetchResult ();
-    
-    $this->assertSame ( $result, $actual->getResults () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $string, $result, $asserts, $flags );
   }
   
   public function provideValueReplacement () {
@@ -77,11 +102,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $string )->fetchResult ();
-    
-    $this->assertSame ( $result, $actual->getResults () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
-    $this->assertSame ( Array (), $actual->getAsserts ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $string, $result, Array (), $flags );
   }
   
   public function provideDefault () {
@@ -111,11 +132,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $string )->fetchResult ();
-    
-    $this->assertSame ( $result, $actual->getResults () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
-    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
+    $this->assertResultsEquals ( $pattern, $string, $result, $asserts, $flags );
   }
   
   /**
@@ -149,7 +166,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
    * @dataProvider      provideCascadingValues
    */
   public function testCascadingValues (
-      $data, $result, Array $flags = Array (), Array $asserts = Array ()
+      $query, $result, Array $flags = Array (), Array $asserts = Array ()
   ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
@@ -160,11 +177,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
     
-    $actual = $pattern->getFilter ( $data )->fetchResult ();
-    
-    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
-    $this->assertSame ( $result, $actual->getResults () );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   /**
@@ -174,7 +187,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <value pattern="/^\d+$/">
+          <value pattern="/^\d+$/" assert="not a number">
             <one>
               <value pattern="/[02468]$/" flag="odd"  />
               <value pattern="/[13579]$/" flag="even" />
@@ -183,20 +196,9 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         </pattern>
     ' );
     
-    $filter = new MapFilter ( $pattern );
-    
-    $odd = $filter->setQuery ( '32' )->fetchResult();
-    $even = $filter->setQuery ( '21' )->fetchResult();
-    $nan = $filter->setQuery ( 'NaN' )->fetchResult();
-    
-    $this->assertSame ( Array (), $nan->getFlags ()->getAll () );
-    $this->assertSame ( null, $nan->getResults () );
-    
-    $this->assertSame ( Array ( 'odd' ), $odd->getFlags ()->getAll () );
-    $this->assertSame ( '32', $odd->getResults () );
-    
-    $this->assertSame ( Array ( 'even' ), $even->getFlags ()->getAll () );
-    $this->assertSame ( '21', $even->getResults () );
+    $this->assertResultsEquals ( $pattern, '32', '32', Array (), Array ( 'odd' ) );
+    $this->assertResultsEquals ( $pattern, '21', '21', Array (), Array ( 'even' ) );
+    $this->assertResultsEquals ( $pattern, 'NaN', null, Array ( 'not a number' ) );
   }
   
   /**
