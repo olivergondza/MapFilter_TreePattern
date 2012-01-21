@@ -456,7 +456,7 @@ class MapFilter_TreePattern implements
     
         if (is_array($iteratorCandidate)) return true;
     
-        return $iteratorCandidate instanceof Iterator;
+        return $iteratorCandidate instanceof Traversable;
     }
     
     /** @endcond */
