@@ -10,24 +10,6 @@ require_once 'PHP/MapFilter/TreePattern.php';
  */
 class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {  
   
-  /**
-   * @expectedException PHPUnit_Framework_Error
-   * @expectedExceptionMessage MapFilter_TreePattern::load is deprecated
-   */
-  public function testTreePatternLoadDeprecated () {
-  
-    MapFilter_TreePattern::load ( null );
-  }
-  
-  /**
-   * @expectedException PHPUnit_Framework_Error
-   * @expectedExceptionMessage MapFilter_TreePattern::fromFile is deprecated
-   */
-  public function testTreePatternFromFileDeprecated () {
-  
-    MapFilter_TreePattern::fromFile ( null );
-  }
-  
   public function provideWrongAttribute () {
   
     return Array (
@@ -298,5 +280,20 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
         ->getFilter ( false )
         ->fetchResult ()
     ;
+  }
+  
+  public function testDestinctResultType () {
+  
+    $pattern = MapFilter_TreePattern_Xml::load (
+        '<pattern><value /></pattern>'
+    );
+    
+    $result = $pattern->getFilter ( null )->fetchResult ();
+    
+    $this->assertInstanceOf ( 'MapFilter_TreePattern', $pattern );
+    $this->assertInstanceOf ( 'MapFilter_TreePattern_Result', $result );
+
+    $this->assertFalse ( $pattern instanceof MapFilter_TreePattern_Result );
+    $this->assertFalse ( $result instanceof MapFilter_TreePattern );
   }
 }
