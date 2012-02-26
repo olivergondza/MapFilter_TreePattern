@@ -118,17 +118,13 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         Array (
             Array ( 'order' => new ArrayIterator ( Array () ) ),
             Array ( 'auto' => Array ( 'defaultValue' ) ),
-            Array ( 'wrong_keyattr' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => new ArrayIterator ( Array () )
-            ) ),
+            Array ( 'wrong_keyattr' => new ArrayIterator ( Array () ) ),
             Array (),
         ),
         Array (
             Array ( 'order' => new EmptyIterator () ),
             Array ( 'auto' => Array ( 'defaultValue' ) ),
-            Array ( 'wrong_keyattr' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => new EmptyIterator ()
-            ) ),
+            Array ( 'wrong_keyattr' => new EmptyIterator () ),
             Array (),
         ),
         Array (
@@ -247,7 +243,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
       $query, $results, $asserts, $flags
   ) {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load (  '
         <pattern>
           <one>
             <key_attr
@@ -267,24 +263,9 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
             >auto</attr>
           </one>
         </pattern>
-    ';
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-    ;
-    
-    $this->assertEquals ( $results, $actual->getResults () );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
-    
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
 
   public function provideKeyAttrDefaultValuePattern () {

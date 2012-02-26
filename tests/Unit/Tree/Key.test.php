@@ -255,13 +255,13 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => 'asdf' ),
             Array (),
             Array (),
-            Array ( 'number', 'string' ),
+            Array ( 'number' => 'asdf', 'string' ),
         ),
         Array (
             Array ( 'string' => 15 ),
             Array (),
             Array (),
-            Array ( 'number', 'string' ),
+            Array ( 'number', 'string' => 15 ),
         ),
     );
   }
@@ -328,7 +328,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => 'not a number' ),
             null,
             Array (),
-            Array ( 'number' )
+            Array ( 'number' => 'not a number' )
         ),
         /** Both */
         Array (
@@ -347,19 +347,19 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => '', 'string' => 'str' ),
             null,
             Array (),
-            Array ( 'number' )
+            Array ( 'number' => '' )
         ),
         Array (
             Array ( 'number' => 42, 'string' => 42 ),
             null,
             Array (),
-            Array ( 'string' )
+            Array ( 'string' => 42 )
         ),
         Array (
             Array ( 'number' => '', 'string' => 42 ),
             null,
             Array (),
-            Array ( 'number' )
+            Array ( 'number' => '' )
         ),
         /** Redundant Keys */
         Array (
@@ -372,7 +372,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => '', 'bool' => true ),
             null,
             Array (),
-            Array ( 'number' )
+            Array ( 'number' => '' )
         ),
         Array (
             Array ( 'number' => 42, 'bool' => true ),
@@ -461,7 +461,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => 'not a number' ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number' => 'not a number', 'string' )
         ),
         /** Both */
         Array (
@@ -480,19 +480,19 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => '', 'string' => 'str' ),
             Array ( 'string' => 'str' ),
             Array ( 'string' ),
-            Array ( 'number' )
+            Array ( 'number' => '' )
         ),
         Array (
             Array ( 'number' => 42, 'string' => 42 ),
             Array ( 'number' => 42 ),
             Array ( 'number' ),
-            Array ( 'string' )
+            Array ( 'string' => 42 )
         ),
         Array (
             Array ( 'number' => '', 'string' => 42 ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number' => '', 'string' => 42 )
         ),
         /** Redundant Keys */
         Array (
@@ -505,7 +505,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => '', 'bool' => true ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number' => '', 'string' )
         ),
         Array (
             Array ( 'number' => 42, 'bool' => true ),
@@ -517,13 +517,13 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'string' => '', 'bool' => true ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number', 'string' => '' )
         ),
         Array (
             Array ( 'string' => 42, 'bool' => true ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number', 'string' => 42 )
         ),
         Array (
             Array ( 'string' => 'str', 'number' => 42, 'bool' => true ),
@@ -596,7 +596,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => 'not a number' ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number' => 'not a number', 'string' )
         ),
         /** Both */
         Array (
@@ -615,7 +615,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => '', 'string' => 'str' ),
             Array ( 'string' => 'str' ),
             Array ( 'string' ),
-            Array ( 'number' )
+            Array ( 'number' => '' )
         ),
         Array (
             Array ( 'number' => 42, 'string' => 42 ),
@@ -627,7 +627,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => '', 'string' => 42 ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number' => '', 'string' => 42 )
         ),
         /** Redundant Keys */
         Array (
@@ -640,7 +640,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'number' => '', 'bool' => true ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number' => '', 'string' )
         ),
         Array (
             Array ( 'number' => 42, 'bool' => true ),
@@ -652,13 +652,13 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'string' => '', 'bool' => true ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number', 'string' => '' )
         ),
         Array (
             Array ( 'string' => 42, 'bool' => true ),
             null,
             Array (),
-            Array ( 'number', 'string' )
+            Array ( 'number', 'string' => 42 )
         ),
         Array (
             Array ( 'string' => 'str', 'number' => 42, 'bool' => true ),

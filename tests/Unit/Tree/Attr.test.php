@@ -126,9 +126,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         Array (
             Array ( 'an_attr' => Array ( 'val1', 'val2' ) ),
             Array ( 'an_attr' => Array ( 'val1' ) ),
-            Array ( 'wrong_attr' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => Array ( 'val2' )
-            ) ),
+            Array ( 'wrong_attr' => Array ( 'val2' ) ),
             Array ( 'an_attr' )
         ),
         Array (
@@ -140,21 +138,19 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         Array (
             Array ( 'an_attr' => Array ( 'val2', 'val2' ) ),
             null,
-            Array ( 'wrong_attr' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => Array ( 'val2', 'val2' )
-            ) ),
+            Array ( 'wrong_attr' => Array ( 'val2', 'val2' ) ),
             Array ()
         ),
         Array (
             Array ( 'an_attr' => Array () ),
             null,
-            Array ( 'wrong_attr' => 'wrong_attr' ),
+            Array ( 'wrong_attr' ),
             Array (),
         ),
         Array (
             Array (),
             null,
-            Array ( 'wrong_attr' => 'wrong_attr' ),
+            Array ( 'wrong_attr' ),
             Array ()
         ),
     );
@@ -169,31 +165,18 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
       $query, $results, $asserts, $flags
   ) {
   
-    $pattern = '<pattern>
-        <attr
-            iterator="yes"
-            valuePattern="val1"
-            assert="wrong_attr"
-            flag="an_attr"
-        >an_attr</attr>
-    </pattern>';
+    $pattern = MapFilter_TreePattern_Xml::load ( '
+        <pattern>
+            <attr
+                iterator="yes"
+                valuePattern="val1"
+                assert="wrong_attr"
+                flag="an_attr"
+            >an_attr</attr>
+        </pattern>
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-    ;
-    
-    $this->assertEquals ( $results, $actual->getResults () );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
-    
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
   
   public function provideValidationAndExistenceDefaults () {
@@ -451,14 +434,12 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         Array (
             Array (),
             null,
-            Array ( 'nExist' => 'nExist' )
+            Array ( 'nExist' )
         ),
         Array (
             Array ( 'attr' => 'asdf' ),
             null,
-            Array ( 'nValid' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => 'asdf'
-            ) )
+            Array ( 'nValid' => 'asdf' )
         ),
     );
   }
@@ -470,7 +451,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
       $query, $result, $asserts
   ) {
   
-    $pattern = '
+    $pattern = MapFilter_TreePattern_Xml::load (  '
         <pattern>
           <attr
               existenceAssert="nExist"
@@ -478,19 +459,9 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
               valuePattern="/\d+/"
           >attr</attr>
         </pattern>
-    ';
+    ' );
     
-    $actual = MapFilter_TreePattern_Xml::load ( $pattern )
-        ->getFilter ( $query )
-        ->fetchResult ()
-    ;
-    
-    $this->assertEquals ( $result, $actual->getResults () );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts );
   }
   
   /**

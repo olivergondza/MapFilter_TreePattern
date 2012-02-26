@@ -57,7 +57,7 @@ abstract class MapFilter_TreePattern_Test_Functional extends
   private function _compare ( $actual, $result, $asserts, $flags ) {
   
     $this->assertEquals ( $result, $actual->getResults () );
-    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
+    $this->assertEquals ( $asserts, $actual->getAsserts ()->getMap () );
     $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
   }
   
@@ -76,7 +76,7 @@ abstract class MapFilter_TreePattern_Test_Functional extends
         );
     }
     
-    $this->assertSame ( $asserts, $actual->getAsserts ()->getAll () );
+    $this->assertEquals ( $asserts, $actual->getAsserts ()->getMap () );
     $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
   }
 }

@@ -51,9 +51,7 @@ class MapFilter_Test_User_TreePattern_Cat extends
             Array ( 'u' => '' ),
             null,
             Array (),
-            Array ( 'deprecated' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => ''
-            ) ),
+            Array ( 'deprecated' => '' ),
         ),
         Array (
             Array (
@@ -131,19 +129,7 @@ class MapFilter_Test_User_TreePattern_Cat extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT
     );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->assertEquals ( $result, $actual->getResults () );
-    
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   /**
@@ -157,18 +143,6 @@ class MapFilter_Test_User_TreePattern_Cat extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT_NEW
     );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->assertEquals ( $result, $actual->getResults () );
-    
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }

@@ -243,4 +243,21 @@ class MapFilter_TreePattern_Asserts
         
         return $result;
     }
+    
+    public function getMap () {
+    
+        $simpleMap = Array();
+        foreach ( $this->getAll () as $name ) {
+        
+            try {
+
+                $simpleMap[ $name ] = $this->getValue($name);
+            } catch ( MapFilter_TreePattern_Asserts_MissingPropertyException $ex ) {
+            
+                $simpleMap[] = $name;
+            }
+        }
+        
+        return $simpleMap;
+    }
 }

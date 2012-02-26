@@ -47,14 +47,15 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   
     $two = new StringClass ( '2' );
     $word = new StringClass ( 'word' );
+    $mf = new MapFilter;
   
     return Array (
         Array ( 1, 1, Array ( 'flag' ) ),
         Array ( '1', '1', Array ( 'flag' ) ),
-        Array ( 'asdf', null, Array (), Array ( 'assert' ) ),
+        Array ( 'asdf', null, Array (), Array ( 'assert' => 'asdf' ) ),
         Array ( $two, $two, Array ( 'flag' ) ),
-        Array ( $word, null, Array (), Array ( 'assert' ) ),
-        Array ( new MapFilter, null, Array (), Array ( 'assert' ) ),
+        Array ( $word, null, Array (), Array ( 'assert' => $word ) ),
+        Array ( $mf, null, Array (), Array ( 'assert' => $mf ) ),
     );
   }
 
@@ -154,9 +155,9 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   public function provideCascadingValues () {
   
     return Array (
-        Array ( '////', null, Array (), Array ( 'content' ) ),
+        Array ( '////', null, Array (), Array ( 'content' => '////' ) ),
         Array ( '12_34', '1234', Array ( 'valid' ) ),
-        Array ( '111', null, Array (), Array ( 'content', 'length' ) ),
+        Array ( '111', null, Array (), Array ( 'content' => '111', 'length' => '111' ) ),
         Array ( '0123456789abcdef', '0123456789abcdef', Array ( 'valid' ) ),
         Array ( '0_____0_00', '0000', Array ( 'valid' ) )
     );
@@ -198,7 +199,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
     
     $this->assertResultsEquals ( $pattern, '32', '32', Array (), Array ( 'odd' ) );
     $this->assertResultsEquals ( $pattern, '21', '21', Array (), Array ( 'even' ) );
-    $this->assertResultsEquals ( $pattern, 'NaN', null, Array ( 'not a number' ) );
+    $this->assertResultsEquals ( $pattern, 'NaN', null, Array ( 'not a number' => 'NaN' ) );
   }
   
   /**

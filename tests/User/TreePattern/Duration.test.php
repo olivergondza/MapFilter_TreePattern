@@ -36,9 +36,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
             Array ( 'start_hour' => 0, 'start_minute' => 0, 'start_second' => 'now' ),
             null,
             Array (),
-            Array ( 'no_beginning_time', 'no_start_second' => Array ( 
-                MapFilter_TreePattern_Asserts::VALUE => 'now'
-            ) )
+            Array ( 'no_beginning_time', 'no_start_second' => 'now' )
         ),
         // Query OK; Nothing get trimmed; Appropriate flags are set
         Array (
@@ -58,18 +56,14 @@ class MapFilter_Test_User_TreePattern_Duration extends
             Array ( 'start_hour' => -1 ),
             null,
             Array (),
-            Array ('no_beginning_time', 'no_start_hour' => Array ( 
-                MapFilter_TreePattern_Asserts::VALUE => -1
-            ) )
+            Array ('no_beginning_time', 'no_start_hour' => -1 )
         ),
         // Invalid value for set_minute set an assertion
         Array (
             Array ( 'start_hour' => 0, 'start_minute' => 60 ),
             null,
             Array (),
-            Array ( 'no_beginning_time', 'no_start_minute' => Array ( 
-                MapFilter_TreePattern_Asserts::VALUE => 60
-            ) )
+            Array ( 'no_beginning_time', 'no_start_minute' => 60 )
         )
     );
   }
@@ -84,19 +78,7 @@ class MapFilter_Test_User_TreePattern_Duration extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION
     );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->assertEquals ( $result, $actual->getResults () );
-
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   /**
@@ -108,18 +90,6 @@ class MapFilter_Test_User_TreePattern_Duration extends
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION_NEW
     );
     
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-    
-    $this->assertEquals ( $result, $actual->getResults () );
-    
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }

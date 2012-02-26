@@ -317,32 +317,32 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
         Array (
             Array ( Array ( 'key1' => 8 ), Array ( 'key2' => 'invalid' ) ),
             Array ( Array ( 'key1' => 8 ) ),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1', 'no_key2' => 'invalid' ),
             Array ( 'iterator', 'key1' ),
         ),
         
         Array (
             Array ( Array ( 'key1' => 'invalid' ), Array ( 'key1' => 8 ) ),
             Array ( 1 => Array ( 'key1' => 8 ) ),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1' => 'invalid', 'no_key2' ),
             Array ( 'iterator', 'key1' ),
         ),
         Array (
             Array ( Array ( 'key1' => 8 ), Array ( 'key1' => 'invalid' ) ),
             Array ( Array ( 'key1' => 8 ) ),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1' => 'invalid', 'no_key2' ),
             Array ( 'iterator', 'key1' ),
         ),
         Array (
             Array ( Array ( 'key2' => 'invalid' ), Array ( 'key2' => 8 ) ),
             Array ( 1 => Array ( 'key2' => 8 ) ),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1', 'no_key2' => 'invalid' ),
             Array ( 'iterator', 'key2' ),
         ),
         Array (
             Array ( Array ( 'key2' => 8 ), Array ( 'key2' => 'invalid' ) ),
             Array ( Array ( 'key2' => 8 ) ),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1', 'no_key2' => 'invalid' ),
             Array ( 'iterator', 'key2' ),
         ),
         
@@ -365,26 +365,26 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
         Array (
             Array ( Array ( 'key1' => 'invalid' ) ),
             Array (),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1' => 'invalid', 'no_key2' ),
             Array ( 'iterator' ),
         ),
         
         Array (
             Array ( Array ( 'key2' => 'invalid' ) ),
             Array (),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1', 'no_key2' => 'invalid' ),
             Array ( 'iterator' ),
         ),
         Array (
             Array ( Array ( 'key1' => 'invalid', 'key2' => 'invalid' ) ),
             Array (),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1' => 'invalid', 'no_key2' => 'invalid' ),
             Array ( 'iterator' ),
         ),
         Array (
             Array ( Array ( 'key1' => 'invalid', 'key2' => 7 ) ),
             Array ( Array ( 'key2' => 7 ) ),
-            Array ( 'no_key1' ),
+            Array ( 'no_key1' => 'invalid' ),
             Array ( 'iterator', 'key2' ),
         ),
         Array (
@@ -621,25 +621,25 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
         Array (
             Array ( 'hello', 'world' ),
             null,
-            Array ( 'flag', 'it' ),
+            Array ( 'flag' => 'world', 'it' ),
             Array ()
         ),
         Array (
             Array ( 'hello', 1, 'world' ),
             Array ( 1 => 1 ),
-            Array ( 'flag' ),
+            Array ( 'flag' => 'world' ),
             Array ( 'it', 'val' )
         ),
         Array (
             Array ( 'hello', 1, 'world', 2 ),
             Array ( 1 => 1, 3 => 2 ),
-            Array ( 'flag' ),
+            Array ( 'flag' => 'world' ),
             Array ( 'it', 'val' )
         ),
         Array (
             Array ( 1, 'hello', 2, 'world', 3 ),
             Array ( 0 => 1, 2 => 2 ),
-            Array ( 'flag' ),
+            Array ( 'flag' => 'hello' ),
             Array ( 'it', 'val' )
         ),
     );
@@ -699,27 +699,36 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
             Array ( 'it', 'val' )
         ),
         Array (
-            Array ( 'hello', 'world' ),
+            Array ( 'hello world' ),
             null,
-            Array ( 'flag', 'it' ),
+            Array ( 'flag' => 'hello world', 'it' ),
             Array ()
         ),
         Array (
+            Array ( 'hello', 'world' ),
+            null,
+            Array ( 'flag' => 'world', 'it' ),
+            Array ()
+        ),
+// TODO
+// Sets the last failing assert value
+// it should probably be the first one or all of them
+        Array (
             Array ( 'hello', 1, 'world' ),
             null,
-            Array ( 'flag', 'it' ),
+            Array ( 'flag' => 'world', 'it' ),
             Array ()
         ),
         Array (
             Array ( 'hello', 1, 'world', 2 ),
             Array ( 1 => 1, 3 => 2 ),
-            Array ( 'flag' ),
+            Array ( 'flag' => 'world' ),
             Array ( 'it', 'val' )
         ),
         Array (
             Array ( 1, 'hello', 2, 'world', 3 ),
             Array ( 0 => 1, 2 => 2 ),
-            Array ( 'flag' ),
+            Array ( 'flag' => 'hello' ),
             Array ( 'it', 'val' )
         ),
     );

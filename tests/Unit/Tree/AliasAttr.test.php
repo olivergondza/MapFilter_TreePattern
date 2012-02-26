@@ -44,9 +44,7 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
             Array ( 'num' => 'hey' ),
             Array (),
             Array (),
-            Array ( 'aName' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => 'hey'
-            ) )
+            Array ( 'aName' => 'hey' )
         ),
         Array (
             Array ( 'num' => 0 ),
@@ -78,19 +76,7 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
         </pattern>
     ' );
 
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $result, $actual->getResults () );
-    
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideOneToOneAliasAttr () {
@@ -100,15 +86,13 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
             Array (),
             Array (),
             Array (),
-            Array ( 'aName' => 'aName' )
+            Array ( 'aName' )
         ),
         Array (
             Array ( 'num' => 'hey' ),
             Array (),
             Array (),
-            Array ( 'aName' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => 'hey'
-            ) )
+            Array ( 'aName' => 'hey' )
         ),
         Array (
             Array ( 'num' => 0 ),
@@ -144,19 +128,7 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     '
     );
 
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $result, $actual->getResults () );
-    
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   
   public function provideOneToManyAliasAttr () {
@@ -166,15 +138,13 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
             Array (),
             Array (),
             Array (),
-            Array ( 'aName' => 'aName' )
+            Array ( 'aName' )
         ),
         Array (
             Array ( 'num' => 'hey' ),
             Array (),
             Array (),
-            Array ( 'aName' => Array (
-                MapFilter_TreePattern_Asserts::VALUE => 'hey'
-            ) )
+            Array ( 'aName' => 'hey' )
         ),
         Array (
             Array ( 'num' => 0 ),
@@ -210,19 +180,7 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
         </pattern>
     '
     );
-
-    $actual = $pattern->getFilter ( $query )->fetchResult ();
-
-    $this->assertEquals ( $result, $actual->getResults () );
     
-    $this->assertEquals (
-        $flags,
-        $actual->getFlags ()->getAll ()
-    );
-    
-    $this->assertEquals (
-        new MapFilter_TreePattern_Asserts ( $asserts ),
-        $actual->getAsserts ()
-    );
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }
