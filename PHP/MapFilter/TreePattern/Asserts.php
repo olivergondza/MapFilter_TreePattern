@@ -221,4 +221,26 @@ class MapFilter_TreePattern_Asserts
             $name, $assertName
         );
     }
+    
+    /**
+     * Combibe asserts with several other assert sets
+     *
+     * @param Array $assertSets Assert sets to combine
+     *
+     * @return MapFilter_TreePattern_Asserts
+     *
+     * @since     $NEXT$
+     */
+    public function combine(Array $assertSets) {
+    
+        $result = clone $this;
+        foreach ($assertSets as $asserts) {
+        
+            assert($asserts instanceof MapFilter_TreePattern_Asserts);
+        
+            $result->_asserts += $asserts->_asserts;
+        }
+        
+        return $result;
+    }
 }

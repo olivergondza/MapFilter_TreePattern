@@ -116,4 +116,26 @@ class MapFilter_TreePattern_Flags
     
         return in_array($flagName, $this->_flags);
     }
+    
+    /**
+     * Combibe asserts with several other assert sets
+     *
+     * @param Array $assertSets Assert sets to combine
+     *
+     * @return MapFilter_TreePattern_Asserts
+     *
+     * @since     $NEXT$
+     */
+    public function combine(Array $flagSets) {
+    
+        $result = clone $this;
+        foreach ($flagSets as $flags) {
+        
+            assert($flags instanceof MapFilter_TreePattern_Flags);
+        
+            $result->_flags += $flags->_flags;
+        }
+        
+        return $result;
+    }
 }

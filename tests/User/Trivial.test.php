@@ -18,15 +18,18 @@ class MapFilter_Test_User_Trivial extends
     return Array (
         Array (
             Array ( '-h' => NULL, '-v' => NULL, '-o' => 'a.out' ),
-            Array ( '-h' => NULL )
+            Array ( '-h' => NULL ),
+            true
         ),
         Array (
             Array ( '-o' => 'a.out' ),
-            null
+            null,
+            false
         ),
         Array (
             Array (),
-            null
+            null,
+            false
         )
     );
   }
@@ -37,7 +40,7 @@ class MapFilter_Test_User_Trivial extends
    *
    * @covers MapFilter_TreePattern_Tree_Node_One
    */
-  public function testSimpleOneWhitelist ( $query, $result ) {
+  public function testSimpleOneWhitelist ( $query, $result, $valid ) {
   
     $pattern = '
         <pattern>
@@ -59,6 +62,11 @@ class MapFilter_Test_User_Trivial extends
         $result,
         $filter->fetchResult ()->getResults ()
     );
+    
+    $this->assertEquals (
+        $valid,
+        $filter->fetchResult ()->isValid ()
+    );
   }
   /**@}*/
 
@@ -67,7 +75,8 @@ class MapFilter_Test_User_Trivial extends
     return Array (
         Array (
             Array ( '-f' => NULL, '-o' => NULL, '-v' => NULL ),
-            Array ( '-f' => NULL, '-o' => NULL )
+            Array ( '-f' => NULL, '-o' => NULL ),
+            true
         )
     );
   }
@@ -78,7 +87,7 @@ class MapFilter_Test_User_Trivial extends
    *
    * @covers MapFilter_TreePattern_Tree_Node_All
    */
-  public function testSimpleAllWhitelist ( $query, $expected ) {
+  public function testSimpleAllWhitelist ( $query, $expected, $valid ) {
   
     $pattern = '
         <pattern>
@@ -92,10 +101,10 @@ class MapFilter_Test_User_Trivial extends
     $actual = MapFilter_TreePattern_Xml::load ( $pattern )
         ->getFilter ( $query )
         ->fetchResult ()
-        ->getResults ()
     ;
     
-    $this->assertEquals ( $expected, $actual );
+    $this->assertEquals ( $expected, $actual->getResults () );
+    $this->assertEquals ( $valid, $actual->isValid () );
   }
   /*@}*/
   
@@ -145,10 +154,10 @@ class MapFilter_Test_User_Trivial extends
     $actual = MapFilter_TreePattern_Xml::load ( $pattern )
         ->getFilter ( $query )
         ->fetchResult ()
-        ->getResults ()
     ;
     
-    $this->assertEquals ( $expected, $actual );
+    $this->assertEquals ( $expected, $actual->getResults () );
+    $this->assertTrue ( $actual->isValid () );
   }
   /*@{*/
 }

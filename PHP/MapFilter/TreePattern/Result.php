@@ -62,26 +62,43 @@ class MapFilter_TreePattern_Result
     private $_asserts;
     
     /**
-     * Pattern Tree
+     * Pattern results
      *
-     * @var MapFilter_TreePattern_Tree Pattern $_tree.
+     * @var Mixed $_results.
      *
      * @since $NEXT$
      */
-    private $_tree;
+    private $_results;
+    
+    /**
+     * Pattern valid
+     *
+     * @var bool $_valid
+     *
+     * @since $NEXT$
+     */
+    private $_valid;
 
     /**
      * Create MapFilter_TreePattern_Result
      *
-     * @param MapFilter_TreePattern_Tree    $tree    Pattern tree.
+     * @param mixed                         $results Pattern results.
      * @param MapFilter_TreePattern_Asserts $asserts Parsing asserts.
+     * @param MapFilter_TreePattern_Flags   $flags   Pattern flags.
+     * @param bool                          $valid   Pattern satisfied.
      */
     public function __construct(
-        MapFilter_TreePattern_Tree $tree,
-        MapFilter_TreePattern_Asserts $asserts
+        $results,
+        MapFilter_TreePattern_Asserts $asserts,
+        MapFilter_TreePattern_Flags $flags,
+        $valid
     ) {
-        $this->_tree = $tree;
+        assert(is_bool($valid));
+    
+        $this->_results = $results;
         $this->_asserts = $asserts;
+        $this->_flags = $flags;
+        $this->_valid = $valid;
     }
 
     /**
@@ -93,7 +110,7 @@ class MapFilter_TreePattern_Result
      */
     public function getResults()
     {
-        return $this->_tree->pickUp(null);
+        return $this->_results;
     }
     
     /**
@@ -117,12 +134,37 @@ class MapFilter_TreePattern_Result
      */
     public function getFlags()
     {
-        if ($this->_flags === null) {
-      
-            $this->_flags = new MapFilter_TreePattern_Flags;
-            $this->_tree->pickUpFlags($this->_flags);
+        return $this->_flags;
+    }
+    
+    /**
+     * Determine whether the data are valid.
+     *
+     * @return bool Data valid
+     *
+     * @since $NEXT$
+     */
+    public function isValid ()
+    {
+        return $this->_valid;
+    }
+    
+    public function combine(Array $subResults)
+    {
+        $asserts = Array();
+        $flags = Array();
+        foreach ($subResults as $result) {
+        
+            assert($result instanceof MapFilter_TreePattern_Result);
+        
+            $asserts[] = $result->_asserts;
+            $flags[] = $result->_flags;
         }
         
-        return $this->_flags;
+        $result = clone $this;
+        $result->_asserts = $this->_asserts->combine($asserts);
+        $result->_flags = $this->_flags->combine($flags);
+        
+        return $result;
     }
 }
