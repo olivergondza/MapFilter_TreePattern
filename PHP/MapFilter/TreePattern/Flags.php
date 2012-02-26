@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to load and hold Pattern tree.
+ * Filtering flags.
  *
  * PHP Version 5.1.0
  *
@@ -28,7 +28,7 @@
  */
 
 /**
- * Class to load and hold Pattern tree.
+ * Filtering flags.
  *
  * @category Pear
  * @package  MapFilter_TreePattern

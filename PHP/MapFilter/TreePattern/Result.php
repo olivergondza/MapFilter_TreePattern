@@ -46,7 +46,7 @@ class MapFilter_TreePattern_Result
     /**
      * Parsing flags
      *
-     * @var MapFilter_TreePattern_Flags Filtering flags.
+     * @var MapFilter_TreePattern_Flags Filtering $_flags.
      *
      * @since $NEXT$
      */
@@ -55,7 +55,7 @@ class MapFilter_TreePattern_Result
     /**
      * Parsing asserts
      *
-     * @var MapFilter_TreePattern_Asserts Filtering asserts.
+     * @var MapFilter_TreePattern_Asserts Filtering $_asserts.
      *
      * @since $NEXT$
      */
@@ -64,7 +64,7 @@ class MapFilter_TreePattern_Result
     /**
      * Pattern Tree
      *
-     * @var MapFilter_TreePattern_Tree Pattern tree.
+     * @var MapFilter_TreePattern_Tree Pattern $_tree.
      *
      * @since $NEXT$
      */

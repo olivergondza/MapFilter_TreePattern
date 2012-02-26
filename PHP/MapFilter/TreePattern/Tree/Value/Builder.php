@@ -166,8 +166,6 @@ class MapFilter_TreePattern_Tree_Value_Builder extends
      *
      * @return MapFilter_TreePattern_Tree_Leaf_Attr Tree Element
      *
-     * @return null
-     *
      * @since    $NEXT$
      */
     public function build()

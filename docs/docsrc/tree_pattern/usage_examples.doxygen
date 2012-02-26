@@ -8,7 +8,7 @@
 This simple example shows how to create simple whitelist allowing occurrence
 of just one of defined attributes.  <tt>my_utility -h -v -o a.out</tt>
 
-@clip{User/TreePattern.test.php,testSimpleOneWhitelist}
+@clip{User/Trivial.test.php,testSimpleOneWhitelist}
 
 Filtered query now contains just <tt>-h</tt> option since there is nothing
 about <tt>-o</tt> in our pattern and <tt>-v</tt> was preceded by
@@ -20,7 +20,7 @@ more than <tt>-v</tt> option.
 
 Let’s assume the same query with slightly modified pattern.
 
-@clip{User/TreePattern.test.php,testSimpleOptWhitelist}
+@clip{User/Trivial.test.php,testSimpleOptWhitelist}
 
 This is the way to enable occurrence of more options (including 0). The same
 query will now contain both <tt>-h</tt> and <tt>-v</tt> option regardless of
@@ -31,7 +31,7 @@ their order.
 Sometimes it’s useful to specify a group of attributes that all must occur.
 <tt>my_app -f main.c -o a.out</tt>
 
-@clip{User/TreePattern.test.php,testSimpleAllWhitelist}
+@clip{User/Trivial.test.php,testSimpleAllWhitelist}
 
 Since we have got all the arguments, they all pass our filter. Let’s try to
 run the binary without source file.  <tt>my_app -o a.out</tt>

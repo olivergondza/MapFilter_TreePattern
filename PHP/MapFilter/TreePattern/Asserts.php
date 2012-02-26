@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to load and hold Pattern tree.
+ * Filtering asserts.
  *
  * PHP Version 5.1.0
  *
@@ -31,7 +31,7 @@ require_once 'PHP/MapFilter/TreePattern/Asserts/InvalidInitializationException.p
 require_once 'PHP/MapFilter/TreePattern/Asserts/MissingPropertyException.php';
 
 /**
- * Class to load and hold Pattern tree.
+ * Filtering asserts.
  *
  * @category Pear
  * @package  MapFilter_TreePattern
@@ -105,7 +105,7 @@ class MapFilter_TreePattern_Asserts
      * @param String $path       Path
      * @param Mixed  &$value     Value reference
      *
-     * @return    MapFilter_TreePattern_Flags
+     * @return    MapFilter_TreePattern_Asserts
      *
      * @since     $NEXT$
      */

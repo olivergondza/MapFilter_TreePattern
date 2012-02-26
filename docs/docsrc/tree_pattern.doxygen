@@ -24,20 +24,20 @@ Individual results can be obtained by get<i>MyResultType</i>().
 	@subsection	results	        Results
 
 		Results can be obtained by <tt>@ref
-MapFilter_TreePattern::getResults() "getResults()"</tt>. Results data
+MapFilter_TreePattern_Result::getResults() "getResults()"</tt>. Results data
 structure contains a derivation of user query created according to given
 pattern.
 
 	@subsection	flags           Flags
 
 		Flags can be obtained by <tt>@ref
-MapFilter_TreePattern::getFlags() "getFlags()"</tt>. Flags represents
+MapFilter_TreePattern_Result::getFlags() "getFlags()"</tt>. Flags represents
 predefined aspects where user data @b match expected data pattern.
 
 	@subsection	assertions      Assertions
 
-		Assertions can be obtained by
-<tt>@ref MapFilter_TreePattern::getAsserts() "getAsserts()"</tt>. Assertions
+		Assertions can be obtained by <tt>@ref
+MapFilter_TreePattern_Result::getAsserts() "getAsserts()"</tt>. Assertions
 represents predefined aspects where user data @b differs from expected data
 patern and related information describing the failures.
 */

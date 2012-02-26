@@ -109,8 +109,6 @@ class MapFilter_TreePattern_Tree_Key_Builder extends
      *
      * @return MapFilter_TreePattern_Tree_Key Tree Element
      *
-     * @return null
-     *
      * @since    $NEXT$
      */
     public function build()
