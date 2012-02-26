@@ -174,20 +174,7 @@ class MapFilter_TreePattern_Asserts
     public function getPath($assertName)
     {
     
-        assert(is_string($assertName));
-      
-        $hasVal = $this->exists($assertName) && array_key_exists(
-            self::PATH, $this->_asserts[ $assertName ]
-        );
-        
-        if (!$hasVal) {
-        
-            throw new MapFilter_TreePattern_Asserts_MissingPropertyException(
-                'path', $assertName
-            );
-        }
-        
-        return $this->_asserts[ $assertName ][ self::PATH ];
+        return $this->_getAssertEntry($assertName, self::PATH, 'path');
     }
     
     /**
@@ -202,19 +189,36 @@ class MapFilter_TreePattern_Asserts
     public function &getValue($assertName)
     {
     
+        return $this->_getAssertEntry($assertName, self::VALUE, 'value');
+    }
+    
+    /**
+     * Get entry property if available
+     *
+     * @param String $assertName Assection name
+     * @param String $attr       Attribute accessed
+     * @param String $name       Symolic name for attribute
+     *
+     * @return    &Mixed
+     *
+     * @since     $NEXT$
+     */
+    private function &_getAssertEntry($assertName, $attr, $name)
+    {
+    
         assert(is_string($assertName));
+        assert(is_string($name));
         
-        $hasVal = $this->exists($assertName) && array_key_exists(
-            self::VALUE, $this->_asserts[ $assertName ]
-        );
-        
-        if (!$hasVal) {
-        
-            throw new MapFilter_TreePattern_Asserts_MissingPropertyException(
-                'value', $assertName
-            );
+        if ($this->exists($assertName)) {
+ 
+            if (array_key_exists($attr, $this->_asserts[ $assertName ])) {
+            
+                return $this->_asserts[ $assertName ][ $attr ];
+            }
         }
         
-        return $this->_asserts[ $assertName ][ self::VALUE ];
+        throw new MapFilter_TreePattern_Asserts_MissingPropertyException(
+            $name, $assertName
+        );
     }
 }

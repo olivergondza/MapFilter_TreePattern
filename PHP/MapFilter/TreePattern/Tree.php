@@ -119,15 +119,6 @@ abstract class MapFilter_TreePattern_Tree implements
     protected $attachPattern = null;
     
     /**
-     * Node setters
-     *
-     * @since     $NEXT$
-     *
-     * @var       Array                                   $setters
-     */
-    protected $setters = Array();
-    
-    /**
      * Name of the element
      *
      * @var     String                                    $elementName
@@ -180,7 +171,7 @@ abstract class MapFilter_TreePattern_Tree implements
      *
      * @since     0.3
      */
-    public function &getContent()
+    protected function &getContent()
     {
     
         $this->attachPattern();

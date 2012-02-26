@@ -42,15 +42,6 @@ interface MapFilter_TreePattern_Tree_Interface
 {
   
     /**
-     * Get node followers reference.
-     *
-     * @return    Array           Node content reference.
-     *
-     * @since     0.4
-     */
-    public function &getContent();
-    
-    /**
      * Set TreePattern.
      *
      * @param MapFilter_TreePattern $pattern A pattern to set.
