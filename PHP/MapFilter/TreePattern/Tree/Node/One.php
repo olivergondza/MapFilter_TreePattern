@@ -61,16 +61,25 @@ final class MapFilter_TreePattern_Tree_Node_One extends
     public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
 
+        $builder = MapFilter_TreePattern_Result::builder();
+
         foreach ($this->getContent() as $follower) {
           
-            if ($follower->satisfy($query, $asserts)) {
+            $result = $follower->satisfy($query, $asserts);
+            if ($result->isValid()) {
 
-                $this->data = $query;
-                return $this->satisfied = true;
+                $this->satisfied = true;
+                return $builder->putResult($this->createResult($asserts))
+                    ->putResult($result)
+                    ->build($this->data, $this->satisfied)
+                ;
             }
+            $builder->putAsserts($result->getAsserts());
         }
         
-        $this->setAssertValue($asserts);
-        return $this->satisfied = false;
+        $this->satisfied = false;
+        return $builder->putResult($this->createResult($asserts))
+            ->build($this->data, $this->satisfied)
+        ;
     }
 }

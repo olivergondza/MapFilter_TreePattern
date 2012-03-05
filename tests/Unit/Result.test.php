@@ -40,33 +40,36 @@ class MapFilter_Test_Unit_TreePattern_Result extends
     $this->assertSame ( $valid, $result->isValid () );
   }
   
-  public function testCompose () {
+  public function testBuild () {
   
     $f1 = new MapFilter_TreePattern_Flags ( Array ( 'f1' ) );
     $a1 = new MapFilter_TreePattern_Asserts ( Array ( 'a1' ) );
-    $r1 = new MapFilter_TreePattern_Result ( null, $a1, $f1, true );
     
     $f2 = new MapFilter_TreePattern_Flags;
     $a2 = new MapFilter_TreePattern_Asserts ( Array ( 'a2' ) );
-    $r2 = new MapFilter_TreePattern_Result ( 42, $a2, $f2, false );
     
     $f3 = new MapFilter_TreePattern_Flags ( Array ( 'f3' ) );
     $a3 = new MapFilter_TreePattern_Asserts;
-    $r3 = new MapFilter_TreePattern_Result ( '', $a3, $f3, false );
     
-    $flags = new MapFilter_TreePattern_Flags ( Array ( 'flag' ) );
-    $asserts = new MapFilter_TreePattern_Asserts;
-    $result = new MapFilter_TreePattern_Result (
-        Array ( 'val' ), $asserts, $flags, true
-    );
+    $builtResult = MapFilter_TreePattern_Result::builder()
+        ->putFlags(null)
+        ->putAsserts(null)
+        ->putFlags($f1)
+        ->putAsserts($a1)
+        ->putFlags($f2)
+        ->putAsserts($a2)
+        ->putFlags($f3)
+        ->putAsserts($a3)
+        ->putFlags(null)
+        ->putAsserts(null)
+        ->build(Array('val'), true)
+    ;
     
-    $combinedResult = $result->combine ( Array ( $r1, $r2, $r3 ) );
-    
-    $this->assertSame ( Array ( 'val' ), $combinedResult->getResults () );
-    $this->assertSame ( true, $combinedResult->isValid () );
+    $this->assertSame ( Array ( 'val' ), $builtResult->getResults () );
+    $this->assertSame ( true, $builtResult->isValid () );
     $this->assertSame (
         Array ( 'a1', 'a2' ),
-        $combinedResult->getAsserts ()->getAll ()
+        $builtResult->getAsserts ()->getAll ()
     );
   }
 }

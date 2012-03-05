@@ -67,17 +67,12 @@ implements
     
         assert(MapFilter_TreePattern::isMap($query));
 
-        $oldAsserts = $asserts;
+        $result = parent::satisfy($query, $asserts);
+        $this->satisfied = $result->isValid();
 
-        $satisfied = parent::satisfy($query, $asserts);
-        
-        if (!$satisfied) return false;
+        if (!$this->satisfied) return $this->createResult($asserts);
 
-        $asserts = $oldAsserts;
-
-        return $this->satisfied = $this->_satisfyFollowers(
-            $query, $asserts
-        );
+        return $this->_satisfyFollowers($query, $asserts);
     }
     
     /**
@@ -96,28 +91,32 @@ implements
     
         $value = $this->attribute->getValue();
 
-        $satisfied = false;
+        $builder = MapFilter_TreePattern_Result::builder ();
         if (is_array($value)) {
 
             foreach ($value as $singleCandidate) {
 
-                $satisfied |= (Bool) $this->_satisfyFittingFollower(
+                $result = $this->_satisfyFittingFollower(
                     $query, $asserts, $singleCandidate
                 );
+                $builder->putResult($result);
+                
+                if ($result->isValid()) {
+                
+                    $this->satisfied = true;
+                }
             }
         } else {
          
-            $satisfied = (Bool) $this->_satisfyFittingFollower(
-                $query, $asserts, $value
-            );
+            $result = $this->_satisfyFittingFollower($query, $asserts, $value);
+            $builder->putResult($result);
+            
+            $this->satisfied = $result->isValid();
         }
-        
-        if (!$satisfied) {
 
-            $this->setAssertValue($asserts, $value);
-        }
-        
-        return (Bool) $satisfied;
+        return $builder->putResult($this->createResult($asserts, $value))
+            ->build($this->data, $this->satisfied)
+        ;
     }
     
     /**
@@ -137,6 +136,8 @@ implements
         $valueCandidate
     ) {
     
+        $builder = MapFilter_TreePattern_Result::builder ();
+    
         $satisfied = false;
         foreach ($this->getContent() as $follower) {
         
@@ -146,16 +147,15 @@ implements
             
             if (!$fits) continue;
             
-            $satisfied |= $follower->satisfy(
-                $query, $asserts
-            );
+            $result = $follower->satisfy($query, $asserts);
+            $builder->putResult($result);
+            
+            $satisfied |= $result->isValid();
         }
         
-        if (!$satisfied) {
-
-            $this->setAssertValue($asserts);
-        }
-          
-        return $this->satisfied = $satisfied;
+        return $builder
+//            ->putResult($this->createResult($asserts))
+            ->build($query, (Bool) $satisfied)
+        ;
     }
 }

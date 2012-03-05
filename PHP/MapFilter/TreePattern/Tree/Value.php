@@ -79,6 +79,8 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
      */
     protected $default = null;
     
+    private $_result;
+    
     /**
      * Instantiate attribute
      *
@@ -109,11 +111,10 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
     {
     
         assert(empty($result));
-      
-        return ($this->isSatisfied())
-            ? $this->data
-            : null
-        ;
+        
+        if (!$this->isSatisfied()) return null;
+        
+        return $this->_result->getResults();
     }
     
     /**
@@ -132,29 +133,32 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
         $this->satisfied = $this->_isSatisfied($query);
 
         if (!$this->satisfied) {
-        
+
             if (is_null($this->default)) {
         
-                $this->setAssertValue($asserts, $query);
-                return false;
+                return $this->_result = $this->createResult($asserts, $query);
             }
-            
+
             $query = $this->default;
         }
 
         $this->data = $this->_replace($query);
 
-        $this->satisfied = (array_key_exists(0, $this->content))
-            ? $this->content[ 0 ]->satisfy($this->data, $asserts)
-            : true
-        ;
-
-        if (!$this->satisfied) {
+        $this->satisfied = true;
+        if (array_key_exists(0, $this->content)) {
         
-            $this->setAssertValue($asserts, $this->data);
+            $result = $this->content[ 0 ]->satisfy($this->data, $asserts);
+            
+            $this->satisfied = $result->isValid();
+
+            return $this->_result = $this->createResult($asserts, $this->data)
+                ->getBuilder()
+                ->putResult($result)
+                ->build($this->data, $this->satisfied)
+            ;
         }
 
-        return $this->satisfied;
+        return $this->_result = $this->createResult($asserts, $this->data);
     }
     
     /**
@@ -188,7 +192,7 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
     private function _isString($query)
     {
 
-        if (is_scalar($query) || is_null($query)) return true;
+        if (is_scalar($query)) return true;
       
         return (is_object($query) && method_exists($query, '__toString'));
     }

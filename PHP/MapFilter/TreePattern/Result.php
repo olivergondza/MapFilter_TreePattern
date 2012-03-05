@@ -27,7 +27,7 @@
  * @since    $NEXT$
  */
 
-require_once 'PHP/MapFilter/PatternInterface.php';
+require_once 'PHP/MapFilter/TreePattern/Result/Builder.php';
 
 /**
  * TreePattern filtering result
@@ -78,6 +78,18 @@ class MapFilter_TreePattern_Result
      * @since $NEXT$
      */
     private $_valid;
+    
+    /**
+     * Get result builder
+     *
+     * @return MapFilter_TreePattern_Result_Builder
+     *
+     * @since $NEXT$
+     */
+    public static function builder()
+    {
+        return new MapFilter_TreePattern_Result_Builder;
+    }
 
     /**
      * Create MapFilter_TreePattern_Result
@@ -149,22 +161,15 @@ class MapFilter_TreePattern_Result
         return $this->_valid;
     }
     
-    public function combine(Array $subResults)
+    /**
+     * Get result builder initialized with state of this instance
+     *
+     * @return MapFilter_TreePattern_Result_Builder
+     *
+     * @since $NEXT$
+     */
+    public function getBuilder()
     {
-        $asserts = Array();
-        $flags = Array();
-        foreach ($subResults as $result) {
-        
-            assert($result instanceof MapFilter_TreePattern_Result);
-        
-            $asserts[] = $result->_asserts;
-            $flags[] = $result->_flags;
-        }
-        
-        $result = clone $this;
-        $result->_asserts = $this->_asserts->combine($asserts);
-        $result->_flags = $this->_flags->combine($flags);
-        
-        return $result;
+        return new MapFilter_TreePattern_Result_Builder($this);
     }
 }

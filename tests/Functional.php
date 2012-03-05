@@ -26,6 +26,8 @@ abstract class MapFilter_TreePattern_Test_Functional extends
       $flags = Array ()
   ) {
   
+    sort ( $flags );
+  
     $actual = $pattern->getFilter ( $query )->fetchResult ();
     $this->_compare ( $actual, $result, $asserts, $flags );
     
@@ -55,10 +57,14 @@ abstract class MapFilter_TreePattern_Test_Functional extends
    * 
    */
   private function _compare ( $actual, $result, $asserts, $flags ) {
-  
-    $this->assertEquals ( $result, $actual->getResults () );
-    $this->assertEquals ( $asserts, $actual->getAsserts ()->getMap () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
+
+    $this->assertEquals ( $result, $actual->getResults (), 'Result mismatch' );
+
+    $givenFlags = $actual->getFlags ()->getAll ();
+    sort ( $givenFlags );
+
+    $this->assertEquals ( $asserts, $actual->getAsserts ()->getMap (), 'Assert mismatch' );
+    $this->assertSame ( $flags, $givenFlags, 'Flag mismatch' );
   }
   
   /**
@@ -72,11 +78,15 @@ abstract class MapFilter_TreePattern_Test_Functional extends
     
         $this->assertEquals (
             $result,
-            iterator_to_array ( $actual->getResults () )
+            iterator_to_array ( $actual->getResults () ),
+            'Result mismatch'
         );
     }
     
-    $this->assertEquals ( $asserts, $actual->getAsserts ()->getMap () );
-    $this->assertSame ( $flags, $actual->getFlags ()->getAll () );
+    $givenFlags = $actual->getFlags ()->getAll ();
+    sort ( $givenFlags );
+
+    $this->assertEquals ( $asserts, $actual->getAsserts ()->getMap (), 'Assert mismatch' );
+    $this->assertSame ( $flags, $givenFlags, 'Flag mismatch' );
   }
 }

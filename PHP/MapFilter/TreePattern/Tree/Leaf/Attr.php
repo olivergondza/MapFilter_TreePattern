@@ -69,33 +69,26 @@ implements
 
         $this->attribute->setQuery($query);
 
-        if (!$this->attribute->isPresent()) {
+        $attributeAsserts = $this->_getAsserts($query, $asserts);
+        if (!$this->satisfied) {
         
-            $this->setAssertValue($asserts);
-
-            return $this->satisfied = false;
-        }
-        
-        if (!$this->attribute->isValid()) {
-        
-            $this->setAssertValue(
-                $asserts, $query[ (String) $this->attribute ]
-            );
-        
-            return $this->satisfied = false;
+            return MapFilter_TreePattern_Result::builder()
+                ->putFlags($this->getFlags())
+                ->putAsserts($attributeAsserts)
+                ->build($query, $this->satisfied)
+            ;
         }
 
         $value = $this->attribute->getValue();
 
         $attrName = (String) $this->attribute;
 
-        if ( array_key_exists($attrName, $query)
-            && is_array($value)
-        ) {
+        $this->satisfied = true;
+        if (array_key_exists($attrName, $query) && is_array($value)) {
 
             $oldValue = self::convertIterator($query[ $attrName ]);
 
-            $oldValue =(is_array($oldValue))
+            $oldValue = (is_array($oldValue))
                 ? $oldValue
                 : Array()
             ;
@@ -107,9 +100,60 @@ implements
             if ($setAsserts) {
 
                 $this->setAssertValue($asserts, $assertValue);
+                $attributeAsserts = MapFilter_TreePattern_Asserts::create(
+                    $this->validationAssert, $assertValue
+                );
             }
         }
 
-        return $this->satisfied = true;
+        return MapFilter_TreePattern_Result::builder()
+            ->putFlags($this->getFlags())
+            ->putAsserts($attributeAsserts)
+            ->build($query, true)
+        ;
+    }
+    
+    /**
+     * Get element asserts
+     *
+     * @param Array|ArrayAccess             $query   A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     *
+     * @return MapFilter_TreePattern_Asserts
+     *
+     * @since $NEXT$
+     */
+    private function _getAsserts(
+        $query, MapFilter_TreePattern_Asserts $asserts
+    ) {
+
+        $this->satisfied = true;
+
+        if (!$this->attribute->isPresent()) {
+            $this->satisfied = false;
+            if ( $this->existenceAssert !== null) {
+            
+                $asserts->set($this->existenceAssert);
+                return MapFilter_TreePattern_Asserts::create(
+                    $this->existenceAssert
+                );
+            }
+        } elseif (!$this->attribute->isValid()) {
+        
+            $this->satisfied = false;
+            if ($this->validationAssert !== null) {
+
+                $this->setAssertValue(
+                    $asserts, $query[ (String) $this->attribute ]
+                );
+            
+                return MapFilter_TreePattern_Asserts::create(
+                    $this->validationAssert,
+                    $query[ (String) $this->attribute ]
+                );
+            }
+        }
+        
+        return new MapFilter_TreePattern_Asserts;
     }
 }

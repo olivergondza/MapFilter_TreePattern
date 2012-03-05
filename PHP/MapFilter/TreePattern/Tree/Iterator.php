@@ -44,9 +44,10 @@ class MapFilter_TreePattern_Tree_Iterator extends
     MapFilter_TreePattern_Tree_Struct
 {
 
-    private $_data = null;
+    protected $data = null;
     private $_lowerBoundary = null;
     private $_upperBoundary = null;
+    private $_follower;
 
     /**
      * Instantiate iterator element
@@ -82,11 +83,11 @@ class MapFilter_TreePattern_Tree_Iterator extends
 
             if ($follower->isSatisfied()) {
             
-                $this->_data[ $key ] = $follower->pickUp($result);
+                $this->data[ $key ] = $follower->pickUp($result);
             }
         }
 
-        return $this->_data;
+        return $this->data;
     }
     
     /**
@@ -103,31 +104,18 @@ class MapFilter_TreePattern_Tree_Iterator extends
     {
         assert($this->satisfied === false);
 
-        $this->satisfied = $this->_isSatisfied($query, $asserts);
-        if (!$this->satisfied) {
+        if (!MapFilter_TreePattern::isIterator($query)) {
         
-            $this->setAssertValue($asserts);
+            return $this->createResult($asserts);
         }
 
-        return $this->satisfied;
-    }
-    
-    /**
-     * Determinw whether the element is satisfied
-     *
-     * @param Mixed                         &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
-     *
-     * @return Bool Satisfied or not.
-     *
-     * @since     $NEXT$
-     */
-    private function _isSatisfied(&$query, MapFilter_TreePattern_Asserts $asserts)
-    {
-    
-        if (!MapFilter_TreePattern::isIterator($query)) return false;
+        $result = $this->_dispatchFollowers($query, $asserts);
         
-        return $this->_dispatchFollowers($query, $asserts);
+        return $this->createResult($asserts)
+            ->getBuilder()
+            ->putResult($result)
+            ->build($this->data, $this->satisfied)
+        ;
     }
     
     /**
@@ -144,30 +132,22 @@ class MapFilter_TreePattern_Tree_Iterator extends
         &$query, MapFilter_TreePattern_Asserts $asserts
     ) {
     
-        $content = $this->getContent();
-        $follower = ($content)
-            ? $content[ 0 ]
-            : null
-        ;
-
-        $this->_data = (!is_array($query))
+        $this->data = (!is_array($query))
             ? new ArrayIterator()
             : Array()
         ;
         
+        $this->_follower = $this->getFollower();
         $this->content = Array();
 
-        $length = $this->_validateFollowers($query, $asserts, $follower);
-        
-        return $length >= $this->_lowerBoundary;
+        return $this->_validateFollowers($query, $asserts);
     }
     
     /**
      * Validate itterator according to pattern
      *
-     * @param Mixed                         &$query   A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts  Asserts.
-     * @param MapFilter_TreePattern_Tree    $follower Pattern.
+     * @param Mixed                         &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
      *
      * @return  Bool
      *
@@ -175,71 +155,95 @@ class MapFilter_TreePattern_Tree_Iterator extends
      */
     private function _validateFollowers (
         &$query,
-        MapFilter_TreePattern_Asserts $asserts,
-        MapFilter_TreePattern_Tree $follower = null
+        MapFilter_TreePattern_Asserts $asserts
     ) {
+    
+        $builder = MapFilter_TreePattern_Result::builder();
     
         $length = 0;
         foreach ($query as $key => $iteratorItem) {
         
             $length++;
+
+            if ($this->_isOutOfRange($length)) break;
+
+            if ($this->_follower) {
+
+                $result = $this->_isValid($key, $iteratorItem, $asserts);
+
+                if (!$result->isValid()) {
             
-            if ($this->_isRedundant($length)) return $length - 1;
-            
-            if (!$this->_isValid($iteratorItem, $key, $asserts, $follower)) {
-            
-                $length--;
-                continue;  
+                    $builder->putAsserts($result->getAsserts());
+                    $length--;
+                    continue;  
+                }
+                
+                $builder->putFlags($result->getFlags());
             }
             
-            $this->_data[ $key ] = $iteratorItem;
+            $this->data[ $key ] = $iteratorItem;
         }
         
-        return $length;
+        if ($length < $this->_lowerBoundary) {
+        
+            $this->satisifed = false;
+            
+            $childResult = $builder->build($this->data, $this->satisfied);
+            return $this->createResult($asserts)
+                ->getBuilder()
+                ->putAsserts($childResult->getAsserts())
+                ->build($this->data, $this->satisfied)
+            ;
+        }
+        
+        $this->satisfied = true;
+        return $builder->build($this->data, $this->satisfied);
     }
     
     /**
      * Determine whether an iterator element is valid according to the pattern
      *
-     * @param Mixed                         &$query   A query to filter.
-     * @param Mixed                         $key      Iterator key.
-     * @param MapFilter_TreePattern_Asserts $asserts  Asserts.
-     * @param MapFilter_TreePattern_Tree    $follower Pattern.
+     * @param Mixed                         $key     Iterator key.
+     * @param Mixed                         &$query  A query to filter.
+     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
      *
      * @return Bool
      *
      * @since $NEXT$
      */
     private function _isValid(
-        &$query,
         $key,
-        MapFilter_TreePattern_Asserts $asserts,
-        MapFilter_TreePattern_Tree $follower = null
+        &$query,
+        MapFilter_TreePattern_Asserts $asserts
     ) {
     
-        if (!$follower) return true;
+        $pattern = clone $this->_follower;
         
-        $pattern = clone $follower;
-        $followerSatisfied = $pattern->satisfy($query, $asserts);
+        $result = $pattern->satisfy($query, $asserts);
+        $builder = $result->getBuilder();
         
-        if ($followerSatisfied) {
+        if ($result->isValid()) {
         
             $this->content[ $key ] = $pattern;
+            $builder->putFlags($result->getFlags());
+        } else {
+
+            $builder->putAsserts($result->getAsserts());
         }
-        
-        return $followerSatisfied;
+
+        return $builder->build($this->data, $result->isValid());
     }
     
     /**
-     * Determine whether the element in array is redundant
+     * Determine whether the length is out of range
      *
-     * @param Int $length Slice length.
+     * @param Int $length Current length.
      *
      * @return Bool
      *
      * @since $NEXT$
      */
-    private function _isRedundant($length)
+    private function _isOutOfRange($length)
     {
     
         assert(is_int($length));

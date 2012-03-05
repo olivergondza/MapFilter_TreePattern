@@ -68,6 +68,15 @@ class MapFilter_TreePattern_Asserts
     private $_asserts = Array();
     
     /**
+     *
+     */
+    public static function create($assertName, &$value = null)
+    {
+
+        return new self(Array($assertName => $value));
+    }
+    
+    /**
      * Create asserts
      *
      * @param Array $asserts Asserts
@@ -115,6 +124,8 @@ class MapFilter_TreePattern_Asserts
         assert(is_string($assertName));
         assert(is_string($path) || is_null($path));
 
+        if ($this->_isRedundant($assertName, $path, $value)) return $this;
+
         $this->_asserts[ $assertName ] = Array();
         
         if ($path !== null) {
@@ -130,6 +141,22 @@ class MapFilter_TreePattern_Asserts
         ksort($this->_asserts);
         
         return $this;
+    }
+    
+    /**
+     *
+     */
+    private function _isRedundant($assertName, $path, $value)
+    {
+    
+        if (!$this->exists($assertName)) return false;
+        
+        $entry = $this->_asserts[ $assertName ];
+        
+        if (array_key_exists(self::PATH, $entry) && $path !== null) return false;
+        if (array_key_exists(self::VALUE, $entry) && $value !== null) return false;
+        
+        return true;
     }
     
     /**
@@ -238,12 +265,18 @@ class MapFilter_TreePattern_Asserts
         
             assert($asserts instanceof MapFilter_TreePattern_Asserts);
         
-            $result->_asserts += $asserts->_asserts;
+        
+            $result->_asserts = array_merge(
+                $result->_asserts, $asserts->_asserts
+            );
         }
         
         return $result;
     }
     
+    /**
+     *
+     */
     public function getMap () {
     
         $simpleMap = Array();

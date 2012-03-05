@@ -61,15 +61,15 @@ implements
     public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
     
-        $satisfied = parent::satisfy($query, $asserts);
+        $result = parent::satisfy($query, $asserts);
         
-        if (!$satisfied) return false;
+        if (!$result->isValid()) return $result;
         
         $value = $this->_removeAttr($query);
         
         $this->_satisfyFollowers($query, $asserts, $value);
 
-        return $satisfied;
+        return $result;
     }
     
     /**

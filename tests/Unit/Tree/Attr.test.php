@@ -37,7 +37,6 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
   }
   
   /**
-   *
    */
   public function testAttr () {
     
@@ -175,7 +174,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
             >an_attr</attr>
         </pattern>
     ' );
-    
+  
     $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
   

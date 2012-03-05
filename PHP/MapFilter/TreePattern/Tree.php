@@ -213,7 +213,7 @@ abstract class MapFilter_TreePattern_Tree implements
     protected function setAssertValue(
         MapFilter_TreePattern_Asserts $asserts, $assertValue = Array()
     ) {
-    
+
         if ($assertValue === Array()) {
 
              $name = $this->existenceAssert;
@@ -225,7 +225,7 @@ abstract class MapFilter_TreePattern_Tree implements
         }
         
         if ($name === null) return;
-          
+
         $asserts->set($name, null, $value);
     }
     
@@ -300,26 +300,77 @@ abstract class MapFilter_TreePattern_Tree implements
     }
     
     /**
-     * Get filtering flags.
+     * Get flags to set for current element
      *
-     * @param MapFilter_TreePattern_Flags $flags Existing flags.
+     * @return MapFilter_TreePattern_Flags Flags
      *
-     * @return  null
-     *
-     * @since     0.5.1
+     * @since $NEXT$
      */
-    public function pickUpFlags(MapFilter_TreePattern_Flags $flags)
-    {
-    
-        if (!$this->isSatisfied()) return;
-        if ($this->flag !== null) {
-        
-            $flags->set($this->flag);
-        }
-        
-        foreach ($this->getContent() as $follower) {
+    protected function getFlags () {
 
-            $follower->pickUpFlags($flags);
+        $flags = (!$this->isSatisfied() || $this->flag === null) 
+            ? Array ()
+            : Array ( $this->flag )
+        ;
+
+        return new MapFilter_TreePattern_Flags($flags);
+    }
+    
+    /**
+     * Get asserts to set for current element
+     *
+     * @return MapFilter_TreePattern_Asserts Asserts
+     *
+     * @since $NEXT$
+     */
+    protected function getAsserts (
+        MapFilter_TreePattern_Asserts $asserts, $useData
+    ) {
+    
+        assert($this->validationAssert === $this->existenceAssert);
+    
+        if ($this->isSatisfied() || $this->validationAssert === null) {
+      
+            return new MapFilter_TreePattern_Asserts;
         }
+        
+        $resultAsserts = null;
+        if ( $useData !== null ) {
+        
+            $asserts->set($this->validationAssert, null, $useData);
+            $resultAsserts = MapFilter_TreePattern_Asserts::create(
+                $this->validationAssert, $useData
+            );
+        } else {
+        
+            $asserts->set($this->validationAssert);
+            $resultAsserts = MapFilter_TreePattern_Asserts::create(
+                $this->validationAssert
+            );
+        }
+        
+        return $resultAsserts;
+    }
+    
+    /**
+     * Instantiate current result
+     */
+    protected function createResult (
+        MapFilter_TreePattern_Asserts $asserts, $useData = null
+    ) {
+    
+        $data = null;
+        
+        if ($this->isSatisfied()) {
+        
+            $data = $this->data;
+        }
+    
+        return new MapFilter_TreePattern_Result (
+            $data,
+            $this->getAsserts($asserts, $useData),
+            $this->getFlags(),
+            $this->isSatisfied()
+        );
     }
 }

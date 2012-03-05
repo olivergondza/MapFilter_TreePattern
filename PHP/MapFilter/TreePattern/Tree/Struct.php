@@ -43,4 +43,26 @@ require_once 'PHP/MapFilter/TreePattern/Tree.php';
 abstract class MapFilter_TreePattern_Tree_Struct extends
     MapFilter_TreePattern_Tree
 {
+
+    /**
+     * Extract only struct element folower
+     *
+     * Struct elements has at most one follower.
+     *
+     * @return  MapFilter_TreePattern_Tree
+     *
+     * @since    $NEXT$
+     */
+    public function getFollower()
+    {
+    
+        $content = $this->getContent();
+    
+        assert(count($content) < 2);
+        
+        return $content
+            ? $content[ 0 ]
+            : null
+        ;
+    }
 }

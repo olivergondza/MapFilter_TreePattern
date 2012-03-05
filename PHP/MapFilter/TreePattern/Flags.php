@@ -59,7 +59,7 @@ class MapFilter_TreePattern_Flags
      */
     public function __construct(Array $flags = Array())
     {
-    
+
         $this->_flags = array_unique(array_values($flags));
         sort($this->_flags);
     }
@@ -120,22 +120,23 @@ class MapFilter_TreePattern_Flags
     /**
      * Combibe asserts with several other assert sets
      *
-     * @param Array $assertSets Assert sets to combine
+     * @param Array $flagtSets Assert sets to combine
      *
      * @return MapFilter_TreePattern_Asserts
      *
      * @since     $NEXT$
      */
-    public function combine(Array $flagSets) {
-    
-        $result = clone $this;
+    public function combine(Array $flagSets)
+    {
+
+        // array_merge requires at least 1 parameter
+        $flagList = $this->_flags;
         foreach ($flagSets as $flags) {
         
             assert($flags instanceof MapFilter_TreePattern_Flags);
-        
-            $result->_flags += $flags->_flags;
+            $flagList = array_merge($flags->_flags, $flagList);
         }
-        
-        return $result;
+
+        return new self($flagList);
     }
 }

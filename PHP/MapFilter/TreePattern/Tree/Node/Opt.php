@@ -60,12 +60,18 @@ final class MapFilter_TreePattern_Tree_Node_Opt extends
     public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
     {
 
+        $builder = MapFilter_TreePattern_Result::builder();
+
         foreach ($this->getContent() as $follower) {
       
-            $follower->satisfy($query, $asserts);
+            $result = $follower->satisfy($query, $asserts);
+            $builder->putResult($result);
         }
 
         $this->data = $query;
-        return $this->satisfied = true;
+        $this->satisfied = true;
+        return $builder->putResult($this->createResult($asserts))
+            ->build($this->data, $this->satisfied)
+        ;
     }
 }

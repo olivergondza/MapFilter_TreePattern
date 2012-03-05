@@ -307,11 +307,10 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
             Array ( 'no_key1' ),
             Array ( 'iterator', 'key1', 'key2' ),
         ),
-        
         Array (
             Array ( Array ( 'key1' => 'invalid' ), Array ( 'key2' => 8 ) ),
             Array ( 1 => Array ( 'key2' => 8 ) ),
-            Array ( 'no_key1', 'no_key2' ),
+            Array ( 'no_key1' => 'invalid', 'no_key2' ),
             Array ( 'iterator', 'key2' ),
         ),
         Array (
@@ -320,7 +319,6 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
             Array ( 'no_key1', 'no_key2' => 'invalid' ),
             Array ( 'iterator', 'key1' ),
         ),
-        
         Array (
             Array ( Array ( 'key1' => 'invalid' ), Array ( 'key1' => 8 ) ),
             Array ( 1 => Array ( 'key1' => 8 ) ),
@@ -345,7 +343,6 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
             Array ( 'no_key1', 'no_key2' => 'invalid' ),
             Array ( 'iterator', 'key2' ),
         ),
-        
         Array (
             Array (
                 Array ( 'wrong' => 1 ), Array ( 'key1' => 7 ),
@@ -368,7 +365,6 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
             Array ( 'no_key1' => 'invalid', 'no_key2' ),
             Array ( 'iterator' ),
         ),
-        
         Array (
             Array ( Array ( 'key2' => 'invalid' ) ),
             Array (),
@@ -398,8 +394,6 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
   
   /**
    * @dataProvider provideKeyIterator
-   *
-   * @covers MapFilter_TreePattern_Tree_Iterator
    */
   public function testKeyIterator ( $query, $result, $asserts, $flags ) {
 
@@ -754,3 +748,4 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }
+

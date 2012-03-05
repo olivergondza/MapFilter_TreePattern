@@ -99,17 +99,6 @@ interface MapFilter_TreePattern_Tree_Interface
     public function pickUp($result);
     
     /**
-     * Get filtering flags.
-     *
-     * @param MapFilter_TreePattern_Flags $flags Existing flags
-     *
-     * @return null
-     *
-     * @since     0.5.1
-     */
-    public function pickUpFlags(MapFilter_TreePattern_Flags $flags);
-    
-    /**
     * Possible iterator values.
     *
     * @since      0.5.2

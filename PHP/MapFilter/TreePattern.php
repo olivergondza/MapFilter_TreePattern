@@ -244,15 +244,14 @@ class MapFilter_TreePattern implements MapFilter_PatternInterface
     {
 
         $asserts = new MapFilter_TreePattern_Asserts;
-        $flags = new MapFilter_TreePattern_Flags;
 
         $tempTree = clone $this->_patternTree;
-        $valid = $tempTree->satisfy($query, $asserts);
-        
-        $tempTree->pickUpFlags($flags);
-        
+        $result = $tempTree->satisfy($query, $asserts);
         return new MapFilter_TreePattern_Result(
-            $tempTree->pickUp(null), $asserts, $flags, $valid
+            $tempTree->pickUp(null),
+            $asserts,
+            $result->getFlags(),
+            $result->isValid()
         );
     }
  
