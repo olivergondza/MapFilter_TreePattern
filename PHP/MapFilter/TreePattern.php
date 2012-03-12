@@ -243,13 +243,12 @@ class MapFilter_TreePattern implements MapFilter_PatternInterface
     public function parse($query)
     {
 
-        $asserts = new MapFilter_TreePattern_Asserts;
-
         $tempTree = clone $this->_patternTree;
-        $result = $tempTree->satisfy($query, $asserts);
+        $result = $tempTree->satisfy($query);
+        
         return new MapFilter_TreePattern_Result(
             $tempTree->pickUp(null),
-            $asserts,
+            $result->getAsserts(),
             $result->getFlags(),
             $result->isValid()
         );

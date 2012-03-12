@@ -112,7 +112,7 @@ class MapFilter_Test_Unit_TreePattern_KeyAttr extends
         Array (
             Array ( 'order' => Array () ),
             Array ( 'auto' => Array ( 'defaultValue' ) ),
-            Array ( 'wrong_keyattr' ),
+            Array ( 'wrong_keyattr' => Array () ),
             Array (),
         ),
         Array (

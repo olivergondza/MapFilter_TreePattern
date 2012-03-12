@@ -143,7 +143,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         Array (
             Array ( 'an_attr' => Array () ),
             null,
-            Array ( 'wrong_attr' ),
+            Array ( 'wrong_attr' => Array ()),
             Array (),
         ),
         Array (

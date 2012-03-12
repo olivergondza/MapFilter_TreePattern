@@ -109,54 +109,51 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Mixed                         &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
      * @since     $NEXT$
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function satisfy(&$query)
     {
 
-        $childResult = $this->_isSatisfied($query, $asserts);
+        $childResult = $this->_isSatisfied($query);
 
         $this->satisfied = $childResult->isValid();
 
         $this->data = $query;
 
-        return $this->createResult($asserts)
+        return $this->createResult()
             ->getBuilder()
             ->putResult($childResult)
-            ->build($this->data, $this->satisfied)
+            ->build($this->satisfied)
         ;
     }
     
     /**
      * Determine whether the lement is satisfied
      *
-     * @param Mixed                         &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
      * @since     $NEXT$
      */
-    private function _isSatisfied(
-        &$query, MapFilter_TreePattern_Asserts $asserts
-    ) {
+    private function _isSatisfied(&$query)
+    {
     
         $this->satisfied = MapFilter_TreePattern::isMap($query);
-        if (!$this->satisfied) return $this->createResult($asserts);
+        if (!$this->satisfied) return $this->createResult();
     
         $this->satisfied = $this->_isPresent($query);
 
         $follower = $this->getFollower();
-        if (!$follower) return $this->createResult($asserts);
+        if (!$follower) return $this->createResult();
         
         return (!$this->satisfied) 
-            ? $this->_validateInfered($query, $asserts, $follower)
-            : $this->_validateExisting($query, $asserts, $follower)
+            ? $this->_validateInfered($query, $follower)
+            : $this->_validateExisting($query, $follower)
         ;
     }
     
@@ -169,7 +166,7 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
      *
      * @since $NEXT$
      */
-    private function _isPresent ($query)
+    private function _isPresent($query)
     {
     
         if (!MapFilter_TreePattern::isMap($query)) return false;
@@ -185,9 +182,8 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
     /**
      * Validate existing key value
      *
-     * @param Mixed                         &$query   A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts  Asserts.
-     * @param MapFilter_TreePattern_Tree    $follower Follower element.
+     * @param Mixed                      &$query   A query to filter.
+     * @param MapFilter_TreePattern_Tree $follower Follower element.
      *
      * @return MapFilter_TreePattern_Result
      *
@@ -195,19 +191,18 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
      */
     private function _validateExisting(
         &$query,
-        MapFilter_TreePattern_Asserts $asserts,
         MapFilter_TreePattern_Tree $follower
     ) {
     
-        $result = $follower->satisfy(
-            $query[ $this->_name ],
-            $asserts
-        );
+        $result = $follower->satisfy($query[ $this->_name ]);
         
         $this->satisfied = $result->isValid();
         if (!$this->satisfied) {
 
-            $this->setAssertValue($asserts, $query[ $this->_name ]);
+            $result = $result->getBuilder()
+                ->putAsserts($this->getAsserts($query[ $this->_name ]))
+                ->build($this->satisfied)
+            ;
         }
         
         return $result;
@@ -216,9 +211,8 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
     /**
      * Validate infered key value
      *
-     * @param Mixed                         &$query   A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts  Asserts.
-     * @param MapFilter_TreePattern_Tree    $follower Follower element.
+     * @param Mixed                      &$query   A query to filter.
+     * @param MapFilter_TreePattern_Tree $follower Follower element.
      *
      * @return MapFilter_TreePattern_Result
      *
@@ -226,23 +220,16 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
      */
     private function _validateInfered(
         &$query,
-        MapFilter_TreePattern_Asserts $asserts,
         MapFilter_TreePattern_Tree $follower
     ) {
     
         $value = null;
     
-        $result = $follower->satisfy(
-            $value,
-            $asserts
-        );
+        $result = $follower->satisfy($value);
         
         $this->satisfied = $result->isValid();
 
-        if (!$this->satisfied) {
-
-            $this->setAssertValue($asserts);
-        } else {
+        if ($this->satisfied) {
         
             $query[ $this->_name ] = $value;
         }

@@ -80,7 +80,7 @@ class MapFilter_TreePattern_Result_Builder
     /**
      * Create Builder instance possibly initialized with $result
      *
-     * @param MapFilter_TreePattern_Result $result
+     * @param MapFilter_TreePattern_Result $result Initialization result.
      *
      * @since $NEXT$
      */
@@ -96,7 +96,7 @@ class MapFilter_TreePattern_Result_Builder
     /**
      * Put result object.
      *
-     * @param MapFilter_TreePattern_Result $result
+     * @param MapFilter_TreePattern_Result $result A result to put.
      *
      * @return MapFilter_TreePattern_Result_Builder
      *
@@ -114,7 +114,7 @@ class MapFilter_TreePattern_Result_Builder
     /**
      * Put asserts.
      *
-     * @param MapFilter_TreePattern_Asserts|Null $asserts
+     * @param MapFilter_TreePattern_Asserts|Null $asserts Asserts to put.
      *
      * @return MapFilter_TreePattern_Result_Builder
      *
@@ -136,7 +136,7 @@ class MapFilter_TreePattern_Result_Builder
     /**
      * Put flags.
      *
-     * @param MapFilter_TreePattern_Flags|Null $flags
+     * @param MapFilter_TreePattern_Flags|Null $flags Flags to put.
      *
      * @return MapFilter_TreePattern_Result_Builder
      *
@@ -194,18 +194,17 @@ class MapFilter_TreePattern_Result_Builder
     /**
      * Instantiate result object
      *
-     * @param   Mixed $result
-     * @param   Bool  $valid
+     * @param Bool  $valid  Valid or not.
      *
      * @return MapFilter_TreePattern_Result
      *
      * @since $NEXT$
      */
-    public function build($result, $valid)
+    public function build($valid)
     {
     
         return new MapFilter_TreePattern_Result(
-            $result, $this->getAsserts (), $this->getFlags (), $valid
+            null, $this->getAsserts(), $this->getFlags(), $valid
         );
     }
 }

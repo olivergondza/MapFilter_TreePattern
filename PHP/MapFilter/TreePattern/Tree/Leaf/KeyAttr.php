@@ -53,8 +53,7 @@ implements
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
@@ -62,42 +61,46 @@ implements
      *
      * @since 0.4
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function satisfy(&$query)
     {
     
         assert(MapFilter_TreePattern::isMap($query));
 
-        $result = parent::satisfy($query, $asserts);
+        $result = parent::satisfy($query);
         $this->satisfied = $result->isValid();
 
-        if (!$this->satisfied) return $this->createResult($asserts);
+        if (!$this->satisfied) {
 
-        return $this->_satisfyFollowers($query, $asserts);
+            return $this->attribute->isPresent()
+                ? $this->createResult($query[(String) $this->attribute])
+                : $this->createResult()
+            ;
+        }
+
+        return $this->_satisfyFollowers($query);
     }
     
     /**
      * Satisfy node followers.
      *
-     * @param Mixed                         &$query  A query.
-     * @param MapFilter_TreePattern_Asserts $asserts Assertions.
+     * @param Mixed &$query A query.
      *
      * @return Bool
      *
      * @since $NEXT$
      */
-    private function _satisfyFollowers(
-        &$query, MapFilter_TreePattern_Asserts $asserts
-    ) {
+    private function _satisfyFollowers(&$query)
+    {
     
         $value = $this->attribute->getValue();
 
-        $builder = MapFilter_TreePattern_Result::builder ();
+        $builder = MapFilter_TreePattern_Result::builder();
         if (is_array($value)) {
 
             foreach ($value as $singleCandidate) {
 
                 $result = $this->_satisfyFittingFollower(
-                    $query, $asserts, $singleCandidate
+                    $query, $singleCandidate
                 );
                 $builder->putResult($result);
                 
@@ -108,35 +111,31 @@ implements
             }
         } else {
          
-            $result = $this->_satisfyFittingFollower($query, $asserts, $value);
+            $result = $this->_satisfyFittingFollower($query, $value);
             $builder->putResult($result);
             
             $this->satisfied = $result->isValid();
         }
 
-        return $builder->putResult($this->createResult($asserts, $value))
-            ->build($this->data, $this->satisfied)
+        return $builder->putResult($this->createResult($value))
+            ->build($this->satisfied)
         ;
     }
     
     /**
      * Find a fitting follower, let it satisfy and set value or assertion.
      *
-     * @param Mixed                         &$query         A query.
-     * @param MapFilter_TreePattern_Asserts $asserts        Assertions.
-     * @param Mixed                         $valueCandidate Value candidate.
+     * @param Mixed &$query         A query.
+     * @param Mixed $valueCandidate Value candidate.
      *
      * @return Bool
      *
      * @since 0.5.2
      */
-    private function _satisfyFittingFollower (
-        &$query,
-        MapFilter_TreePattern_Asserts $asserts,
-        $valueCandidate
-    ) {
+    private function _satisfyFittingFollower(&$query, $valueCandidate)
+    {
     
-        $builder = MapFilter_TreePattern_Result::builder ();
+        $builder = MapFilter_TreePattern_Result::builder();
     
         $satisfied = false;
         foreach ($this->getContent() as $follower) {
@@ -147,15 +146,12 @@ implements
             
             if (!$fits) continue;
             
-            $result = $follower->satisfy($query, $asserts);
+            $result = $follower->satisfy($query);
             $builder->putResult($result);
             
             $satisfied |= $result->isValid();
         }
         
-        return $builder
-//            ->putResult($this->createResult($asserts))
-            ->build($query, (Bool) $satisfied)
-        ;
+        return $builder->build((Bool) $satisfied);
     }
 }

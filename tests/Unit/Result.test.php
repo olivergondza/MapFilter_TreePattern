@@ -62,10 +62,10 @@ class MapFilter_Test_Unit_TreePattern_Result extends
         ->putAsserts($a3)
         ->putFlags(null)
         ->putAsserts(null)
-        ->build(Array('val'), true)
+        ->build(true)
     ;
     
-    $this->assertSame ( Array ( 'val' ), $builtResult->getResults () );
+    $this->assertSame ( null, $builtResult->getResults () );
     $this->assertSame ( true, $builtResult->isValid () );
     $this->assertSame (
         Array ( 'a1', 'a2' ),

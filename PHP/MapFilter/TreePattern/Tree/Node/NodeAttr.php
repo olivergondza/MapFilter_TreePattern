@@ -142,14 +142,13 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
      * @since 0.5.3
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function satisfy(&$query)
     {
 
         assert(MapFilter_TreePattern::isMap($query));
@@ -158,14 +157,14 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
         
         if (!array_key_exists($this->_attribute, $query)) {
 
-            return $this->createResult($asserts);
+            return $this->createResult();
         }
 
         $valueCandidate = self::convertIterator($query[ $this->_attribute ]);
 
         if (!is_array($valueCandidate)|| $valueCandidate === Array()) {
         
-            return $this->createResult($asserts);
+            return $this->createResult();
         }
 
         $builder = MapFilter_TreePattern_Result::builder();
@@ -182,7 +181,7 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
             
                 $follower = clone $this->_follower;
 
-                $result = $follower->satisfy($singleCandidate, $asserts);
+                $result = $follower->satisfy($singleCandidate);
                 $builder->putResult($result);
 
                 if ($result->isValid()) {
@@ -193,15 +192,15 @@ final class MapFilter_TreePattern_Tree_Node_NodeAttr extends
             }
         } else {
 
-            $result = $follower->satisfy($valueCandidate, $asserts);
+            $result = $follower->satisfy($valueCandidate);
             $builder->putResult($result);
             
             $this->satisfied = $result->isValid();
         } 
 
         $this->data = $query;
-        return $builder->putResult($this->createResult($asserts))
-            ->build($this->data, $this->satisfied)
+        return $builder->putResult($this->createResult())
+            ->build($this->satisfied)
         ;
     }
     

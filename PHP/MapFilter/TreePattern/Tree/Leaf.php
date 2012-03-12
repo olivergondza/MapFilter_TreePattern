@@ -62,7 +62,6 @@ implements
      * @var       MapFilter_TreePattern_Tree_Attribute          $attribute
      */
     protected $attribute = '';
-    protected $data;
     
     /**
      * Instantiate attribute

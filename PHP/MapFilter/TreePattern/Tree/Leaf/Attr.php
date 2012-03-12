@@ -49,8 +49,7 @@ implements
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
@@ -62,20 +61,20 @@ implements
      *
      * @since 0.4
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function satisfy(&$query)
     {
     
         assert(MapFilter_TreePattern::isMap($query));
 
         $this->attribute->setQuery($query);
 
-        $attributeAsserts = $this->_getAsserts($query, $asserts);
+        $attributeAsserts = $this->_getAsserts($query);
         if (!$this->satisfied) {
         
             return MapFilter_TreePattern_Result::builder()
                 ->putFlags($this->getFlags())
                 ->putAsserts($attributeAsserts)
-                ->build($query, $this->satisfied)
+                ->build($this->satisfied)
             ;
         }
 
@@ -97,11 +96,10 @@ implements
                 array_diff($oldValue, $value)
             );
 
-            if ($setAsserts) {
+            if ($setAsserts && $this->validationAssert !== null) {
 
-                $this->setAssertValue($asserts, $assertValue);
-                $attributeAsserts = MapFilter_TreePattern_Asserts::create(
-                    $this->validationAssert, $assertValue
+                $attributeAsserts->set(
+                    $this->validationAssert, null, $assertValue
                 );
             }
         }
@@ -109,51 +107,46 @@ implements
         return MapFilter_TreePattern_Result::builder()
             ->putFlags($this->getFlags())
             ->putAsserts($attributeAsserts)
-            ->build($query, true)
+            ->build(true)
         ;
     }
     
     /**
      * Get element asserts
      *
-     * @param Array|ArrayAccess             $query   A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed $query A query to filter.
      *
      * @return MapFilter_TreePattern_Asserts
      *
      * @since $NEXT$
      */
-    private function _getAsserts(
-        $query, MapFilter_TreePattern_Asserts $asserts
-    ) {
+    private function _getAsserts($query)
+    {
 
         $this->satisfied = true;
 
+        $asserts = new MapFilter_TreePattern_Asserts;
+
         if (!$this->attribute->isPresent()) {
+
             $this->satisfied = false;
             if ( $this->existenceAssert !== null) {
             
-                $asserts->set($this->existenceAssert);
-                return MapFilter_TreePattern_Asserts::create(
-                    $this->existenceAssert
-                );
+                return $asserts->set($this->existenceAssert);
             }
         } elseif (!$this->attribute->isValid()) {
         
             $this->satisfied = false;
             if ($this->validationAssert !== null) {
 
-                $this->setAssertValue(
-                    $asserts, $query[ (String) $this->attribute ]
-                );
-            
-                return MapFilter_TreePattern_Asserts::create(
+                return $asserts->set(
                     $this->validationAssert,
+                    null,
                     $query[ (String) $this->attribute ]
                 );
             }
         }
         
-        return new MapFilter_TreePattern_Asserts;
+        return $asserts;
     }
 }

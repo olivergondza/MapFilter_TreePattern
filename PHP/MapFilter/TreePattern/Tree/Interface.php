@@ -78,14 +78,13 @@ interface MapFilter_TreePattern_Tree_Interface
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return    Bool                    Satisfied or not.
      *
      * @since     0.4
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts);
+    public function satisfy(&$query);
     
     /**
      * Pick-up satisfaction results.

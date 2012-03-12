@@ -51,23 +51,22 @@ implements
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
      * @since $NEXT$
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function satisfy(&$query)
     {
     
-        $result = parent::satisfy($query, $asserts);
+        $result = parent::satisfy($query);
         
         if (!$result->isValid()) return $result;
         
         $value = $this->_removeAttr($query);
         
-        $this->_satisfyFollowers($query, $asserts, $value);
+        $this->_satisfyFollowers($query, $value);
 
         return $result;
     }
@@ -75,28 +74,27 @@ implements
     /**
      * Satisfy aliases using original attribute value
      *
-     * @param Array|ArrayAccess &$query   A query to filter.
-     * @param Array             &$asserts Asserts.
-     * @param Mixed             $value    A value of alias attribute.
+     * @param Mixed &$query A query to filter.
+     * @param Mixed $value  A value of alias attribute.
      *
      * @return null
      *
      * @since $NEXT$
      */
-    private function _satisfyFollowers(&$query, &$asserts, $value)
+    private function _satisfyFollowers(&$query, $value)
     {
     
         foreach ($this->content as $follower) {
       
             $query[ $follower->getAttribute() ] = $value;
-            $follower->satisfy($query, $asserts);
+            $follower->satisfy($query);
         }
     }
     
     /**
      * Remove attribute and fetch its value.
      *
-     * @param Array|ArrayAccess &$query A query to filter.
+     * @param Mixed &$query A query to filter.
      *
      * @return Mixed Attribute that was removed.
      *

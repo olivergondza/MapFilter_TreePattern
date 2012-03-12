@@ -47,8 +47,7 @@ final class MapFilter_TreePattern_Tree_Node_Some extends
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Array|ArrayAccess             &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
@@ -57,7 +56,7 @@ final class MapFilter_TreePattern_Tree_Node_Some extends
      *
      * @since 0.4
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function satisfy(&$query)
     {
 
         $this->satisfied = false;
@@ -66,7 +65,7 @@ final class MapFilter_TreePattern_Tree_Node_Some extends
 
         foreach ($this->getContent() as $follower) {
 
-            $result = $follower->satisfy($query, $asserts);
+            $result = $follower->satisfy($query);
             if ($result->isValid()) {
 
                 $this->satisfied = true;
@@ -77,8 +76,8 @@ final class MapFilter_TreePattern_Tree_Node_Some extends
             }
         }
 
-        return $builder->putResult($this->createResult($asserts))
-            ->build($this->data, $this->satisfied)
+        return $builder->putResult($this->createResult())
+            ->build($this->satisfied)
         ;
     }
 }

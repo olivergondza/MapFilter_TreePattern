@@ -68,15 +68,6 @@ class MapFilter_TreePattern_Asserts
     private $_asserts = Array();
     
     /**
-     *
-     */
-    public static function create($assertName, &$value = null)
-    {
-
-        return new self(Array($assertName => $value));
-    }
-    
-    /**
      * Create asserts
      *
      * @param Array $asserts Asserts
@@ -85,7 +76,7 @@ class MapFilter_TreePattern_Asserts
      */
     public function __construct(Array $asserts = Array())
     {
-    
+
         foreach ($asserts as $name => $details) {
         
             if (is_int($name) && !is_string($details)) {
@@ -103,7 +94,7 @@ class MapFilter_TreePattern_Asserts
                 : Array()
             ;
         }
-        
+
         ksort($this->_asserts);
     }
 
@@ -137,14 +128,20 @@ class MapFilter_TreePattern_Asserts
         
             $this->_asserts[ $assertName ][ self::VALUE ] = $value;
         }
-        
-        ksort($this->_asserts);
-        
+
         return $this;
     }
     
     /**
+     * Determine whether an assertion is redundant.
      *
+     * @param String $assertName Assert identifier
+     * @param String $path       Path
+     * @param Mixed  $value      Value reference
+     *
+     * @return    Bool
+     *
+     * @since     $NEXT$
      */
     private function _isRedundant($assertName, $path, $value)
     {
@@ -169,7 +166,9 @@ class MapFilter_TreePattern_Asserts
     public function getAll()
     {
 
-        return array_keys($this->_asserts);
+        $assertNames = array_keys($this->_asserts);
+        sort($assertNames);
+        return $assertNames;
     }
     
     /**
@@ -258,26 +257,36 @@ class MapFilter_TreePattern_Asserts
      *
      * @since     $NEXT$
      */
-    public function combine(Array $assertSets) {
+    public function combine(Array $assertSets)
+    {
     
         $result = clone $this;
         foreach ($assertSets as $asserts) {
         
             assert($asserts instanceof MapFilter_TreePattern_Asserts);
-        
-        
-            $result->_asserts = array_merge(
-                $result->_asserts, $asserts->_asserts
-            );
+
+            foreach ($asserts->_asserts as $name => $vals) {
+            
+                $newVal = array_key_exists(self::VALUE, $vals);
+            
+                if ($result->exists($name) && !$newVal) continue;
+            
+                $result->_asserts[ $name ] = $vals;
+            }
         }
         
         return $result;
     }
     
     /**
+     * Get asserts as map
      *
+     * @return Array Map representing asserts
+     *
+     * @since     $NEXT$
      */
-    public function getMap () {
+    public function getMap()
+    {
     
         $simpleMap = Array();
         foreach ( $this->getAll () as $name ) {

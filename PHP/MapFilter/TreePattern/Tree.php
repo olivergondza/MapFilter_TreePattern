@@ -201,35 +201,6 @@ abstract class MapFilter_TreePattern_Tree implements
     }
     
     /**
-     * Set assertion value.
-     *
-     * @param MapFilter_TreePattern_Asserts $asserts     Existing asserts.
-     * @param Mixed                         $assertValue An assert value to set.
-     *
-     * @return  null
-     *
-     * @since      0.5.2
-     */
-    protected function setAssertValue(
-        MapFilter_TreePattern_Asserts $asserts, $assertValue = Array()
-    ) {
-
-        if ($assertValue === Array()) {
-
-             $name = $this->existenceAssert;
-             $value = null;
-        } else {
-
-             $name = $this->validationAssert;
-             $value = $assertValue;
-        }
-        
-        if ($name === null) return;
-
-        $asserts->set($name, null, $value);
-    }
-    
-    /**
      * Determine whether the node is satisfied.
      *
      * @return    Bool            Satisfied or not.
@@ -306,7 +277,8 @@ abstract class MapFilter_TreePattern_Tree implements
      *
      * @since $NEXT$
      */
-    protected function getFlags () {
+    protected function getFlags ()
+    {
 
         $flags = (!$this->isSatisfied() || $this->flag === null) 
             ? Array ()
@@ -319,56 +291,45 @@ abstract class MapFilter_TreePattern_Tree implements
     /**
      * Get asserts to set for current element
      *
-     * @return MapFilter_TreePattern_Asserts Asserts
+     * @param Mixed $useData Assert data to set.
+     *
+     * @return MapFilter_TreePattern_Asserts New asserts
      *
      * @since $NEXT$
      */
-    protected function getAsserts (
-        MapFilter_TreePattern_Asserts $asserts, $useData
-    ) {
+    protected function getAsserts($useData)
+    {
     
         assert($this->validationAssert === $this->existenceAssert);
-    
+
         if ($this->isSatisfied() || $this->validationAssert === null) {
       
             return new MapFilter_TreePattern_Asserts;
         }
-        
-        $resultAsserts = null;
-        if ( $useData !== null ) {
-        
-            $asserts->set($this->validationAssert, null, $useData);
-            $resultAsserts = MapFilter_TreePattern_Asserts::create(
-                $this->validationAssert, $useData
-            );
-        } else {
-        
-            $asserts->set($this->validationAssert);
-            $resultAsserts = MapFilter_TreePattern_Asserts::create(
-                $this->validationAssert
-            );
-        }
-        
-        return $resultAsserts;
+
+        $asserts = new MapFilter_TreePattern_Asserts;
+
+        return ($useData !== null)
+            ? $asserts->set($this->validationAssert, null, $useData)
+            : $asserts->set($this->validationAssert)
+        ;
     }
     
     /**
      * Instantiate current result
+     *
+     * @param Mixed $useData Assert data to set.
+     *
+     * @return MapFilter_TreePattern_Result New result.
+     *
+     * @since $NEXT$
      */
-    protected function createResult (
-        MapFilter_TreePattern_Asserts $asserts, $useData = null
-    ) {
+    protected function createResult($useData = null)
+    {
     
-        $data = null;
-        
-        if ($this->isSatisfied()) {
-        
-            $data = $this->data;
-        }
-    
-        return new MapFilter_TreePattern_Result (
-            $data,
-            $this->getAsserts($asserts, $useData),
+        return new MapFilter_TreePattern_Result(
+            null,
+            $this->getAsserts($useData),
             $this->getFlags(),
             $this->isSatisfied()
         );

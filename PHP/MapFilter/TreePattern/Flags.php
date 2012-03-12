@@ -120,7 +120,7 @@ class MapFilter_TreePattern_Flags
     /**
      * Combibe asserts with several other assert sets
      *
-     * @param Array $flagtSets Assert sets to combine
+     * @param Array $flagSets Assert sets to combine
      *
      * @return MapFilter_TreePattern_Asserts
      *
@@ -129,7 +129,6 @@ class MapFilter_TreePattern_Flags
     public function combine(Array $flagSets)
     {
 
-        // array_merge requires at least 1 parameter
         $flagList = $this->_flags;
         foreach ($flagSets as $flags) {
         

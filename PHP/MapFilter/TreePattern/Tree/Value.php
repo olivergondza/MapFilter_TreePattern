@@ -79,8 +79,6 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
      */
     protected $default = null;
     
-    private $_result;
-    
     /**
      * Instantiate attribute
      *
@@ -114,20 +112,19 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
         
         if (!$this->isSatisfied()) return null;
         
-        return $this->_result->getResults();
+        return $this->data;
     }
     
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
-     * @param Scalar                        &$query  A query to filter.
-     * @param MapFilter_TreePattern_Asserts $asserts Asserts.
+     * @param Mixed &$query A query to filter.
      *
      * @return Bool Satisfied or not.
      *
      * @since     $NEXT$
      */
-    public function satisfy(&$query, MapFilter_TreePattern_Asserts $asserts)
+    public function satisfy(&$query)
     {
 
         $this->satisfied = $this->_isSatisfied($query);
@@ -135,8 +132,8 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
         if (!$this->satisfied) {
 
             if (is_null($this->default)) {
-        
-                return $this->_result = $this->createResult($asserts, $query);
+
+                return $this->createResult($query);
             }
 
             $query = $this->default;
@@ -147,18 +144,18 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
         $this->satisfied = true;
         if (array_key_exists(0, $this->content)) {
         
-            $result = $this->content[ 0 ]->satisfy($this->data, $asserts);
+            $result = $this->content[ 0 ]->satisfy($this->data);
             
             $this->satisfied = $result->isValid();
 
-            return $this->_result = $this->createResult($asserts, $this->data)
+            return $this->createResult($this->data)
                 ->getBuilder()
                 ->putResult($result)
-                ->build($this->data, $this->satisfied)
+                ->build($this->satisfied)
             ;
         }
 
-        return $this->_result = $this->createResult($asserts, $this->data);
+        return $this->createResult($this->data);
     }
     
     /**
