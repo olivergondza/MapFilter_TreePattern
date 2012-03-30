@@ -66,7 +66,9 @@ abstract class MapFilter_TreePattern_Tree_Node extends
     {
 
         if (!$this->isSatisfied()) return null;
-      
+
+        if ($this->getContent() === Array()) return $this->data;
+        
         if ($result === null && $this->data !== null) {
         
             $result = ($this->data instanceof ArrayAccess)

@@ -61,6 +61,8 @@ final class MapFilter_TreePattern_Tree_Node_All extends
     {
     
         $builder = MapFilter_TreePattern_Result::builder();
+        
+        $this->data = $query;
 
         foreach ($this->getContent() as $follower) {
         

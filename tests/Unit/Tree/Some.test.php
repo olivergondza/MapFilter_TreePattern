@@ -10,6 +10,47 @@ require_once 'tests/Functional.php';
 class MapFilter_Test_Unit_TreePattern_Some extends
     MapFilter_TreePattern_Test_Functional
 {
+
+  public function provideContradition () {
+
+    return Array (
+        Array ( null ),
+        Array ( true ),
+        Array ( 0 ),
+        Array ( .1 ),
+        Array ( 'a' ),
+        Array ( Array ( 'a' ) ),
+        Array ( new MapFilter ),
+        Array ( xml_parser_create () ),
+    );
+  }
+
+  /**
+   * @dataProvider      provideContradition
+   */
+  public function testContradition ( $data ) {
+  
+    $tautology = MapFilter_TreePattern_Xml::load ( '
+      <!-- TreePattern_Contradition__ -->
+        <pattern>
+          <some />
+        </pattern>
+      <!-- __TreePattern_Contradition -->
+    ' );
+    
+    
+    $this->assertResultsEquals ( $tautology, $data, null );
+    
+    $tautology = MapFilter_TreePattern_Xml::load ( '
+        <pattern>
+          <some flag="valueFlag" assert="valueAssert" />
+        </pattern>
+    ' );
+    
+    $asserts = Array ( 'valueAssert' );
+    
+    $this->assertResultsEquals ( $tautology, $data, null, $asserts );
+  }
   
   public function provideSimpleSomeNode () {
   

@@ -10,6 +10,47 @@ require_once 'tests/Functional.php';
 class MapFilter_Test_Unit_TreePattern_Opt extends
     MapFilter_TreePattern_Test_Functional
 {
+
+  public function provideTautology () {
+
+    return Array (
+        Array ( null ),
+        Array ( true ),
+        Array ( 0 ),
+        Array ( .1 ),
+        Array ( 'a' ),
+        Array ( Array ( 'a' ) ),
+        Array ( new MapFilter ),
+        Array ( xml_parser_create () ),
+    );
+  }
+
+  /**
+   * @dataProvider      provideTautology
+   */
+  public function testTautology ( $data ) {
+  
+    $tautology = MapFilter_TreePattern_Xml::load ( '
+      <!-- TreePattern_Tautology__ -->
+        <pattern>
+          <opt />
+        </pattern>
+      <!-- __TreePattern_Tautology -->
+    ' );
+    
+    
+    $this->assertResultsEquals ( $tautology, $data, $data );
+    
+    $tautology = MapFilter_TreePattern_Xml::load ( '
+        <pattern>
+          <opt flag="valueFlag" assert="valueAssert" />
+        </pattern>
+    ' );
+    
+    $flags = Array ( 'valueFlag' );
+    
+    $this->assertResultsEquals ( $tautology, $data, $data, Array (), $flags );
+  }
   
   public function provideSimpleOptNode () {
   

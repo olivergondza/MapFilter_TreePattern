@@ -282,7 +282,7 @@ class MapFilter_Test_Unit_TreePattern extends PHPUnit_Framework_TestCase {
     ;
   }
   
-  public function testDestinctResultType () {
+  public function testDistinctResultType () {
   
     $pattern = MapFilter_TreePattern_Xml::load (
         '<pattern><value /></pattern>'

@@ -461,11 +461,13 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
   ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_Iterator__ -->
         <pattern>
           <iterator flag="it" assert="it" min="1" max="2">
             <value flag="val" assert="flag" />
           </iterator>
         </pattern>
+        <!-- __TreePattern_Iterator -->
     ' );
     
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );

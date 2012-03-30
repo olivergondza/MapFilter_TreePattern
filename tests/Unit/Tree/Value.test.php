@@ -11,49 +11,6 @@ class MapFilter_Test_Unit_TreePattern_Value extends
     MapFilter_TreePattern_Test_Functional
 {
 
-  public function provideTautology () {
-
-    return Array (
-        Array ( null ),
-        Array ( true ),
-        Array ( 0 ),
-        Array ( .1 ),
-        Array ( 'a' ),
-        Array ( Array ( 'a' ) ),
-        Array ( new MapFilter ),
-        Array ( xml_parser_create () ),
-    );
-  }
-
-  /**
-   * @dataProvider      provideTautology
-   * 
-   * @covers MapFilter_TreePattern_Tree_Value
-   */
-  public function testTautology ( $data ) {
-  
-    $tautology = MapFilter_TreePattern_Xml::load ( '
-      <!-- TreePattern_Tautology__ -->
-        <pattern>
-          <value />
-        </pattern>
-      <!-- __TreePattern_Tautology -->
-    ' );
-    
-    
-    $this->assertResultsEquals ( $tautology, $data, $data );
-    
-    $tautology = MapFilter_TreePattern_Xml::load ( '
-        <pattern>
-          <value flag="valueFlag" assert="valueAssert" />
-        </pattern>
-    ' );
-    
-    $flags = Array ( 'valueFlag' );
-    
-    $this->assertResultsEquals ( $tautology, $data, $data, Array (), $flags );
-  }
-
   public function provideValuePattern () {
   
     $two = new StringClass ( '2' );
@@ -96,10 +53,10 @@ class MapFilter_Test_Unit_TreePattern_Value extends
     $filter = new MapFilter;
   
     return Array (
-        Array ( 1, '2', Array ( 'flag' ) ),
-        Array ( '1', '2', Array ( 'flag' ) ),
+        Array ( 1, '_', Array ( 'flag' ) ),
+        Array ( '1', '_', Array ( 'flag' ) ),
         Array ( 'asdf', 'asdf', Array ( 'flag' ) ),
-        Array ( $twelve, '22', Array ( 'flag' ) ),
+        Array ( $twelve, '_', Array ( 'flag' ) ),
         Array ( $word, 'word', Array ( 'flag' ) ),
         Array ( $filter, $filter, Array ( 'flag' ) ),
     );
@@ -113,7 +70,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <!-- TreePattern_Replacement__ -->
         <pattern>
-          <value replacement="/1/2/" flag="flag" assert="assert" />
+          <value replacement="/(\d)+/_/" flag="flag" assert="assert" />
         </pattern>
         <!-- __TreePattern_Replacement -->
     ' );
