@@ -14,8 +14,8 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   public function provideTautology () {
 
     return Array (
-        Array ( NULL ),
-        Array ( TRUE ),
+        Array ( null ),
+        Array ( true ),
         Array ( 0 ),
         Array ( .1 ),
         Array ( 'a' ),
@@ -32,6 +32,17 @@ class MapFilter_Test_Unit_TreePattern_Value extends
    */
   public function testTautology ( $data ) {
   
+    $tautology = MapFilter_TreePattern_Xml::load ( '
+      <!-- TreePattern_Tautology__ -->
+        <pattern>
+          <value />
+        </pattern>
+      <!-- __TreePattern_Tautology -->
+    ' );
+    
+    
+    $this->assertResultsEquals ( $tautology, $data, $data );
+    
     $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <value flag="valueFlag" assert="valueAssert" />
@@ -67,9 +78,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_Regex__ -->
         <pattern>
           <value pattern="/\d+/" flag="flag" assert="assert" />
         </pattern>
+        <!-- __TreePattern_Regex -->
     ' );
 
     $this->assertResultsEquals ( $pattern, $string, $result, $asserts, $flags );
@@ -98,9 +111,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   public function testValueReplacement ( $string, $result, $flags ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_Replacement__ -->
         <pattern>
           <value replacement="/1/2/" flag="flag" assert="assert" />
         </pattern>
+        <!-- __TreePattern_Replacement -->
     ' );
     
     $this->assertResultsEquals ( $pattern, $string, $result, Array (), $flags );
@@ -171,13 +186,15 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_Cascading__ -->
         <pattern>
           <value pattern="/^[_0-9a-f]*$/" replacement="/_//" assert="content">
             <value pattern="/^(..)+$/" assert="length" flag="valid" />
           </value>
         </pattern>
+        <!-- __TreePattern_Cascading -->
     ' );
-    
+      
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
   

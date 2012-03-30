@@ -61,13 +61,15 @@ class MapFilter_Test_Unit_TreePattern_Opt extends
   public function testSimpleOptNode ( $query, $result, $flags, $asserts ) {
     
     $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_Opt__ -->
         <pattern>
           <opt flag="opt" assert="opt">
-            <attr flag="f0" assert="a0">Attr0</attr>
-            <attr flag="f1" assert="a1">Attr1</attr>
+            <key flag="f0" assert="a0" name="Attr0" />
+            <key flag="f1" assert="a1" name="Attr1" />
           </opt>
         </pattern>
-    ' );
+        <!-- __TreePattern_Opt -->
+    ' ); 
 
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }

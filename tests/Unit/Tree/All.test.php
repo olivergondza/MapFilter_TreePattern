@@ -55,14 +55,15 @@ class MapFilter_Test_Unit_TreePattern_All extends
   public function testSimpleAllNode ( $query, $result, $asserts, $flags ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_All__ -->
         <pattern>
           <all flag="all" assert="all">
-            <attr flag="f0" assert="a0">Attr0</attr>
-            <attr flag="f1" assert="a1">Attr1</attr>
+            <key flag="f0" assert="a0" name="Attr0" />
+            <key flag="f1" assert="a1" name="Attr1" />
           </all>
         </pattern>
-    '
-    );
+        <!-- __TreePattern_All -->
+    ' );
 
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }

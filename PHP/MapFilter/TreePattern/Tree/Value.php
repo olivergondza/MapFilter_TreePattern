@@ -108,8 +108,6 @@ class MapFilter_TreePattern_Tree_Value extends MapFilter_TreePattern_Tree
     public function pickUp($result)
     {
     
-        assert(empty($result));
-        
         if (!$this->isSatisfied()) return null;
         
         return $this->data;

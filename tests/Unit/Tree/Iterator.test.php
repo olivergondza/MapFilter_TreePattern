@@ -747,5 +747,114 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
     
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
+  
+  public function provideBinaryTree () {
+  
+    return Array (
+        Array ( 42, 42 ),
+        Array (
+            Array ( 42, 43 ),
+            Array ( 42, 43 ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        Array (
+            Array ( Array ( 42, 43 ), 44 ),
+            Array ( Array ( 42, 43 ), 44 ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        Array (
+            Array ( 42, Array ( 43, 44 ) ),
+            Array ( 42, Array ( 43, 44 ) ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        Array (
+            Array ( Array ( 42, 43 ), Array ( 44, 45 ) ),
+            Array ( Array ( 42, 43 ), Array ( 44, 45 ) ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        Array (
+            Array ( Array ( Array ( 42, 43 ), 44 ), 45 ),
+            Array ( Array ( Array ( 42, 43 ), 44 ), 45 ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        Array (
+            Array ( 42, Array ( 43, Array ( 44, 45 ) ) ),
+            Array ( 42, Array ( 43, Array ( 44, 45 ) ) ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        
+        // Errors
+        Array (
+            'asdf',
+            null,
+            Array ( 'invalid_leaf' => 'asdf' )
+        ),
+        Array (
+            Array ( 'asdf', 42 ),
+            null,
+            Array ( 'invalid_leaf' => 'asdf' )
+        ),
+        Array (
+            Array ( 42, 'asdf' ),
+            null,
+            Array ( 'invalid_leaf' => 'asdf' )
+        ),
+        Array (
+            Array ( 'first', 'second' ),
+            null,
+            Array ( 'invalid_leaf' => 'second' )
+        ),
+        Array (
+            Array ( 42, 43, 44 ),
+            Array ( 42, 43 ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        Array (
+            Array ( 42 ),
+            null,
+        ),
+        Array (
+            Array ( Array ( 42, 43 ), Array ( 44, 45 ), Array ( 46, 47 ) ),
+            Array ( Array ( 42, 43 ), Array ( 44, 45 ) ),
+            Array (),
+            Array ( 'has_node' )
+        ),
+        Array (
+            Array ( Array ( 42 ) ),
+            null,
+        ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideBinaryTree
+   *
+   * @covers MapFilter_TreePattern_Tree_Iterator
+   */
+  public function testBinaryTree (
+      $query, $result, $asserts = Array (), $flags = Array ()
+  ) {
+  
+    $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_RecursiveIterator__ -->
+        <pattern name="main">
+          <one>
+            <iterator flag="has_node" min="2" max="2" attachPattern="main" />
+            <value pattern="/.*/">
+              <value assert="invalid_leaf" pattern="/\d/" />
+            </value>
+          </one>
+        </pattern>
+        <!-- __TreePattern_RecursiveIterator -->
+    ' );
+    
+    $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
+  }
 }
-

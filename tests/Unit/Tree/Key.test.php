@@ -88,9 +88,11 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   public function testKeyOnlyValid ( $query ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_Key__ -->
         <pattern>
           <key name="name" flag="valid" assert="invalid" />
         </pattern>
+        <!-- __TreePattern_Key -->
     ' );
     
     $this->assertResultsEquals (
