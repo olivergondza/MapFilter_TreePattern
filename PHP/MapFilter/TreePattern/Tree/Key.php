@@ -232,9 +232,10 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
         if ($this->satisfied) {
         
             $query[ $this->_name ] = $value;
+            return $result;
         }
         
-        return $result;
+        /** Do not populate any errors in case of member inference */
+        return $this->createResult ();
     }
-    
 }

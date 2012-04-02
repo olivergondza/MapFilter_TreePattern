@@ -686,4 +686,75 @@ class MapFilter_Test_Unit_TreePattern_Key extends
     
     $this->assertResultsEquals ( $pattern, $query, $results, $asserts, $flags );
   }
+  
+  public function provideNestedKey () {
+  
+    return Array (
+        Array (
+            null,
+            null,
+            Array ( 'no_outer' )
+        ),
+        Array (
+            Array ( 'inner' => null ),
+            null,
+            Array ( 'no_outer' )
+        ),
+        Array (
+            Array ( 'inner' => Array ( 'inner' => null ) ),
+            null,
+            Array ( 'no_outer' )
+        ),
+        Array (
+            Array ( 'outer' => null ),
+            null,
+            Array ( 'no_inner', 'no_outer' )
+        ),
+        Array (
+            Array ( 'outer' => Array ( 'inner' => null ) ),
+            Array ( 'outer' => Array ( 'inner' => null ) ),
+            Array ()
+        ),
+        Array (
+            Array ( 'outer' => Array ( 'inner' => null ), 'other' => null ),
+            Array ( 'outer' => Array ( 'inner' => null ) ),
+            Array ()
+        ),
+        Array (
+            Array ( 'outer' => Array ( 'inner' => null, 'other' => null ) ),
+            Array ( 'outer' => Array ( 'inner' => null ) ),
+            Array ()
+        ),
+        Array (
+            Array ( 'outer' => Array ( 'inner' => 'val' ) ),
+            Array ( 'outer' => Array ( 'inner' => 'val' ) ),
+            Array ()
+        ),
+        Array (
+            Array ( 'outer' => Array ( 'inner' => Array () ) ),
+            Array ( 'outer' => Array ( 'inner' => Array () ) ),
+            Array ()
+        ),
+    );
+  }
+  
+  /**
+   * @dataProvider provideNestedKey
+   */
+  public function testNestedKey (
+      $query, $results, Array $asserts
+  ) {
+  
+    $pattern = MapFilter_TreePattern_Xml::load ( '
+        <!-- TreePattern_NestedKey__ -->
+        <pattern>
+          <key name="outer" assert="no_outer">
+            <key name="inner" assert="no_inner" />
+          </key>
+        </pattern>
+        <!-- __TreePattern_NestedKey -->
+    ' );
+    
+    $this->assertResultsEquals ( $pattern, $query, $results, $asserts );
+  }
 }
