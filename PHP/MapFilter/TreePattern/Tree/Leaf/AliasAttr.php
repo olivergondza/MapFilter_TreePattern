@@ -86,7 +86,7 @@ implements
     
         foreach ($this->content as $follower) {
       
-            $query[ $follower->getAttribute() ] = $value;
+            $query[ $follower->getName() ] = $value;
             $follower->satisfy($query);
         }
     }

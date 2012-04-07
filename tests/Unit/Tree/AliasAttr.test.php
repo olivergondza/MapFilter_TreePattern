@@ -14,7 +14,7 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
   
   /**
    * @expectedException MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
-   * @expectedExceptionMessage  Only allowed follower for AliasAttribute is Attr.
+   * @expectedExceptionMessage  Only allowed follower for Alias element is Key.
    *
    * @covers MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException
    */
@@ -72,7 +72,7 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/"/>
+          <alias name="num" flag="fName" assert="aName" valuePattern="/\d/"/>
         </pattern>
     ' );
 
@@ -122,7 +122,7 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/">
-            <attr>number</attr>
+            <key name="number" />
           </alias>
         </pattern>
     '
@@ -174,8 +174,10 @@ class MapFilter_Test_Unit_TreePattern_AliasAttr extends
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <alias attr="num" flag="fName" assert="aName" valuePattern="/\d/">
-            <attr>number</attr>
-            <attr valuePattern="/(?!)/" default="yes">value</attr>
+            <key name="number" />
+            <key name="value">
+              <value pattern="/(?!)/" default="yes" />
+            </key>
           </alias>
         </pattern>
     '

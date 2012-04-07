@@ -53,7 +53,7 @@ extends
      * @since $NEXT$
      */
     public function __construct (
-        $follower, $message = 'Only allowed follower for AliasAttribute is Attr. %s given.'
+        $follower, $message = 'Only allowed follower for Alias element is Key. %s given.'
     ) {
     
         assert(is_string($follower));

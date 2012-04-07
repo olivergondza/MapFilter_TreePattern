@@ -15,50 +15,50 @@
 
           <!-- translate long options to its short versions -->
           <alias attr="number-nonblank">
-            <attr>b</attr>
+            <key name="b" />
           </alias>
 
           <alias attr="show-ends">
-            <attr>E</attr>
+            <key name="E" />
           </alias>
 
           <alias attr="number">
-            <attr>n</attr>
+            <key name="n" />
           </alias>
 
           <alias attr="squeeze-blank">
-            <attr>s</attr>
+            <key name="s" />
           </alias>
 
           <alias attr="show-tabs">
-            <attr>T</attr>
+            <key name="T" />
           </alias>
 
           <alias attr="show-nonprinting">
-            <attr>v</attr>
+            <key name="v" />
           </alias>
 
           <!-- expand aggregative options -->
           <alias attr="show-all">
-            <attr>v</attr>
-            <attr>E</attr>
-            <attr>T</attr>
+            <key name="v" />
+            <key name="E" />
+            <key name="T" />
           </alias>
           
           <alias attr="A">
-            <attr>v</attr>
-            <attr>E</attr>
-            <attr>T</attr>
+            <key name="v" />
+            <key name="E" />
+            <key name="T" />
           </alias>
 
           <alias attr="e">
-            <attr>v</attr>
-            <attr>E</attr>
+            <key name="v" />
+            <key name="E" />
           </alias>
 
           <alias attr="t">
-            <attr>v</attr>
-            <attr>T</attr>
+            <key name="v" />
+            <key name="T" />
           </alias>
 
           <!-- allowed short options -->

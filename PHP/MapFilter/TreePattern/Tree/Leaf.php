@@ -99,6 +99,12 @@ implements
     
         return $this->attribute->getAttribute();
     }
+    
+    public function getName()
+    {
+    
+        return $this->getAttribute ();
+    }
 
     /**
      * Pick-up satisfaction results.

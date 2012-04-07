@@ -2,79 +2,77 @@
 <!DOCTYPE patterns SYSTEM "TreePattern053.dtd">
 <patterns>
   <pattern>
-    <all>
-      <one>
+    <one>
 
-        <key flag="show_help" name="help" />
+      <key flag="show_help" name="help" />
+      
+      <key flag="show_version" name="version" />
+
+      <some flag="perform_action">
+
+        <!-- ignote option and set assert if present -->
+        <alias name="u" validationAssert="deprecated" valuePattern="/(?!)/" />
+
+        <!-- translate long options to its short versions -->
+        <alias name="number-nonblank">
+          <key name="b" />
+        </alias>
+
+        <alias name="show-ends">
+          <key name="E" />
+        </alias>
+
+        <alias name="number">
+          <key name="n" />
+        </alias>
+
+        <alias name="squeeze-blank">
+          <key name="s" />
+        </alias>
+
+        <alias name="show-tabs">
+          <key name="T" />
+        </alias>
+
+        <alias name="show-nonprinting">
+          <key name="v" />
+        </alias>
+
+        <!-- expand aggregative options -->
+        <alias name="show-all">
+          <key name="v" />
+          <key name="E" />
+          <key name="T" />
+        </alias>
         
-        <key flag="show_version" name="version" />
+        <alias name="A">
+          <key name="v" />
+          <key name="E" />
+          <key name="T" />
+        </alias>
 
-        <some flag="perform_action">
+        <alias name="e">
+          <key name="v" />
+          <key name="E" />
+        </alias>
 
-          <!-- ignote option and set assert if present -->
-          <alias attr="u" validationAssert="deprecated" valuePattern="/(?!)/" />
+        <alias name="t">
+          <key name="v" />
+          <key name="T" />
+        </alias>
 
-          <!-- translate long options to its short versions -->
-          <alias attr="number-nonblank">
-            <attr>b</attr>
-          </alias>
+        <!-- allowed short options -->
+        <some flag="number">
+          <key name="b" flag="number_nonblank" />
+          <key name="n" flag="number_all" />
+        </some>
+        
+        <key name="E" flag="show_ends" />
+        <key name="s" flag="squeeze_blank" />
+        <key name="T" flag="show_tabs" />
+        <key name="v" flag="show_nonprinting" />
+      </some>  
 
-          <alias attr="show-ends">
-            <attr>E</attr>
-          </alias>
-
-          <alias attr="number">
-            <attr>n</attr>
-          </alias>
-
-          <alias attr="squeeze-blank">
-            <attr>s</attr>
-          </alias>
-
-          <alias attr="show-tabs">
-            <attr>T</attr>
-          </alias>
-
-          <alias attr="show-nonprinting">
-            <attr>v</attr>
-          </alias>
-
-          <!-- expand aggregative options -->
-          <alias attr="show-all">
-            <attr>v</attr>
-            <attr>E</attr>
-            <attr>T</attr>
-          </alias>
-          
-          <alias attr="A">
-            <attr>v</attr>
-            <attr>E</attr>
-            <attr>T</attr>
-          </alias>
-
-          <alias attr="e">
-            <attr>v</attr>
-            <attr>E</attr>
-          </alias>
-
-          <alias attr="t">
-            <attr>v</attr>
-            <attr>T</attr>
-          </alias>
-
-          <!-- allowed short options -->
-          <some flag="number">
-            <key name="b" flag="number_nonblank" />
-            <key name="n" flag="number_all" />
-          </some>
-          
-          <key name="E" flag="show_ends" />
-          <key name="s" flag="squeeze_blank" />
-          <key name="T" flag="show_tabs" />
-          <key name="v" flag="show_nonprinting" />
-        </some>  
-
-      </one>
-    </all>
+    </one>
   </pattern>
 </patterns>

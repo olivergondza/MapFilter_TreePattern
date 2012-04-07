@@ -30,7 +30,7 @@ class MapFilter_TreePattern_Unit_Xml extends PHPUnit_Framework_TestCase {
    */
   public function testPatternFromFileInterface () {
   
-    $file = PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT;
+    $file = PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::ACTION;
   
     $pattern = MapFilter_TreePattern_Xml::fromFile ( $file );
     $this->assertInstanceOf ( 'MapFilter_PatternInterface', $pattern );

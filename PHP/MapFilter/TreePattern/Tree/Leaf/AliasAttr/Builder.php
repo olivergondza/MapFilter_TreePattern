@@ -61,7 +61,7 @@ class MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder extends
         
             $class = get_class($follower);
         
-            if ($class === 'MapFilter_TreePattern_Tree_Leaf_Attr') continue;
+            if ($class === 'MapFilter_TreePattern_Tree_Key') continue;
           
             throw new MapFilter_TreePattern_Tree_Leaf_AliasAttr_DisallowedFollowerException(
                 $class
@@ -69,6 +69,12 @@ class MapFilter_TreePattern_Tree_Leaf_AliasAttr_Builder extends
         }
        
         $this->content = $content;
+    }
+    
+    public function setName($name)
+    {
+    
+        $this->setAttr($name);
     }
 
     /**

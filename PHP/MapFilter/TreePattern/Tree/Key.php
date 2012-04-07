@@ -75,6 +75,12 @@ class MapFilter_TreePattern_Tree_Key extends MapFilter_TreePattern_Tree_Struct
         
         $this->_name = $builder->name;
     }
+    
+    public function getName()
+    {
+    
+        return $this->_name;
+    }
 
     /**
      * Pick-up satisfaction results.
