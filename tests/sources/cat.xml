@@ -62,12 +62,15 @@
           </alias>
 
           <!-- allowed short options -->
-          <attr>b</attr>
-          <attr>E</attr>
-          <attr>n</attr>
-          <attr>s</attr>
-          <attr>T</attr>
-          <attr>v</attr>
+          <some flag="number">
+            <attr flag="number_nonblank">b</attr>
+            <attr flag="number_all">n</attr>
+          </some>
+          
+          <attr flag="show_ends">E</attr>
+          <attr flag="squeeze_blank">s</attr>
+          <attr flag="show_tabs">T</attr>
+          <attr flag="show_nonprinting">v</attr>
         </some>  
 
       </one>

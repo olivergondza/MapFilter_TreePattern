@@ -107,7 +107,6 @@ class MapFilter_TreePattern_Tree_Value_Builder extends
         $follower = array_shift($content);
         if ( $follower instanceof MapFilter_TreePattern_Tree_Value
             || $follower instanceof MapFilter_TreePattern_Tree_Policy
-            || $follower instanceof MapFilter_TreePattern_Tree_Leaf_AliasAttr
         ) {
         
             $this->content = Array($follower);

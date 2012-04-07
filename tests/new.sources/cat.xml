@@ -63,12 +63,15 @@
           </alias>
 
           <!-- allowed short options -->
-          <key name="b" />
-          <key name="E" />
-          <key name="n" />
-          <key name="s" />
-          <key name="T" />
-          <key name="v" />
+          <some flag="number">
+            <key name="b" flag="number_nonblank" />
+            <key name="n" flag="number_all" />
+          </some>
+          
+          <key name="E" flag="show_ends" />
+          <key name="s" flag="squeeze_blank" />
+          <key name="T" flag="show_tabs" />
+          <key name="v" flag="show_nonprinting" />
         </some>  
 
       </one>
