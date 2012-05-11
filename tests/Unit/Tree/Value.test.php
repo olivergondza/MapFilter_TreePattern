@@ -131,7 +131,8 @@ class MapFilter_Test_Unit_TreePattern_Value extends
         Array ( '12_34', '1234', Array ( 'valid' ) ),
         Array ( '111', null, Array (), Array ( 'content' => '111', 'length' => '111' ) ),
         Array ( '0123456789abcdef', '0123456789abcdef', Array ( 'valid' ) ),
-        Array ( '0_____0_00', '0000', Array ( 'valid' ) )
+        Array ( '0_____0_00', '0000', Array ( 'valid' ) ),
+        Array ( 'Dead_Beaf', 'DeadBeaf', Array ( 'valid' ) ),
     );
   }
   
@@ -145,7 +146,7 @@ class MapFilter_Test_Unit_TreePattern_Value extends
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <!-- TreePattern_Cascading__ -->
         <pattern>
-          <value pattern="/^[_0-9a-f]*$/" replacement="/_//" assert="content">
+          <value pattern="/^[_0-9a-f]*$/i" replacement="/_//" assert="content">
             <value pattern="/^(..)+$/" assert="length" flag="valid" />
           </value>
         </pattern>
