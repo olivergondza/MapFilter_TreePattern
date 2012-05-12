@@ -271,7 +271,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         ),
         Array (
             // invalid value replaced by default
-            Array ( 'weight' => Array ( Array ( Array ( 'heawy' ) ) ) ),
+            Array ( 'weight' => Array ( Array ( Array ( 'heavy' ) ) ) ),
             Array ( 'weight' => Array ( Array ( Array ( 0 ) ) ) )
         ),
         Array (
@@ -289,15 +289,15 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
         ),
         Array (
             // multiple values with invalid pieces
-            Array ( 'weight' => Array ( Array ( Array ( 1, 'heawy' ) ) ) ),
+            Array ( 'weight' => Array ( Array ( Array ( 1, 'heavy' ) ) ) ),
             Array ( 'weight' => Array ( Array ( Array ( 1, 0 ) ) ) )
         ),
         Array (
-            Array ( 'weight' => Array ( Array ( Array ( 1 ), Array ( 'heawy' ) ) ) ),
+            Array ( 'weight' => Array ( Array ( Array ( 1 ), Array ( 'heavy' ) ) ) ),
             Array ( 'weight' => Array ( Array ( Array ( 1 ), Array ( 0 ) ) ) )
         ),
         Array (
-            Array ( 'weight' => Array ( Array ( Array ( 1 ) ), Array ( Array ( 'heawy' ) ) ) ),
+            Array ( 'weight' => Array ( Array ( Array ( 1 ) ), Array ( Array ( 'heavy' ) ) ) ),
             Array ( 'weight' => Array ( Array ( Array ( 1 ) ), Array ( Array ( 0 ) ) ) )
         ),
         Array (
@@ -321,7 +321,7 @@ class MapFilter_Test_Unit_TreePattern_Attr extends
             Array ( 'weight' => Array ( Array ( Array ( 0 ) ) ) )
         ),
         Array (
-            // incavated cube with heawy corners
+            // incavated cube with heavy corners
             Array ( 'weight' => Array (
                 Array ( Array ( 2, 1, 2 ), Array ( 1, 1, 1 ), Array ( 2, 1, 2 ) ),
                 Array ( Array ( 1, 1, 1 ), Array ( 1, 0, 1 ), Array ( 1, 1, 1 ) ),

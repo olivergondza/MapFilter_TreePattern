@@ -93,7 +93,7 @@ implements
             ;
 
             $setAsserts = (Bool) $assertValue = array_values(
-                array_diff($oldValue, $value)
+                @array_diff($oldValue, $value)
             );
 
             if ($setAsserts && $this->validationAssert !== null) {
