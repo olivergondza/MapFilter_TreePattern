@@ -88,11 +88,9 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   public function testKeyOnlyValid ( $query ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_Key__ -->
         <pattern>
           <key name="name" flag="valid" assert="invalid" />
         </pattern>
-        <!-- __TreePattern_Key -->
     ' );
     
     $this->assertResultsEquals (
@@ -194,9 +192,11 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   const NUMBER_OPT_STRING_PATTERN = '
       <pattern>
         <opt>
+          <!-- TreePattern_Key__ -->
           <key name="number" flag="number" assert="number">
             <value pattern="/\d+/" />
           </key>
+          <!-- __TreePattern_Key -->
           <key name="string" flag="string" assert="string">
             <value pattern="/[a-z]+/" />
           </key>
@@ -711,19 +711,14 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ( 'no_inner', 'no_outer' )
         ),
         Array (
-            Array ( 'outer' => Array ( 'inner' => null ) ),
-            Array ( 'outer' => Array ( 'inner' => null ) ),
-            Array ()
+            Array ( 'outer' => Array () ),
+            null,
+            Array ( 'no_inner', 'no_outer' => Array () )
         ),
         Array (
-            Array ( 'outer' => Array ( 'inner' => null ), 'other' => null ),
-            Array ( 'outer' => Array ( 'inner' => null ) ),
-            Array ()
-        ),
-        Array (
-            Array ( 'outer' => Array ( 'inner' => null, 'other' => null ) ),
-            Array ( 'outer' => Array ( 'inner' => null ) ),
-            Array ()
+            Array ( 'outer' => Array ( 'inner' => '' ) ),
+            null,
+            Array ( 'no_inner' => '', 'no_outer' => Array ( 'inner' => '' ) )
         ),
         Array (
             Array ( 'outer' => Array ( 'inner' => 'val' ) ),
@@ -731,10 +726,16 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             Array ()
         ),
         Array (
-            Array ( 'outer' => Array ( 'inner' => Array () ) ),
-            Array ( 'outer' => Array ( 'inner' => Array () ) ),
+            Array ( 'outer' => Array ( 'inner' => 'val' ), 'other' => null ),
+            Array ( 'outer' => Array ( 'inner' => 'val' ) ),
             Array ()
         ),
+        Array (
+            Array ( 'outer' => Array ( 'inner' => 'val', 'other' => null ) ),
+            Array ( 'outer' => Array ( 'inner' => 'val' ) ),
+            Array ()
+        ),
+        
     );
   }
   
@@ -749,7 +750,9 @@ class MapFilter_Test_Unit_TreePattern_Key extends
         <!-- TreePattern_NestedKey__ -->
         <pattern>
           <key name="outer" assert="no_outer">
-            <key name="inner" assert="no_inner" />
+            <key name="inner" assert="no_inner">
+              <value pattern="/./" />
+            </key>
           </key>
         </pattern>
         <!-- __TreePattern_NestedKey -->
