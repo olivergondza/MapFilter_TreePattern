@@ -31,11 +31,9 @@ class MapFilter_Test_Unit_TreePattern_Some extends
   public function testContradition ( $data ) {
   
     $tautology = MapFilter_TreePattern_Xml::load ( '
-      <!-- TreePattern_Contradition__ -->
         <pattern>
           <some />
         </pattern>
-      <!-- __TreePattern_Contradition -->
     ' );
     
     
@@ -102,14 +100,14 @@ class MapFilter_Test_Unit_TreePattern_Some extends
   public function testSimpleSomeNode ( $query, $result, $asserts, $flags ) {
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_Some__ -->
         <pattern>
+          <!-- TreePattern_Some__ -->
           <some flag="some" assert="some">
             <key flag="f0" assert="a0" name="Attr0" />
             <key flag="f1" assert="a1" name="Attr1" />
           </some>
+          <!-- __TreePattern_Some -->
         </pattern>
-        <!-- __TreePattern_Some -->
     ' );
 
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );

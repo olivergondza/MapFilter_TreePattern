@@ -3,6 +3,7 @@
 <patterns>
 
   <pattern>
+    <!-- TreePattern_Direction__ -->
     <some>
       <one>
         <key name="top" attachPattern="distance" />
@@ -13,6 +14,7 @@
         <key name="left" attachPattern="distance" />
       </one>
     </some>
+    <!-- __TreePattern_Direction -->
   </pattern>
 
   <pattern name="distance">

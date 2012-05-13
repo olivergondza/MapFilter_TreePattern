@@ -31,11 +31,9 @@ class MapFilter_Test_Unit_TreePattern_One extends
   public function testContradition ( $data ) {
   
     $tautology = MapFilter_TreePattern_Xml::load ( '
-      <!-- TreePattern_Contradition__ -->
         <pattern>
           <one />
         </pattern>
-      <!-- __TreePattern_Contradition -->
     ' );
     
     
@@ -108,14 +106,14 @@ class MapFilter_Test_Unit_TreePattern_One extends
   public function testSimpleOneNode ( $query, $result, $asserts, $flags ) {
     
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_One__ -->
         <pattern>
+          <!-- TreePattern_One__ -->
           <one flag="one" assert="one">
             <key flag="f0" assert="a0" name="Attr0" />
             <key flag="f1" assert="a1" name="Attr1" />
           </one>
+          <!-- __TreePattern_One -->
         </pattern>
-        <!-- __TreePattern_One -->
     ' );
 
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );

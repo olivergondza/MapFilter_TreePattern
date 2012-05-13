@@ -31,11 +31,9 @@ class MapFilter_Test_Unit_TreePattern_Opt extends
   public function testTautology ( $data ) {
   
     $tautology = MapFilter_TreePattern_Xml::load ( '
-      <!-- TreePattern_Tautology__ -->
         <pattern>
           <opt />
         </pattern>
-      <!-- __TreePattern_Tautology -->
     ' );
     
     
@@ -102,14 +100,14 @@ class MapFilter_Test_Unit_TreePattern_Opt extends
   public function testSimpleOptNode ( $query, $result, $flags, $asserts ) {
     
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_Opt__ -->
         <pattern>
+          <!-- TreePattern_Opt__ -->
           <opt flag="opt" assert="opt">
             <key flag="f0" assert="a0" name="Attr0" />
             <key flag="f1" assert="a1" name="Attr1" />
           </opt>
+          <!-- __TreePattern_Opt -->
         </pattern>
-        <!-- __TreePattern_Opt -->
     ' ); 
 
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
