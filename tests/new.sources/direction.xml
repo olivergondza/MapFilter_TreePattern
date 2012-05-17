@@ -5,12 +5,12 @@
   <pattern>
     <some>
       <one>
-        <key name="top" attachPattern="distance" />
-        <key name="bottom" attachPattern="distance" />
+        <key name="north" attachPattern="distance" />
+        <key name="south" attachPattern="distance" />
       </one>
       <one>
-        <key name="right" attachPattern="distance" />
-        <key name="left" attachPattern="distance" />
+        <key name="east" attachPattern="distance" />
+        <key name="west" attachPattern="distance" />
       </one>
     </some>
   </pattern>

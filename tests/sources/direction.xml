@@ -5,12 +5,12 @@
   <pattern>
     <some>
       <one>
-        <node_attr attr="top" attachPattern="distance" />
-        <node_attr attr="bottom" attachPattern="distance" />
+        <node_attr attr="north" attachPattern="distance" />
+        <node_attr attr="south" attachPattern="distance" />
       </one>
       <one>
-        <node_attr attr="right" attachPattern="distance" />
-        <node_attr attr="left" attachPattern="distance" />
+        <node_attr attr="east" attachPattern="distance" />
+        <node_attr attr="west" attachPattern="distance" />
       </one>
     </some>
   </pattern>
