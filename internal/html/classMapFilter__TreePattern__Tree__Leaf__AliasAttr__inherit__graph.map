@@ -1,7 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classMapFilter__TreePattern__Tree__Leaf__Attr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="121,1318,361,1407"/>
-<area shape="rect" id="node4" href="$classMapFilter__TreePattern__Tree__Leaf.html" title="Abstract class for pattern tree leaf." alt="" coords="97,955,311,1269"/>
-<area shape="rect" id="node6" href="$classMapFilter__TreePattern__Tree.html" title="Internal pattern tree." alt="" coords="33,387,215,906"/>
-<area shape="rect" id="node8" href="$interfaceMapFilter__TreePattern__Tree__Interface.html" title="MapFilter_TreePattern_Tree Interface." alt="" coords="5,6,243,338"/>
-<area shape="rect" id="node10" href="$interfaceMapFilter__TreePattern__Tree__Leaf__Interface.html" title="Interface for MapFilter pattern tree leaves." alt="" coords="239,602,508,691"/>
+<area shape="rect" id="node2" href="$classMapFilter__TreePattern__Tree__Leaf__Attr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="123,809,367,901"/>
+<area shape="rect" id="node4" href="$classMapFilter__TreePattern__Tree__Leaf.html" title="Abstract class for pattern tree leaf." alt="" coords="101,624,317,760"/>
+<area shape="rect" id="node6" href="$classMapFilter__TreePattern__Tree.html" title="Internal pattern tree." alt="" coords="35,235,219,576"/>
+<area shape="rect" id="node8" href="$interfaceMapFilter__TreePattern__Tree__Interface.html" title="MapFilter_TreePattern_Tree Interface." alt="" coords="5,6,248,186"/>
+<area shape="rect" id="node10" href="$interfaceMapFilter__TreePattern__Tree__Leaf__Interface.html" title="Interface for MapFilter pattern tree leaves." alt="" coords="243,367,517,444"/>
 </map>

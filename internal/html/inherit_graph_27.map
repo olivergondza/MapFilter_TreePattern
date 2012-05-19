@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$classMapFilter__TreePattern__Xml__LibXmlException.html" title="libxml exception" alt="" coords="6,56,290,83"/>
+<area shape="rect" id="node3" href="$classMapFilter__TreePattern__Xml__LibXmlErrorException.html" title="libxml error exception" alt="" coords="349,5,659,32"/>
+<area shape="rect" id="node5" href="$classMapFilter__TreePattern__Xml__LibXmlFatalException.html" title="libxml fatal error exception" alt="" coords="347,56,661,83"/>
+<area shape="rect" id="node7" href="$classMapFilter__TreePattern__Xml__LibXmlWarningException.html" title="libxml warning exception" alt="" coords="339,107,669,133"/>
+</map>

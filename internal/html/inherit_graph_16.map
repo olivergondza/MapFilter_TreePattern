@@ -1,0 +1,16 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$classMapFilter__TreePattern__Tree__Builder.html" title="Tree element builder class." alt="" coords="6,107,237,133"/>
+<area shape="rect" id="node3" href="$classMapFilter__TreePattern__Tree__Iterator__Builder.html" title="Tree All element builder class." alt="" coords="286,5,565,32"/>
+<area shape="rect" id="node5" href="$classMapFilter__TreePattern__Tree__Key__Builder.html" title="Tree All element builder class." alt="" coords="295,56,555,83"/>
+<area shape="rect" id="node7" href="$classMapFilter__TreePattern__Tree__Leaf__Builder.html" title="Tree All element builder class." alt="" coords="294,107,557,133"/>
+<area shape="rect" id="node15" href="$classMapFilter__TreePattern__Tree__Node__Builder.html" title="Tree All element builder class." alt="" coords="291,157,559,184"/>
+<area shape="rect" id="node27" href="$classMapFilter__TreePattern__Tree__Value__Builder.html" title="Tree All element builder class." alt="" coords="290,208,561,235"/>
+<area shape="rect" id="node9" href="$classMapFilter__TreePattern__Tree__Leaf__Attr__Builder.html" title="Tree All element builder class." alt="" coords="632,31,923,57"/>
+<area shape="rect" id="node11" href="$classMapFilter__TreePattern__Tree__Leaf__AliasAttr__Builder.html" title="Tree All element builder class." alt="" coords="990,5,1309,32"/>
+<area shape="rect" id="node13" href="$classMapFilter__TreePattern__Tree__Leaf__KeyAttr__Builder.html" title="Tree All element builder class." alt="" coords="993,56,1306,83"/>
+<area shape="rect" id="node17" href="$classMapFilter__TreePattern__Tree__Node__All__Builder.html" title="Tree All element builder class." alt="" coords="632,81,923,108"/>
+<area shape="rect" id="node19" href="$classMapFilter__TreePattern__Tree__Node__NodeAttr__Builder.html" title="Tree All element builder class." alt="" coords="614,132,941,159"/>
+<area shape="rect" id="node21" href="$classMapFilter__TreePattern__Tree__Node__One__Builder.html" title="Tree All element builder class." alt="" coords="628,183,927,209"/>
+<area shape="rect" id="node23" href="$classMapFilter__TreePattern__Tree__Node__Opt__Builder.html" title="Tree All element builder class." alt="" coords="629,233,925,260"/>
+<area shape="rect" id="node25" href="$classMapFilter__TreePattern__Tree__Node__Some__Builder.html" title="Tree All element builder class." alt="" coords="623,284,932,311"/>
+</map>

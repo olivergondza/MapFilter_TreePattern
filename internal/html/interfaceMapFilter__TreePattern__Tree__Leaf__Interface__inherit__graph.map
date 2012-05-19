@@ -1,6 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$classMapFilter__TreePattern__Tree__Leaf.html" title="Abstract class for pattern tree leaf." alt="" coords="153,145,367,458"/>
-<area shape="rect" id="node5" href="$classMapFilter__TreePattern__Tree__Leaf__Attr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="165,507,405,597"/>
-<area shape="rect" id="node7" href="$classMapFilter__TreePattern__Tree__Leaf__AliasAttr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="5,646,275,829"/>
-<area shape="rect" id="node9" href="$classMapFilter__TreePattern__Tree__Leaf__KeyAttr.html" title="MapFilter pattern tree KeyAttribute node." alt="" coords="311,655,572,819"/>
+<area shape="rect" id="node3" href="$classMapFilter__TreePattern__Tree__Leaf.html" title="Abstract class for pattern tree leaf." alt="" coords="155,131,371,267"/>
+<area shape="rect" id="node5" href="$classMapFilter__TreePattern__Tree__Leaf__Attr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="166,315,409,407"/>
+<area shape="rect" id="node7" href="$classMapFilter__TreePattern__Tree__Leaf__AliasAttr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="5,457,276,578"/>
+<area shape="rect" id="node9" href="$classMapFilter__TreePattern__Tree__Leaf__KeyAttr.html" title="MapFilter pattern tree KeyAttribute node." alt="" coords="313,464,580,571"/>
 </map>

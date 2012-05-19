@@ -1,8 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node9" href="$classMapFilter__TreePattern__Tree__Leaf__Attr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="164,1318,404,1407"/>
-<area shape="rect" id="node2" href="$classMapFilter__TreePattern__Tree.html" title="Internal pattern tree." alt="" coords="69,387,251,906"/>
-<area shape="rect" id="node4" href="$interfaceMapFilter__TreePattern__Tree__Interface.html" title="MapFilter_TreePattern_Tree Interface." alt="" coords="41,6,279,338"/>
-<area shape="rect" id="node6" href="$interfaceMapFilter__TreePattern__Tree__Leaf__Interface.html" title="Interface for MapFilter pattern tree leaves." alt="" coords="275,602,544,691"/>
-<area shape="rect" id="node11" href="$classMapFilter__TreePattern__Tree__Leaf__AliasAttr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="5,1457,275,1639"/>
-<area shape="rect" id="node13" href="$classMapFilter__TreePattern__Tree__Leaf__KeyAttr.html" title="MapFilter pattern tree KeyAttribute node." alt="" coords="299,1466,560,1630"/>
+<area shape="rect" id="node9" href="$classMapFilter__TreePattern__Tree__Leaf__Attr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="166,809,409,901"/>
+<area shape="rect" id="node2" href="$classMapFilter__TreePattern__Tree.html" title="Internal pattern tree." alt="" coords="69,235,253,576"/>
+<area shape="rect" id="node4" href="$interfaceMapFilter__TreePattern__Tree__Interface.html" title="MapFilter_TreePattern_Tree Interface." alt="" coords="40,6,283,186"/>
+<area shape="rect" id="node6" href="$interfaceMapFilter__TreePattern__Tree__Leaf__Interface.html" title="Interface for MapFilter pattern tree leaves." alt="" coords="277,367,552,444"/>
+<area shape="rect" id="node11" href="$classMapFilter__TreePattern__Tree__Leaf__AliasAttr.html" title="MapFilter pattern tree attribute leaf." alt="" coords="5,950,276,1071"/>
+<area shape="rect" id="node13" href="$classMapFilter__TreePattern__Tree__Leaf__KeyAttr.html" title="MapFilter pattern tree KeyAttribute node." alt="" coords="301,957,568,1064"/>
 </map>

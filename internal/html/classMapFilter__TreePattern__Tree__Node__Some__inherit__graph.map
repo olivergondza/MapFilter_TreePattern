@@ -1,5 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classMapFilter__TreePattern__Tree__Node.html" title="Abstract class for pattern tree node." alt="" coords="25,955,244,1082"/>
-<area shape="rect" id="node4" href="$classMapFilter__TreePattern__Tree.html" title="Internal pattern tree." alt="" coords="44,387,225,906"/>
-<area shape="rect" id="node6" href="$interfaceMapFilter__TreePattern__Tree__Interface.html" title="MapFilter_TreePattern_Tree Interface." alt="" coords="16,6,253,338"/>
+<area shape="rect" id="node2" href="$classMapFilter__TreePattern__Tree__Policy.html" title="Abstract class for pattern tree node." alt="" coords="23,749,249,827"/>
+<area shape="rect" id="node4" href="$classMapFilter__TreePattern__Tree__Node.html" title="Abstract class for pattern tree node." alt="" coords="25,624,247,701"/>
+<area shape="rect" id="node6" href="$classMapFilter__TreePattern__Tree.html" title="Internal pattern tree." alt="" coords="44,235,228,576"/>
+<area shape="rect" id="node8" href="$interfaceMapFilter__TreePattern__Tree__Interface.html" title="MapFilter_TreePattern_Tree Interface." alt="" coords="15,6,257,186"/>
 </map>
