@@ -10,12 +10,11 @@ determined by <tt>start_hour</tt>, <tt>start_minute</tt> and
 recognized by flags (<tt>ending_time</tt> or <tt>duration_time</tt>).  The
 missing/incorrect value is identified by assertion <tt>no_@e value</tt>.
 
-@include        sources/duration.xml
+@include        new.sources/duration.xml
 
-There is a list of input arrays in the first row of each set and the output
-array obtained by MapFilter_TreePattern::getResults() in the second one.
-Flags (MapFilter_TreePattern::getFlags()) are in the third and assertions
-(MapFilter_TreePattern::getAsserts()) are in the fourth row.
+There is a list of input arrays on the first row of each set and the result
+arrays on the second. Flags can be found on the third row and the assertions on
+the fourth.
 
-@clip{User/TreePattern/Duration.test.php,provideDuration}
+@snippet User/TreePattern/Duration.test.php provideDuration
 */

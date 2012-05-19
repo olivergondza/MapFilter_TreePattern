@@ -648,11 +648,11 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <!-- TreePattern_Iterator__ -->
+          <!-- [TreePattern_Iterator] -->
           <iterator flag="it" assert="it" min="1" max="2">
             <value flag="val" assert="flag" pattern="/^\d+$/"/>
           </iterator>
-          <!-- __TreePattern_Iterator -->
+          <!-- [TreePattern_Iterator] -->
         </pattern>
     ' );
     
@@ -843,7 +843,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
   ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_RecursiveIterator__ -->
+        <!-- [TreePattern_RecursiveIterator] -->
         <pattern name="main">
           <one>
             <iterator flag="has_node" min="2" max="2" attachPattern="main" />
@@ -852,7 +852,7 @@ class MapFilter_Test_Unit_TreePattern_Iterator extends
             </value>
           </one>
         </pattern>
-        <!-- __TreePattern_RecursiveIterator -->
+        <!-- [TreePattern_RecursiveIterator] -->
     ' );
     
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );

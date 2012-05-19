@@ -15,7 +15,7 @@
 
     <!-- Int ( -5..5 ); default 0 -->
     <key name="sugar">
-      <value default="0" pattern="/-?[0-5]/" />
+      <value default="0" pattern="/^-?[0-5]$/" />
     </key>
 
   </all>

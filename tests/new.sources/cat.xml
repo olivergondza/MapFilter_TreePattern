@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE patterns SYSTEM "TreePattern053.dtd">
-<!-- TreePattern_Cat__ -->
+<!-- [TreePattern_Cat] -->
 <patterns>
   <pattern>
     <one>
@@ -79,4 +79,4 @@
     </one>
   </pattern>
 </patterns>
-<!-- __TreePattern_Cat -->
+<!-- [TreePattern_Cat] -->

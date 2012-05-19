@@ -29,29 +29,29 @@ class MapFilter_Test_Unit_TreePattern_Opt extends
    * @dataProvider      provideTautology
    */
   public function testTautology ( $data ) {
-  
+
     $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <opt />
         </pattern>
     ' );
-    
-    
+
+
     $this->assertResultsEquals ( $tautology, $data, $data );
-    
+
     $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <opt flag="valueFlag" assert="valueAssert" />
         </pattern>
     ' );
-    
+
     $flags = Array ( 'valueFlag' );
-    
+
     $this->assertResultsEquals ( $tautology, $data, $data, Array (), $flags );
   }
-  
+
   public function provideSimpleOptNode () {
-  
+
     return Array (
         Array (
             Array (),
@@ -91,24 +91,24 @@ class MapFilter_Test_Unit_TreePattern_Opt extends
         ),
     );
   }
-  
+
   /**
    * Test OptNode with simple values
    *
    * @dataProvider      provideSimpleOptNode
    */
   public function testSimpleOptNode ( $query, $result, $flags, $asserts ) {
-    
+
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <!-- TreePattern_Opt__ -->
+          <!-- [TreePattern_Opt] -->
           <opt flag="opt" assert="opt">
             <key flag="f0" assert="a0" name="Attr0" />
             <key flag="f1" assert="a1" name="Attr1" />
           </opt>
-          <!-- __TreePattern_Opt -->
+          <!-- [TreePattern_Opt] -->
         </pattern>
-    ' ); 
+    ' );
 
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }

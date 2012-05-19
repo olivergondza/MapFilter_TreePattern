@@ -12,10 +12,11 @@ require_once 'tests/Functional.php';
 class MapFilter_Test_User_TreePattern_Pathway extends
     MapFilter_TreePattern_Test_Functional
 {
-  
-  public function provide () {
-  
+
+  public function provideParse () {
+
     return Array (
+        /** [provideParse] */
         // Just turn
         Array (
             Array ( 'steps' =>
@@ -62,7 +63,7 @@ class MapFilter_Test_User_TreePattern_Pathway extends
                         'walk' => Array ( 'yards' => 1 )
                     ),
                     Array ( 'turn' => 'left' ),
-                    
+
                 )
             )
         ),
@@ -109,11 +110,12 @@ class MapFilter_Test_User_TreePattern_Pathway extends
                 )
             )
         ),
+        /** [provideParse] */
     );
   }
 
   public function providePathway () {
-  
+
     // Empty; Mandatory attribute "steps" is missing
     $empty = Array (
         Array (
@@ -126,9 +128,9 @@ class MapFilter_Test_User_TreePattern_Pathway extends
         ),
     );
 
-    return array_merge ( $this->provide (), $empty );
+    return array_merge ( $this->provideParse (), $empty );
   }
-  
+
   /**
    * @dataProvider      providePathway
    */
@@ -140,9 +142,9 @@ class MapFilter_Test_User_TreePattern_Pathway extends
 
     $this->assertResultsEquals ( $pattern, $query, $result );
   }
-  
+
   public function provideNewPathway () {
-  
+
     // Empty; Mandatory attribute "steps" is missing
     $empty = Array (
         Array (
@@ -158,10 +160,10 @@ class MapFilter_Test_User_TreePattern_Pathway extends
             Array ( 'steps' => Array () ),
         ),
     );
-    
-    return array_merge ( $this->provide (), $empty );
+
+    return array_merge ( $this->provideParse (), $empty );
   }
-  
+
   /**
    * @dataProvider      provideNewPathway
    */

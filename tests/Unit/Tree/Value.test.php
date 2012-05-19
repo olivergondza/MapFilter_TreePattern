@@ -35,11 +35,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_Regex__ -->
+        <!-- [TreePattern_Regex] -->
         <pattern>
           <value pattern="/\d+/" flag="flag" assert="assert" />
         </pattern>
-        <!-- __TreePattern_Regex -->
+        <!-- [TreePattern_Regex] -->
     ' );
 
     $this->assertResultsEquals ( $pattern, $string, $result, $asserts, $flags );
@@ -68,11 +68,11 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   public function testValueReplacement ( $string, $result, $flags ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_Replacement__ -->
+        <!-- [TreePattern_Replacement] -->
         <pattern>
           <value replacement="/(\d)+/_/" flag="flag" assert="assert" />
         </pattern>
-        <!-- __TreePattern_Replacement -->
+        <!-- [TreePattern_Replacement] -->
     ' );
     
     $this->assertResultsEquals ( $pattern, $string, $result, Array (), $flags );
@@ -144,13 +144,13 @@ class MapFilter_Test_Unit_TreePattern_Value extends
   ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_Cascading__ -->
+        <!-- [TreePattern_Cascading] -->
         <pattern>
           <value pattern="/^[_0-9a-f]*$/i" replacement="/_//" assert="invalid">
             <value pattern="/^(..)+$/" assert="bad_length" flag="valid" />
           </value>
         </pattern>
-        <!-- __TreePattern_Cascading -->
+        <!-- [TreePattern_Cascading] -->
     ' );
       
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );

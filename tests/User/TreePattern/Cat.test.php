@@ -1,7 +1,7 @@
 <?php
 /**
 * User Tests using cat.xml
-*/  
+*/
 
 require_once 'PHP/MapFilter/TreePattern.php';
 require_once 'tests/Functional.php';
@@ -13,10 +13,10 @@ class MapFilter_Test_User_TreePattern_Cat extends
     MapFilter_TreePattern_Test_Functional
 {
 
-  /*@}*/
-  public function provideParseCat () {
-  
+  public function provideCat () {
+
     return Array (
+        /** [provideCat] */
         Array (
             Array (),
             null,
@@ -121,12 +121,12 @@ class MapFilter_Test_User_TreePattern_Cat extends
             Array ( 'v' => '' ),
             Array ( 'perform_action', 'show_nonprinting' )
         ),
+        /** [provideCat] */
     );
   }
-  /*@}*/
-  
+
   /**
-   * @dataProvider      provideParseCat
+   * @dataProvider      provideCat
    */
   public function testCat (
       $query, $result, $flags, $asserts = Array ()
@@ -135,12 +135,12 @@ class MapFilter_Test_User_TreePattern_Cat extends
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
-  
+
   /**
-   * @dataProvider      provideParseCat
+   * @dataProvider      provideCat
    */
   public function testNewCat (
       $query, $result, $flags, $asserts = Array ()
@@ -149,7 +149,7 @@ class MapFilter_Test_User_TreePattern_Cat extends
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::CAT_NEW
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }

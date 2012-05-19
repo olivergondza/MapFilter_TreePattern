@@ -13,10 +13,10 @@ class MapFilter_Test_User_TreePattern_Action extends
     MapFilter_TreePattern_Test_Functional
 {
 
-  /*@{*/
   public function provideParseAction () {
-  
+
     return Array (
+        /** [provideParseAction] */
         Array (
             Array (),
             null
@@ -89,19 +89,19 @@ class MapFilter_Test_User_TreePattern_Action extends
             Array ( 'action' => 'report', 'file_name' => 'myName' ),
             null
         )
+        /** [provideParseAction] */
     );
   }
-  /*@}*/
-  
+
   /**
    * @dataProvider      provideParseAction
    */
   public function testParseAction ( $query, $result ) {
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::ACTION
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result );
   }
 }

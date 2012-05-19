@@ -1,7 +1,7 @@
 <?php
 /**
  * User Tests using coffee_Maker.xml
- */  
+ */
 
 require_once 'PHP/MapFilter/TreePattern.php';
 require_once 'tests/Functional.php';
@@ -13,10 +13,10 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends
     MapFilter_TreePattern_Test_Functional
 {
 
-  /*@}*/
   public function provideCoffeeMaker () {
-  
+
     return Array (
+        /** [provideCoffeeMaker] */
         Array (
             Array (),
             null
@@ -50,24 +50,24 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends
             Array ( 'beverage' => 'coffee', 'cup' => 'no', 'sugar' => 5, 'spoon' => 'please' ),
             Array ( 'beverage' => 'coffee', 'cup' => 'no', 'sugar' => 5 )
         )
+        /** [provideCoffeeMaker] */
     );
   }
-  /*@}*/
-  
+
   /**
    * @dataProvider      provideCoffeeMaker
    */
   public function testCoffeeMaker ( $query, $expected ) {
-  
+
     $filename =
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::COFFEE_MAKER
     ;
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile ( $filename );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $expected );
   }
-  
+
   /**
    * @dataProvider      provideCoffeeMaker
    */
@@ -76,9 +76,9 @@ class MapFilter_Test_User_TreePattern_CoffeeMaker extends
     $filename =
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::COFFEE_MAKER_NEW
     ;
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile ( $filename );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $expected );
   }
 }

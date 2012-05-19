@@ -192,11 +192,11 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   const NUMBER_OPT_STRING_PATTERN = '
       <pattern>
         <opt>
-          <!-- TreePattern_Key__ -->
+          <!-- [TreePattern_Key] -->
           <key name="number" flag="number" assert="number">
             <value pattern="/\d+/" />
           </key>
-          <!-- __TreePattern_Key -->
+          <!-- [TreePattern_Key] -->
           <key name="string" flag="string" assert="string">
             <value pattern="/[a-z]+/" />
           </key>
@@ -747,7 +747,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
   ) {
   
     $pattern = MapFilter_TreePattern_Xml::load ( '
-        <!-- TreePattern_NestedKey__ -->
+        <!-- [TreePattern_NestedKey] -->
         <pattern>
           <key name="outer" assert="no_outer">
             <key name="inner" assert="no_inner">
@@ -755,7 +755,7 @@ class MapFilter_Test_Unit_TreePattern_Key extends
             </key>
           </key>
         </pattern>
-        <!-- __TreePattern_NestedKey -->
+        <!-- [TreePattern_NestedKey] -->
     ' );
     
     $this->assertResultsEquals ( $pattern, $query, $results, $asserts );

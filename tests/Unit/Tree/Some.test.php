@@ -29,29 +29,29 @@ class MapFilter_Test_Unit_TreePattern_Some extends
    * @dataProvider      provideContradition
    */
   public function testContradition ( $data ) {
-  
+
     $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <some />
         </pattern>
     ' );
-    
-    
+
+
     $this->assertResultsEquals ( $tautology, $data, null );
-    
+
     $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <some flag="valueFlag" assert="valueAssert" />
         </pattern>
     ' );
-    
+
     $asserts = Array ( 'valueAssert' );
-    
+
     $this->assertResultsEquals ( $tautology, $data, null, $asserts );
   }
-  
+
   public function provideSimpleSomeNode () {
-  
+
     return Array (
         Array (
             Array (),
@@ -91,7 +91,7 @@ class MapFilter_Test_Unit_TreePattern_Some extends
         ),
     );
   }
-  
+
   /**
    * Test OptNode with simple values
    *
@@ -101,12 +101,12 @@ class MapFilter_Test_Unit_TreePattern_Some extends
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <!-- TreePattern_Some__ -->
+          <!-- [TreePattern_Some] -->
           <some flag="some" assert="some">
             <key flag="f0" assert="a0" name="Attr0" />
             <key flag="f1" assert="a1" name="Attr1" />
           </some>
-          <!-- __TreePattern_Some -->
+          <!-- [TreePattern_Some] -->
         </pattern>
     ' );
 

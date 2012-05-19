@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE patterns SYSTEM "TreePattern053.dtd">
-<!-- TreePattern_Direction__ -->
+<!-- [TreePattern_Direction] -->
 <patterns>
   <pattern>
     <some>
@@ -25,4 +25,4 @@
     </all>
   </pattern>
 </patterns>
-<!-- __TreePattern_Direction -->
+<!-- [TreePattern_Direction] -->

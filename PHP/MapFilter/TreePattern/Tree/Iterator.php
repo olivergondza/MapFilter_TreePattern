@@ -10,15 +10,15 @@
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or (at
  * your option) any later version.
- *                
+ *
  * MapFilter is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
  * License for more details.
- *                              
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with MapFilter.  If not, see <http://www.gnu.org/licenses/>.
- *                              
+ *
  * @category Pear
  * @package  MapFilter_TreePattern
  * @author   Oliver Gondža <324706@mail.muni.cz>
@@ -82,14 +82,14 @@ class MapFilter_TreePattern_Tree_Iterator extends
         foreach ($this->getContent() as $key => $follower) {
 
             if ($follower->isSatisfied()) {
-            
+
                 $this->_data[ $key ] = $follower->pickUp($result);
             }
         }
 
         return $this->_data;
     }
-    
+
     /**
      * Satisfy certain node type and let its followers to get satisfied.
      *
@@ -104,7 +104,7 @@ class MapFilter_TreePattern_Tree_Iterator extends
         assert($this->satisfied === false);
 
         if (!MapFilter_TreePattern::isIterator($query)) {
-        
+
             return $this->createResult();
         }
 
@@ -116,7 +116,7 @@ class MapFilter_TreePattern_Tree_Iterator extends
             ->build($this->satisfied)
         ;
     }
-    
+
     /**
      * Satisfy followers using new pattern for each follower
      *
@@ -128,18 +128,18 @@ class MapFilter_TreePattern_Tree_Iterator extends
      */
     private function _dispatchFollowers(&$query)
     {
-    
+
         $this->_data = (!is_array($query))
             ? new ArrayIterator()
             : Array()
         ;
-        
+
         $this->_follower = $this->getFollower();
         $this->content = Array();
 
         return $this->_validateFollowers($query);
     }
-    
+
     /**
      * Validate itterator according to pattern
      *
@@ -151,12 +151,12 @@ class MapFilter_TreePattern_Tree_Iterator extends
      */
     private function _validateFollowers(&$query)
     {
-    
+
         $builder = MapFilter_TreePattern_Result::builder();
-    
+
         $length = 0;
         foreach ($query as $key => $iteratorItem) {
-        
+
             $length++;
 
             if ($this->_isOutOfRange($length)) break;
@@ -168,21 +168,21 @@ class MapFilter_TreePattern_Tree_Iterator extends
                 $builder->putAsserts($result->getAsserts());
 
                 if (!$result->isValid()) {
-            
+
                     $length--;
-                    continue;  
+                    continue;
                 }
-                
+
                 $builder->putFlags($result->getFlags());
             }
-            
+
             $this->_data[ $key ] = $iteratorItem;
         }
-        
+
         if ($length < $this->_lowerBoundary) {
-        
+
             $this->satisifed = false;
-            
+
             $childResult = $builder->build($this->satisfied);
             return $this->createResult()
                 ->getBuilder()
@@ -194,7 +194,7 @@ class MapFilter_TreePattern_Tree_Iterator extends
         $this->satisfied = true;
         return $builder->build($this->satisfied);
     }
-    
+
     /**
      * Determine whether an iterator element is valid according to the pattern
      *
@@ -207,14 +207,14 @@ class MapFilter_TreePattern_Tree_Iterator extends
      */
     private function _isValid($key, &$query)
     {
-    
+
         $pattern = clone $this->_follower;
-        
+
         $result = $pattern->satisfy($query);
         $builder = $result->getBuilder();
-        
+
         if ($result->isValid()) {
-        
+
             $this->content[ $key ] = $pattern;
             $builder->putFlags($result->getFlags());
         } else {
@@ -224,7 +224,7 @@ class MapFilter_TreePattern_Tree_Iterator extends
 
         return $builder->build($result->isValid());
     }
-    
+
     /**
      * Determine whether the length is out of range
      *
@@ -236,11 +236,11 @@ class MapFilter_TreePattern_Tree_Iterator extends
      */
     private function _isOutOfRange($length)
     {
-    
+
         assert(is_int($length));
 
         if (!is_int($this->_upperBoundary)) return false;
-    
+
         return $length > $this->_upperBoundary;
     }
 }

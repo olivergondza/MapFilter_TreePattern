@@ -16,10 +16,9 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
 {
 
   const EXPAND_SECTIONS = TRUE;
- 
-  /**@{*/
+
   public function testParseIniFile () {
-  
+
     $content = parse_ini_file (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_INI,
         self::EXPAND_SECTIONS
@@ -28,16 +27,14 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE
     );
-    
+
     $actual = $pattern->getFilter ( $content )->fetchResult ()->getResults ();
 
     $this->assertEquals ( $content, $actual );
   }
-  /**@}*/
-  
-  /**@{*/
+
   public function testNewParseIniFile () {
-  
+
     $content = parse_ini_file (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_INI,
         self::EXPAND_SECTIONS
@@ -46,10 +43,9 @@ class MapFilter_Test_User_TreePattern_ParseIniFile extends
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::PARSEINIFILE_NEW
     );
-    
+
     $actual = $pattern->getFilter ( $content )->fetchResult ()->getResults ();
 
     $this->assertEquals ( $content, $actual );
   }
-  /**@}*/
 }

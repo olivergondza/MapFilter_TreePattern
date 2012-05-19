@@ -4,34 +4,34 @@
 
     <!--// "id" or "file_name" must be used -->
     <one forValue="delete">
-      <attr>id</attr>
-      <attr>file_name</attr>
+      <key name="id" />
+      <key name="file_name" />
     </one>
 
     <!--// "new_file" is mandatory and "new_name" is optional attribute -->
     <all forValue="create">
-      <attr>new_file</attr>
+      <key name="new_file" />
       <opt>
-        <attr>new_name</attr>
+        <key name="new_name" />
       </opt>
     </all>
 
     <!--// "new_name" is now mandatory with one of "id" or "old_name" -->
     <all forValue="rename">
       <one>
-        <attr>id</attr>
-        <attr>old_name</attr>
+        <key name="id" />
+        <key name="old_name" />
       </one>
-      <attr>new_name</attr>
+      <key name="new_name" />
     </all>
-    
+
     <!--// "id" is mandatory argument for "report" action. -->
-    <attr forValue="report">id</attr>
-    <!--        
+    <key forValue="report" name="id" />
+    <!--
     //  Consider equivalent but slightly clumsy statement:
     //
     //  <all forValue="report">
-    //    <attr>id</attr>
+    //    <key name="id" />
     //  </all>
     -->
 

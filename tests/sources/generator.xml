@@ -3,17 +3,23 @@
 <pattern>
   <all>
 
-    <attr iterator="yes" assert="no_source">input</attr>
+    <key name="input" assert="no_source">
+      <iterator />
+    </key>
 
     <key_attr attr="output_format" iterator="yes" default="html" valuePattern="html|man|xml">
 
-      <attr forValue="html|xml" default="default.css" valuePattern=".+\.css" iterator="yes">
+      <attr forValue="html|xml" default="default.css" valuePattern="/\.css$/" iterator="yes">
           stylesheet
       </attr>
 
-      <attr forValue="man" default="3" valuePattern="[1-8]">extension</attr>
+      <key forValue="man" name="extension">
+        <value pattern="/^[1-8]$/" default="3" />
+      </key>
 
-      <attr forValue="xml" default="default.dtd" valuePattern=".+\.dtd">dtd</attr>
+      <key forValue="xml" name="dtd">
+        <value pattern="/\.dtd$/" default="default.dtd" />
+      </key>
 
     </key_attr>
 

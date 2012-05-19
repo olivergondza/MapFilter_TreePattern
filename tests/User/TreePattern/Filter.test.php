@@ -1,7 +1,7 @@
 <?php
 /**
  * User Tests using filter.xml
- */  
+ */
 
 require_once 'PHP/MapFilter/TreePattern.php';
 require_once 'tests/Functional.php';
@@ -12,8 +12,9 @@ require_once 'tests/Functional.php';
 class MapFilter_TestUserFilter extends MapFilter_TreePattern_Test_Functional {
 
   public function provideParseFilterUtility () {
-  
+
     return Array (
+        /** [provideParseFilterUtility] */
         Array (
             Array (),
             null
@@ -27,7 +28,7 @@ class MapFilter_TestUserFilter extends MapFilter_TreePattern_Test_Functional {
             Array ( '-v' => NULL ),
             Array ( '-v' => NULL )
         ),
-        
+
         Array (
             Array ( '-a' => NULL ),
             Array ( '-a' => NULL )
@@ -69,9 +70,10 @@ class MapFilter_TestUserFilter extends MapFilter_TreePattern_Test_Functional {
             Array ( '-a' => NULL, '-v' => NULL ),
             Array ( '-v' => NULL )
         ),
+        /** [provideParseFilterUtility] */
     );
   }
-  
+
   /**
    * @dataProvider      provideParseFilterUtility
    */
@@ -83,7 +85,7 @@ class MapFilter_TestUserFilter extends MapFilter_TreePattern_Test_Functional {
 
     $this->assertResultsEquals ( $pattern, $query, $result );
   }
-  
+
   /**
    * @dataProvider      provideParseFilterUtility
    */

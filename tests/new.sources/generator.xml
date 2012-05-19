@@ -28,7 +28,7 @@
 
     </all>
   </pattern>
-  
+
   <pattern name="stylesheet">
     <key name="stylesheet">
       <iterator>
@@ -36,14 +36,14 @@
       </iterator>
     </key>
   </patern>
-  
+
   <pattern name="extension">
     <key name="extension">
       <value default="3" pattern="[1-8]">
     </key>
   </pattern>
 
-  <pattern name="dtd">  
+  <pattern name="dtd">
     <key name="dtd">
       <value default="default.dtd" pattern=".+\.dtd">
     </key>

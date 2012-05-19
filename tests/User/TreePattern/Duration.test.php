@@ -1,7 +1,7 @@
 <?php
 /**
  * User Tests using duration.xml
- */  
+ */
 
 require_once 'PHP/MapFilter/TreePattern.php';
 require_once 'tests/Functional.php';
@@ -13,10 +13,10 @@ class MapFilter_Test_User_TreePattern_Duration extends
     MapFilter_TreePattern_Test_Functional
 {
 
-    /**@{*/
     public function provideDuration () {
-  
+
     return Array (
+        /** [provideDuration] */
         // An absence of query set related assertions
         Array (
             Array (),
@@ -65,31 +65,31 @@ class MapFilter_Test_User_TreePattern_Duration extends
             Array (),
             Array ( 'no_beginning_time', 'no_start_minute' => 60 )
         )
+        /** [provideDuration] */
     );
   }
-  /**@}*/
-  
+
   /**
    * @dataProvider      provideDuration
    */
   public function testDuration ( $query, $result, $flags, $asserts ) {
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
-  
+
   /**
    * @dataProvider      provideDuration
    */
   public function testNewDuration ( $query, $result, $flags, $asserts ) {
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::DURATION_NEW
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }

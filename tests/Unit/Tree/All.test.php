@@ -29,28 +29,28 @@ class MapFilter_Test_Unit_TreePattern_All extends
    * @dataProvider      provideTautology
    */
   public function testTautology ( $data ) {
-  
+
     $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <all />
         </pattern>
     ' );
-    
+
     $this->assertResultsEquals ( $tautology, $data, $data );
-    
+
     $tautology = MapFilter_TreePattern_Xml::load ( '
         <pattern>
           <all flag="valueFlag" assert="valueAssert" />
         </pattern>
     ' );
-    
+
     $flags = Array ( 'valueFlag' );
-    
+
     $this->assertResultsEquals ( $tautology, $data, $data, Array (), $flags );
   }
-  
+
   public function provideSimpleAllNode () {
-  
+
     return Array (
         Array (
             Array (),
@@ -84,7 +84,7 @@ class MapFilter_Test_Unit_TreePattern_All extends
         )
     );
   }
-  
+
   /**
    * Test AllNode with simple values
    *
@@ -94,12 +94,12 @@ class MapFilter_Test_Unit_TreePattern_All extends
 
     $pattern = MapFilter_TreePattern_Xml::load ( '
         <pattern>
-          <!-- TreePattern_All__ -->
+          <!-- [TreePattern_All] -->
           <all flag="all" assert="all">
             <key flag="f0" assert="a0" name="Attr0" />
             <key flag="f1" assert="a1" name="Attr1" />
           </all>
-          <!-- __TreePattern_All -->
+          <!-- [TreePattern_All] -->
         </pattern>
     ' );
 

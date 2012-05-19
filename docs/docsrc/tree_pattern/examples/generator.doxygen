@@ -3,7 +3,7 @@
 
 Following example shows structure of parser for fictive configuration file
 of utility to generate some outcome of its input files.  There is a mandatory
-<tt>input</tt> attribute that holds either single or array of input values. 
+<tt>input</tt> attribute that holds either single or array of input values.
 The other common mandatory attribute is <tt>output_format</tt> that defines
 either one or several output formats to generate, a whitelist for allowed
 output types and the default output type.
@@ -20,5 +20,5 @@ There is a list of input arrays in the first row of each set and the output
 array obtained by MapFilter_TreePattern::getResults() in the
 second one.
 
-@clip{User/TreePattern/Generator.test.php,provideGenerator}
+@snippet User/TreePattern/Generator.test.php provideGenerator
 */

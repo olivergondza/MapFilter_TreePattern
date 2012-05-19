@@ -1,7 +1,7 @@
 <?php
 /**
  * User Tests using location.xml
- */  
+ */
 
 require_once 'PHP/MapFilter/TreePattern.php';
 require_once 'tests/Functional.php';
@@ -13,10 +13,10 @@ class MapFilter_Test_User_TreePattern_Location extends
     MapFilter_TreePattern_Test_Functional
 {
 
-  /*@{*/
   public function provideLocation () {
-  
+
     return Array (
+        /** [provideLocation] */
         Array (
             Array (),
             null
@@ -54,32 +54,32 @@ class MapFilter_Test_User_TreePattern_Location extends
         Array (
             Array ( 'action' => 'delete', 'nick' => 'myLocation', 'duration' => 'permanent' ),
             Array ( 'action' => 'delete', 'nick' => 'myLocation' )
-        )
+        ),
+        /** [provideLocation] */
     );
   }
-  /*@}*/
-  
+
   /**
    * @dataProvider      provideLocation
    */
   public function testLocation ( $query, $result ) {
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result );
   }
-  
+
   /**
    * @dataProvider      provideLocation
    */
   public function testNewLocation ( $query, $result ) {
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOCATION_NEW
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result );
   }
 }

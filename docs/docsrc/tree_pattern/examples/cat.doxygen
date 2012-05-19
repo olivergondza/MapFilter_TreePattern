@@ -3,14 +3,13 @@
 
 Following example shows how the pattern for <tt>cat</tt>
 (http://linux.die.net/man/1/cat) utility may look like.
-  
-@include        sources/cat.xml
 
-There is a list of input arrays in the first row of each set and the output
-array obtained by MapFilter_TreePattern::getResults() in the
-second one.  Flags can be found in the third row.
+@include        new.sources/cat.xml
 
-@clip{User/TreePattern/Cat.test.php,provideParseCat}
+There is a list of input arrays on the first row of each set and the result
+arrays on the second. Flags can be found on the third row.
+
+@snippet User/TreePattern/Cat.test.php provideCat
 */
 
 

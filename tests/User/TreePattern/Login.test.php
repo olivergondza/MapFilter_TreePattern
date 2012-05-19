@@ -1,7 +1,7 @@
 <?php
 /**
  * User Tests using login.xml
- */  
+ */
 
 require_once 'PHP/MapFilter/TreePattern.php';
 require_once 'tests/Functional.php';
@@ -14,8 +14,9 @@ class MapFilter_Test_User_TreePattern_Login extends
 {
 
   public function provideLogin () {
-  
+
     return Array (
+        /** [provideLogin] */
         // Valid set; 'login' flag will be set
         Array (
             Array ( 'name' => 'me', 'pass' => 'myPass' ),
@@ -72,6 +73,7 @@ class MapFilter_Test_User_TreePattern_Login extends
             Array ( 'login', 'use_https' ),
             Array ( 'no_remember_method' )
         )
+        /** [provideLogin] */
     );
   }
 
@@ -79,27 +81,27 @@ class MapFilter_Test_User_TreePattern_Login extends
    * @dataProvider      provideLogin
    */
   public function testLogin ( $query, $result, $flags, $asserts ) {
-  
+
     sort ( $flags );
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
-  
+
   /**
    * @dataProvider      provideLogin
    */
   public function testNewLogin ( $query, $result, $flags, $asserts ) {
-  
+
     sort ( $flags );
-  
+
     $pattern = MapFilter_TreePattern_Xml::fromFile (
         PHP_TREEPATTERN_TEST_DIR . MapFilter_Test_Sources::LOGIN_NEW
     );
-    
+
     $this->assertResultsEquals ( $pattern, $query, $result, $asserts, $flags );
   }
 }
